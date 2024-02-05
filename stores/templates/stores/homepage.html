@@ -1,0 +1,15 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+    <h1> My E-Commerce brok</h1>
+
+    {% for gadget in smartphone %}
+        <h3> Category: {{gadget.category}} </h3>
+        <h3> nama product: {{gadget.name}} </h3>
+        <h3> {{gadget.image}} </h3>
+        <h3> Harga: {{gadget.price}} </h3>
+        <h3> Deskripsi: {{gadget.description}} </h3>
+        <h3> Owner/seller: {{gadget.owner}} </h3>
+    {% endfor %}
+{% endblock %}
