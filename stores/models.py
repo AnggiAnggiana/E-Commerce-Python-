@@ -8,9 +8,13 @@ class Customers(models.Model):
     password = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=30)
     address =  models.TextField(max_length=150)
+    image = models.ImageField(upload_to='uploads/customers', default='')
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+    class Meta:
+        verbose_name_plural = 'Customers'
     
 class Sellers(models.Model):
     first_name = models.CharField(max_length=50)
@@ -19,15 +23,22 @@ class Sellers(models.Model):
     password = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=20)
     address =  models.TextField(max_length=150)
+    image = models.ImageField(upload_to='uploads/sellers', default='')
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+    class Meta:
+        verbose_name_plural = 'Sellers'
 
 class Categories(models.Model):
     name = models.CharField(max_length=50)
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = 'Categories'
     
 class Products(models.Model):
     name = models.CharField(max_length=100)
@@ -39,6 +50,13 @@ class Products(models.Model):
     
     def __str__(self):
         return self.name
+    
+    # Put (.) after 3 numbers from behind
+    def formatted_price(self):
+        return '{:,.0f}'.format(self.price).replace(',','.')
+    
+    class Meta:
+        verbose_name_plural = 'Products'
 
 class Transactions(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
@@ -51,3 +69,6 @@ class Transactions(models.Model):
     
     def __str__(self):
         return self.product
+    
+    class Meta:
+        verbose_name_plural = 'Transactions'
