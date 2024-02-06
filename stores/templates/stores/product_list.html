@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="product-id">
+                    <div class="title-teks" style="width: 640px;">
+                        <h4> {{ list_product.name }} </h4>
+                        <div class="card-price">
+                            <h3 style="padding-top: 5px; margin-left: 26px;"> Rp.{{ list_product.formatted_price }} </h3>
+                        </div>
+                        <br><br>
+                    
+                        <div class="owner-shop" style="display: flex; align-items: flex-start;">
+                            <img src="{{ list_product.owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%;">
+                            <h5>{{ list_product.owner }}</h5>
+                        </div><br><br>
+
+                        <h4>Deskripsi Produk:</h4>
+                        <p>{{ list_product.description }}</p>
+                        
+                    </div>
+                    <div class="product-pic" style="margin-left: 40px; margin-right: 10px;">
+                        <img src="{{ list_product.image.url }}" style="width: 480px; height: 450px;">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <style>
+            body {
+                background-color: rgba(14, 12, 12, 0.959);
+            }
+
+            .container {
+                margin-left: 70px;
+            }
+
+            .card {
+                height: 820px;
+                width: 1180px;
+                margin-top: 55px;
+            }
+
+            .card-price {
+                width: 460px;
+                height: 50px;
+                background-color: rgba(14, 12, 12, 0.959);
+                color: rgba(206, 19, 128, 0.795);
+                margin-bottom: 20px;
+                margin-top: 60px;
+            }
+
+            .product-id {
+                margin-top: 10px;
+                margin-left: 40px;
+                display: flex;
+                align-items: flex-start;
+            }
+        </style>
+    </body>
+{% endblock %}

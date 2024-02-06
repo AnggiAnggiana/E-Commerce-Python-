@@ -12,7 +12,7 @@
             {% for gadget in smartphone %}
                 <div class="item">
                     <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
-                    <h6> {{ gadget.name|truncatechars:45 }} </h6><br>
+                    <h6> <a href="{% url 'product_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6><br>
                     <h5 style="color: rgba(0, 136, 226, 0.932);"> Rp.{{ gadget.formatted_price }} </h5>
                     <h5> <img src="{{ gadget.owner.image.url }}" style="width: 30px; height: 30px;"> {{ gadget.owner.first_name }} {{ gadget.owner.last_name }} </h5>
                 </div>
@@ -35,7 +35,7 @@
 
         .item {
             width: calc(20% - 20px);
-            margin: 20px;
+            margin: 15px;
             padding: 0px;
             border: 1px solid #ccc;
         }
