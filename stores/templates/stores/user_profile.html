@@ -1,0 +1,49 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+    {% if submitted %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        <div class="container">
+            <div class="card">
+                <h3> My Profile </h3>
+                <p>Manage your personal information to control and secure your account security</p>
+                <hr><br>
+                <form action="" class="form-control" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="profile-information" style="width: 640px;">
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> First Name: </p> {{ profile_form.first_name }}
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> Last Name: </p> {{ profile_form.last_name }}
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> Email: </p> {{ profile_form.email }}
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> Password: </p> {{ profile_form.password }}
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> Phone Number: </p> {{ profile_form.phone_number }}
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> Address: </p> {{ profile_form.address }}
+                        <p style="margin-right: 10px; padding-bottom: 10px;"> Gender: </p> {{ profile_form.gender }}
+                    </div>
+                    <div class="profile-pic" style="margin-left: 40px; margin-right: 10px;">
+                        <input type="file" accept="image/*" id="id_profile_image">
+                        {% if profile_form.instance.image %}
+                            <img src="{{ profile_form.instance.image.url }}" style="width: 100px; height: 100px; background-color: rgba(0, 0, 0, 0.7); border-radius: 50%;">
+                        {% else %}
+                            <img src="{% static 'images/no-profile-picture.jpg' %}" alt="logo" style="width: 100px; height: 100px; background-color: rgba(0, 0, 0, 0.7); border-radius: 50%;">
+                        {% endif %}
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgb(0, 0, 0, 0.7); display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; border-radius: 50%;">
+                            <span style="color: solid white; cursor: pointer;">Change Picture</span>
+                        </div>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

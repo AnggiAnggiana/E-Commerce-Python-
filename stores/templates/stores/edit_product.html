@@ -1,0 +1,13 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2> Edit Product Details </h2><hr><br>
+        <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 780px; margin-left: 170px;">
+            {% csrf_token %}
+
+            {{ edit_form.as_p }}
+            <a href="{% url 'homepage' %}"> <input type="submit" value="Edit Product" class="btn btn-warning" style="margin-left: 290px;"> Cancel </a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,7 +1,27 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    activation_key = models.CharField(max_length=255, unique=True)
+    email_validated = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.user.username
+    
+@receiver(post_save, sender=User, dispatch_uid="save_new_user_profile")
+def save_profile(sender, instance, created, **kwargs):
+    user = instance
+    if created:
+        profile = Profile(user=user)
+        profile.save()
 
 class Customers(models.Model):
+    # username = models.CharField(max_length=50, default='1')
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=60)
@@ -9,6 +29,13 @@ class Customers(models.Model):
     phone_number = models.CharField(max_length=30)
     address =  models.TextField(max_length=150)
     image = models.ImageField(upload_to='uploads/customers', default='')
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+    
+    gender = models.CharField(max_length=30, choices=GENDER_CHOICES, default='')
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -17,13 +44,22 @@ class Customers(models.Model):
         verbose_name_plural = 'Customers'
     
 class Sellers(models.Model):
+    # username = models.CharField(max_length=50, default='1')
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    store_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=60)
     password = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=20)
     address =  models.TextField(max_length=150)
     image = models.ImageField(upload_to='uploads/sellers', default='')
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+    
+    gender = models.CharField(max_length=30, choices=GENDER_CHOICES, default='')
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

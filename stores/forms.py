@@ -1,9 +1,9 @@
 from django.forms import ModelForm
 from django import forms
-from stores.models import Products
+from stores.models import Products, Customers
 
 
-class Add_productForms(ModelForm):
+class ProductForms(ModelForm):
     class Meta:
         model = Products
         fields = ('name', 'image', 'price', 'category', 'description', 'owner')
@@ -23,4 +23,36 @@ class Add_productForms(ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Add product description'}),
         }
         
+class ProfileForms(ModelForm):
+    class Meta:
+        model = Customers
+        fields = ('image', 'first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'gender')
+        labels = {
+            'image': '',
+            'first_name': '',
+            'last_name': '',
+            'email': '',
+            'password': '',
+            'phone_number': '',
+            'address': '',
+            'gender': '',
+        }
         
+        # Styling form
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+    
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
+ 

@@ -21,24 +21,25 @@
                 </div>
             {% endfor %}
         {% endif %}
-    {% endif %}<br>
-    <h3> Category: {{ gadget.category }} </h3>
-    <br><br>
+    {% else %}<br>
+        <h3> Category: {{ gadget.category }} </h3>
+        <br><br>
 
-    <div class="container">
-        <div class="flex-container">
-            {% for gadget in smartphone %}
-                <div class="item">
-                    <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
-                    <div class="product-title" style="height: 90px; width: 195px;">
-                        <h6> <a href="{% url 'product_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
+        <div class="container">
+            <div class="flex-container">
+                {% for gadget in smartphone %}
+                    <div class="item">
+                        <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
+                        <div class="product-title" style="height: 90px; width: 195px;">
+                            <h6> <a href="{% url 'product_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
+                        </div>
+                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
+                        
                     </div>
-                    <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
-                    <h5> <img src="{{ gadget.owner.image.url }}" style="width: 30px; height: 30px;"> {{ gadget.owner.first_name }} {{ gadget.owner.last_name }} </h5>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <style>
         .container {
