@@ -1,0 +1,16 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="title-add-product" style="text-align: center;">
+            <h2> Add Product </h2>
+        </div><br>
+        <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 780px; margin-left: 170px;">
+            {% csrf_token %}
+
+            {{ product_add.as_p }}
+            <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
+            <input type="submit" value="Submit" class="btn btn-success">
+        </form>
+    </div>
+{% endblock %}

@@ -4,6 +4,24 @@
 {% block content %}
     <h1> My E-Commerce brok</h1>
     <br>
+    {% if submitted %}
+        {% if messages %}
+            {% for message in messages %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+                    <symbol id="info-fill" viewbox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.2461-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </symbol>
+                </svg>
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                    <div>
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}<br>
     <h3> Category: {{ gadget.category }} </h3>
     <br><br>
 
@@ -12,8 +30,10 @@
             {% for gadget in smartphone %}
                 <div class="item">
                     <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
-                    <h6> <a href="{% url 'product_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6><br>
-                    <h5 style="color: rgba(0, 136, 226, 0.932);"> Rp.{{ gadget.formatted_price }} </h5>
+                    <div class="product-title" style="height: 90px; width: 195px;">
+                        <h6> <a href="{% url 'product_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
+                    </div>
+                    <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
                     <h5> <img src="{{ gadget.owner.image.url }}" style="width: 30px; height: 30px;"> {{ gadget.owner.first_name }} {{ gadget.owner.last_name }} </h5>
                 </div>
             {% endfor %}
