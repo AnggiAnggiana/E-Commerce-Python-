@@ -7,7 +7,8 @@
             {% csrf_token %}
 
             {{ edit_form.as_p }}
-            <a href="{% url 'homepage' %}"> <input type="submit" value="Edit Product" class="btn btn-warning" style="margin-left: 290px;"> Cancel </a>
+            <a href="{% url 'homepage' %}" class="btn btn-warning" style="margin-left: 290px;">Cancel</a>
+            <a href="{% url 'homepage' %}"> <input type="submit" value="Edit" class="btn btn-success"></a>
         </form>
     </div>
 {% endblock %}

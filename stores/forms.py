@@ -26,7 +26,7 @@ class ProductForms(ModelForm):
 class ProfileForms(ModelForm):
     class Meta:
         model = Customers
-        fields = ('image', 'first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'gender')
+        fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'gender')
         labels = {
             'image': '',
             'first_name': '',
@@ -55,4 +55,3 @@ class ProfileForms(ModelForm):
     ]
     
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
- 

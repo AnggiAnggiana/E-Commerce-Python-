@@ -17,11 +17,12 @@ class Profile(models.Model):
 def save_profile(sender, instance, created, **kwargs):
     user = instance
     if created:
-        profile = Profile(user=user)
+        profile = Profile.objects.create(user=user)
         profile.save()
+        
 
 class Customers(models.Model):
-    # username = models.CharField(max_length=50, default='1')
+    owner_id = models.IntegerField(blank=True, default=1)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=60)
@@ -37,16 +38,21 @@ class Customers(models.Model):
     
     gender = models.CharField(max_length=30, choices=GENDER_CHOICES, default='')
     
+    # to make value of owner_id added from the exists customers numbers
+    def save(self, *args, **kwargs):
+        if self.id:
+            self.owner_id = Customers.objects.count() + 1
+        super().save(*args, **kwargs)
+    
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
     class Meta:
         verbose_name_plural = 'Customers'
+
     
 class Sellers(models.Model):
-    # username = models.CharField(max_length=50, default='1')
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    owner_id = models.IntegerField(blank=True, default=1)
     store_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=60)
     password = models.CharField(max_length=30)
@@ -62,7 +68,7 @@ class Sellers(models.Model):
     gender = models.CharField(max_length=30, choices=GENDER_CHOICES, default='')
     
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return self.store_name
     
     class Meta:
         verbose_name_plural = 'Sellers'

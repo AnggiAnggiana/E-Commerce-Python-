@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from stores.models import Products, Customers
 import locale
 from .forms import ProductForms, ProfileForms
 
 from django.contrib import messages
 from django.urls import reverse
+
 
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
@@ -42,6 +43,25 @@ def add_product(request):
         'submitted': submitted,
     })
     
+# to add Customers profile
+def user_profile(request):
+    submitted = False
+    if request.method == 'POST':
+        profile_form = ProfileForms(request.POST, request.FILES)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Profile successfully edited')
+            return redirect(reverse('user_profile') + '?submitted=True')
+    else:
+        profile_form = ProfileForms()
+        if 'submitted' in request.GET:
+            submitted = True
+            
+    return render(request, 'stores/user_profile.html', {
+        'submitted': submitted,
+        'profile_form': profile_form,
+    })
+    
 # Page to edit the product
 def edit_product(request, product_id):
     edit_product = Products.objects.get(pk=product_id)
@@ -58,22 +78,24 @@ def edit_product(request, product_id):
     
     
 # Page of user profile
-def user_profile(request):
-    submitted = False
-    user_profile = Customers.objects.all()
-    if request.method == 'POST':
-        profile_form = ProfileForms(request.POST or None, request.FILES or None, instance=user_profile)
-        if profile_form.is_valid():
-            edit_profile = profile_form.save(commit=False)
-            edit_profile.save()
-            messages.success(request, 'Profile successfully edited')
-            return redirect(reverse('user_profile') + '?submitted=True')
-    else:
-        profile_form = ProfileForms()
-        if 'submitted' in request.GET:
-            submitted = True
+# def user_profile(request):
+#     submitted = False
+#     user_profile = Customers.objects.filter(owner_id=request.user.id)
+#     if request.method == 'POST':
+#         profile_form = ProfileForms(request.POST or None, request.FILES or None, instance=user_profile)
+#         if profile_form.is_valid():
+#             edit_profile = profile_form.save(commit=False)
+#             edit_profile.owner_id = request.user.id
+#             edit_profile.save()
+#             messages.success(request, 'Profile successfully edited')
+#             return redirect(reverse('user_profile') + '?submitted=True')
+#     else:
+#         profile_form = ProfileForms()
+#         if 'submitted' in request.GET:
+#             submitted = True
             
-    return render(request, 'stores/user_profile.html', {
-        'submitted': submitted,
-        'profile_form': profile_form,
-    })
+#     return render(request, 'stores/user_profile.html', {
+#         'submitted': submitted,
+#         'profile_form': profile_form,
+#         'user_profile': user_profile,
+#     })
