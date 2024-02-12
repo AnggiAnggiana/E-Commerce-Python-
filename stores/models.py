@@ -26,7 +26,7 @@ class Customers(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=60)
-    password = models.CharField(max_length=30)
+    birthdate = models.DateField(default=None, blank=True, null=True)
     phone_number = models.CharField(max_length=30)
     address =  models.TextField(max_length=150)
     image = models.ImageField(upload_to='uploads/customers', default='')
@@ -38,11 +38,6 @@ class Customers(models.Model):
     
     gender = models.CharField(max_length=30, choices=GENDER_CHOICES, default='')
     
-    # to make value of owner_id added from the exists customers numbers
-    def save(self, *args, **kwargs):
-        if self.id:
-            self.owner_id = Customers.objects.count() + 1
-        super().save(*args, **kwargs)
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -55,7 +50,7 @@ class Sellers(models.Model):
     owner_id = models.IntegerField(blank=True, default=1)
     store_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=60)
-    password = models.CharField(max_length=30)
+    birthdate = models.DateField(default=None, blank=True, null=True)
     phone_number = models.CharField(max_length=20)
     address =  models.TextField(max_length=150)
     image = models.ImageField(upload_to='uploads/sellers', default='')

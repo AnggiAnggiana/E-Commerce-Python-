@@ -88,7 +88,7 @@ def customerProfile(request):
             edit_profile.owner_id = request.user.id
             edit_profile.save()
             messages.success(request, 'Profile successfully edited')
-            return redirect(reverse('user_profile') + '?submitted=True')
+            return redirect(reverse('homepage') + '?submitted=True')
     
     else:
         form = ProfileForms(instance=customerProfile)

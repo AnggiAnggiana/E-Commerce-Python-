@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from stores.models import Products, Customers
+from django.forms.widgets import SelectDateWidget
 
 
 class ProductForms(ModelForm):
@@ -26,7 +27,7 @@ class ProductForms(ModelForm):
 class ProfileForms(ModelForm):
     class Meta:
         model = Customers
-        fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'gender')
+        fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'address', 'gender')
         labels = {
             'image': '',
             'first_name': '',
@@ -55,3 +56,7 @@ class ProfileForms(ModelForm):
     ]
     
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
+    
+    birthdate = forms.DateField(
+        widget=SelectDateWidget(years=range(1900, 2101), attrs={'class': 'birthdate-select'})
+    )
