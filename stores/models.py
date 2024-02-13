@@ -20,7 +20,6 @@ def save_profile(sender, instance, created, **kwargs):
         profile = Profile.objects.create(user=user)
         profile.save()
         
-
 class Customers(models.Model):
     owner_id = models.IntegerField(blank=True, default=1)
     first_name = models.CharField(max_length=50)
@@ -38,14 +37,13 @@ class Customers(models.Model):
     
     gender = models.CharField(max_length=30, choices=GENDER_CHOICES, default='')
     
-    
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
     class Meta:
         verbose_name_plural = 'Customers'
 
-    
+
 class Sellers(models.Model):
     owner_id = models.IntegerField(blank=True, default=1)
     store_name = models.CharField(max_length=50, default='')
@@ -109,3 +107,35 @@ class Transactions(models.Model):
     
     class Meta:
         verbose_name_plural = 'Transactions'
+
+# Product based on category
+class Smartphone(models.Model):
+    memory_capacity = models.CharField(max_length=30, blank=True, null=True)
+    ram_capacity = models.CharField(max_length=30, blank=True, null=True)
+    warranty_period = models.CharField(max_length=30, blank=True, null=True)
+    stock = models.IntegerField(default='')
+    seller_Address = models.CharField(max_length=30, blank=True, null=True)
+    CONDITION_CHOICES = [
+        ('New', 'New'),
+        ('Second-hand', 'Second-hand'),
+    ]
+    
+    condition = models.CharField(max_length=30, choices=CONDITION_CHOICES, default='')
+    
+    BRAND_CHOICES = [
+        ('Apple', 'Apple'),
+        ('Samsung', 'Samsung'),
+        ('Xiaomi', 'Xiaomi'),
+        ('Sony', 'Sony'),
+        ('Evercross', 'Evercross'),
+        ('Vivo', 'Vivo'),
+        ('Huawei', 'Huawei'),
+        ('ASUS', 'ASUS'),
+        ('Nokia', 'Nokia'),
+        ('OPPO', 'OPPO'),
+        ('Realme', 'Realme'),
+        ('Infinix', 'Infinix'),
+        ('Lenovo', 'Lenovo'),
+    ]
+    
+    brand = models.CharField(max_length=30, choices=BRAND_CHOICES, default='')

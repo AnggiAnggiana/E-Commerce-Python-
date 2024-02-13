@@ -60,7 +60,10 @@
                                         <input type="file" id="file-upload" name="image" style="display: none;" accept="image/*">
                                     </div>
                                 </div>
-                            {% endif %}<br><br><hr>
+                            {% endif %}<br><br><hr><br>
+                            <div class="seller-login" style="margin-left: 60px;">
+                                <a href="{% url 'add_seller_profile' %}" class="btn btn-primary">Login as Seller</a>
+                            </div>
                         </div>
                     </div><br>
                     <div>
@@ -126,6 +129,11 @@
             width: 110px;
             height: 40px;
             margin-right: 9px;
+            text-align: center;
+        }
+
+        .birthdate-select:hover {
+            border-color:  orange;
         }
     </style>
 

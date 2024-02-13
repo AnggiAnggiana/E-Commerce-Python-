@@ -34,8 +34,11 @@
                             <h6> <a href="{% url 'product_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
                         </div>
                         <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
-
-                        <br><br>
+                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
+                            <img src="{{ gadget.owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                            <h6> {{ gadget.owner.store_name }} </h6>
+                        </div>
+                        <br>
                         <a href="{% url 'edit_product' gadget.id %}" class="btn btn-warning">Edit Product</a>
                         
                     </div>

@@ -16,16 +16,28 @@
                             <div class="owner-shop" style="display: flex; align-items: flex-start;">
                                 <img src="{{ list_product.owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%;">
                                 <h5>{{ list_product.owner }}</h5>
-                            </div><br><br>
-
-                            <h4>Deskripsi Produk:</h4>
-                            <p>{{ list_product.description }}</p>
+                            </div><br><br><br><br>
+                            
                             
                         </div>
                         <div class="product-pic" style="margin-left: 40px; margin-right: 10px;">
                             <img src="{{ list_product.image.url }}" style="width: 480px; height: 450px;">
                         </div>
-
+                    </div>
+                </div><br>
+                <div class="card">
+                    <div class="card-sub-title">
+                        <h3 style="padding-top: 5px; margin-left: 26px;">Product Spesifications:</h3>
+                    </div>
+                    <h6>Category: {{ list_product.category.name }} </h6>
+                    <div class="card-sub-title">
+                        <h3 style="padding-top: 5px; margin-left: 26px;">Product Description:</h3>
+                    </div>
+                    <p>{{ list_product.description }}</p>
+                </div><br>
+                <div class="card">
+                    <div class="card-sub-title">
+                        <h3 style="padding-top: 5px; margin-left: 26px;">Review Product:</h3>
                     </div>
                 </div>
             </div>
@@ -51,6 +63,15 @@
                 width: 460px;
                 height: 50px;
                 background-color: rgba(14, 12, 12, 0.959);
+                color: rgba(206, 19, 128, 0.795);
+                margin-bottom: 20px;
+                margin-top: 60px;
+            }
+
+            .card-sub-title {
+                width: 1160px;
+                height: 50px;
+                background-color: rgba(230, 221, 221, 0.959);
                 color: rgba(206, 19, 128, 0.795);
                 margin-bottom: 20px;
                 margin-top: 60px;

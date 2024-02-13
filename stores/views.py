@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from stores.models import Products, Customers
 import locale
-from .forms import ProductForms, ProfileForms
+from .forms import ProductForms, ProfileForms, SellerForms
 
 from django.contrib import messages
 from django.urls import reverse
@@ -43,7 +43,7 @@ def add_product(request):
         'submitted': submitted,
     })
     
-# to add Customers profile
+# to add Customers Profile
 def add_customer_profile(request):
     submitted = False
     if request.method == 'POST':
@@ -58,6 +58,25 @@ def add_customer_profile(request):
             submitted = True
             
     return render(request, 'stores/add_customer_profile.html', {
+        'submitted': submitted,
+        'profile_form': profile_form,
+    })
+    
+# To add Sellers Profile
+def add_seller_profile(request):
+    submitted = False
+    if request.method == 'POST':
+        profile_form = SellerForms(request.POST, request.FILES)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Your Seller Profile Successfully completed')
+            return redirect(reverse('homepage') + '?submitted=True')
+    else:
+        profile_form = SellerForms()
+        if 'submitted' in request.GET:
+            submitted = True
+            
+    return render(request, 'stores/add_seller_profile.html', {
         'submitted': submitted,
         'profile_form': profile_form,
     })
