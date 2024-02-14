@@ -67,10 +67,18 @@ class Sellers(models.Model):
         verbose_name_plural = 'Sellers'
 
 class Categories(models.Model):
-    name = models.CharField(max_length=50)
+    CATEGORIES_CHOICES = [
+        ('Laptop', 'Laptop'),
+        ('Smartphone', 'Smartphone'),
+        ('Foods', 'Foods'),
+        ('Book', 'Book'),
+        ('Outfit', 'Outfit'),
+    ]
+    
+    categories = models.CharField(max_length=50, choices=CATEGORIES_CHOICES, default='')
     
     def __str__(self):
-        return self.name
+        return self.categories
     
     class Meta:
         verbose_name_plural = 'Categories'
@@ -139,3 +147,6 @@ class Smartphone(models.Model):
     ]
     
     brand = models.CharField(max_length=30, choices=BRAND_CHOICES, default='')
+    
+    class Meta:
+        verbose_name_plural = 'Smartphones'

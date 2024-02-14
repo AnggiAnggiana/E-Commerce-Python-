@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers
+from stores.models import Products, Customers, Categories
 import locale
-from .forms import ProductForms, ProfileForms, SellerForms
+from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms
 
 from django.contrib import messages
 from django.urls import reverse
@@ -29,17 +29,25 @@ def add_product(request):
     submitted = False
     if request.method == 'POST':
         product_add = ProductForms(request.POST, request.FILES)
-        if product_add.is_valid():
+        smartphone_add = SmartphoneForms(request.POST, request.FILES)
+        if product_add.is_valid() and smartphone_add.is_valid():
             product_add.save()
+            product_instance = product_add.save()
+            if product_instance.category.categories == 'Smartphone':
+                smartphone_instance = smartphone_add.save(commit=False)
+                smartphone_instance.product = product_instance
+                smartphone_instance.save()
             messages.success(request, 'Successfully added product')
             return redirect(reverse('homepage') + '?submitted=True')
     else:
         product_add = ProductForms()
+        smartphone_add = SmartphoneForms()
         if 'submitted' in request.GET:
             submitted = True
     
     return render(request, 'stores/product_add.html', {
         'product_add': product_add,
+        'smartphone_add': smartphone_add,
         'submitted': submitted,
     })
     

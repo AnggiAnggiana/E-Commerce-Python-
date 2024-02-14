@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from stores.models import Products, Customers, Sellers
+from stores.models import Products, Customers, Sellers, Smartphone
 from django.forms.widgets import SelectDateWidget
 
 
@@ -22,6 +22,7 @@ class ProductForms(ModelForm):
             'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insert price of product(numbers)'}),
             'category': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Category --'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Add product description'}),
+            'owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Category --'}),
         }
         
 class ProfileForms(ModelForm):
@@ -41,12 +42,11 @@ class ProfileForms(ModelForm):
         
         # Styling form
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
-            'password': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'address': forms.Textarea(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+62 85xxxxx'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your address'}),
         }
         
     GENDER_CHOICES = [
@@ -78,10 +78,10 @@ class SellerForms(ModelForm):
         
         # Styling Form
         widgets = {
-            'store_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'address': forms.Textarea(attrs={'class': 'form-control'}),
+            'store_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Store Name'}),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'example123@email.com'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+62 85xxxxx'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Store Address'}),
         }
         
     GENDER_CHOICES = [
@@ -95,3 +95,28 @@ class SellerForms(ModelForm):
     birthdate = forms.DateField(
         widget=SelectDateWidget(years=range(1900, 2101), attrs={'class': 'birthdate-select'})
     )
+    
+class SmartphoneForms(ModelForm):
+    class Meta:
+        model = Smartphone
+        fields = ('memory_capacity', 'ram_capacity', 'warranty_period', 'stock', 'seller_Address', 'condition', 'brand')
+        labels = {
+            'memory_capacity': '',
+            'ram_capacity': '',
+            'warranty_period': '',
+            'stock': '',
+            'seller_Address': '',
+            'condition': '',
+            'brand': '',
+        }
+        
+        #Styling Form
+        widgets = {
+            'memory_capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '120GB'}),
+            'ram_capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '10GB'}),
+            'warranty_period': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '2 years'}),
+            'stock': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '100'}),
+            'seller_Address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sent From (Type the Address here)'}),
+            'condition': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Condition --'}),
+            'brand': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Brand --'}),
+        }
