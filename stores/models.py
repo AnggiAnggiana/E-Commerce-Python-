@@ -19,7 +19,7 @@ def save_profile(sender, instance, created, **kwargs):
     if created:
         profile = Profile.objects.create(user=user)
         profile.save()
-        
+    
 class Customers(models.Model):
     owner_id = models.IntegerField(blank=True, default=1)
     first_name = models.CharField(max_length=50)
@@ -65,8 +65,9 @@ class Sellers(models.Model):
     
     class Meta:
         verbose_name_plural = 'Sellers'
-
-class Categories(models.Model):
+    
+    
+class Products(models.Model):
     CATEGORIES_CHOICES = [
         ('Laptop', 'Laptop'),
         ('Smartphone', 'Smartphone'),
@@ -79,24 +80,6 @@ class Categories(models.Model):
     
     def __str__(self):
         return self.categories
-    
-    class Meta:
-        verbose_name_plural = 'Categories'
-    
-class Products(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.IntegerField()
-    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    description = models.TextField(max_length=300, blank=True, null=True)
-    image = models.ImageField(upload_to='uploads/product')
-    owner = models.ForeignKey(Sellers, on_delete=models.CASCADE, default='')
-    
-    def __str__(self):
-        return self.name
-    
-    # Put (.) after 3 numbers from behind
-    def formatted_price(self):
-        return '{:,.0f}'.format(self.price).replace(',','.')
     
     class Meta:
         verbose_name_plural = 'Products'
@@ -118,11 +101,14 @@ class Transactions(models.Model):
 
 # Product based on category
 class Smartphone(models.Model):
+    name = models.CharField(max_length=100, default='')
+    categories = models.ForeignKey(Products, on_delete=models.CASCADE, default=None)
+    price = models.IntegerField(default=None)
+    image = models.ImageField(upload_to='uploads/product', default=None)
     memory_capacity = models.CharField(max_length=30, blank=True, null=True)
     ram_capacity = models.CharField(max_length=30, blank=True, null=True)
     warranty_period = models.CharField(max_length=30, blank=True, null=True)
-    stock = models.IntegerField(default='')
-    seller_Address = models.CharField(max_length=30, blank=True, null=True)
+    stock = models.IntegerField(default=None)
     CONDITION_CHOICES = [
         ('New', 'New'),
         ('Second-hand', 'Second-hand'),
@@ -147,6 +133,16 @@ class Smartphone(models.Model):
     ]
     
     brand = models.CharField(max_length=30, choices=BRAND_CHOICES, default='')
+    description = models.TextField(max_length=300, blank=True, null=True)
+    seller_Address = models.CharField(max_length=80, blank=True, null=True)
+    owner = models.ForeignKey(Sellers, on_delete=models.CASCADE, default='')
+    
+    def __str__(self):
+        return self.name
+    
+    # Put (.) after 3 numbers from behind
+    def formatted_price(self):
+        return '{:,.0f}'.format(self.price).replace(',','.')
     
     class Meta:
         verbose_name_plural = 'Smartphones'

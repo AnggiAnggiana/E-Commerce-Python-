@@ -7,7 +7,7 @@
         </div><br>
         <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 710px; margin-left: 170px; margin-top: 20px;">
             {% csrf_token %}
-            <div class="product-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <!-- <div class="product-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
                 <label for="id_product_name" style="padding-bottom: 40px; flex-grow: 1;">Product Name:</label>
                 <div class="form1" style="width: 430px">
                     {{ product_add.name }}
@@ -28,7 +28,7 @@
             <div class="product-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
                 <label for="id_product_category" style="padding-bottom: 40px; flex-grow: 1;">Category:</label>
                 <div class="form4" style="width: 430px">
-                    {{ product_add.category }}
+                    
                 </div>
             </div>
             <div id="smartphoneForm" style="display: none;">
@@ -86,12 +86,11 @@
                 <div class="form6" style="width: 430px">
                     {{ product_add.owner }}
                 </div>
-            </div>
+            </div> -->
             <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
             <input type="submit" value="Submit" class="btn btn-success">
         </form>
     </div>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -7,24 +7,22 @@ from django.forms.widgets import SelectDateWidget
 class ProductForms(ModelForm):
     class Meta:
         model = Products
-        fields = ('name', 'image', 'price', 'category', 'description', 'owner')
+        fields = ('categories',)
         labels = {
-            'name': '',
-            'image': '',
-            'price': '',
-            'category': '',
-            'description': '',
+            'categories': '',
         }
-        
-        #styling form
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Type name of product here'}),
-            'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insert price of product(numbers)'}),
-            'category': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Category --'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Add product description'}),
-            'owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Category --'}),
-        }
-        
+    
+    CATEGORIES_CHOICES = [
+        ('Laptop', 'Laptop'),
+        ('Smartphone', 'Smartphone'),
+        ('Foods', 'Foods'),
+        ('Book', 'Book'),
+        ('Outfit', 'Outfit'),
+    ]
+    
+    categories = forms.ChoiceField(choices=CATEGORIES_CHOICES)
+    
+    
 class ProfileForms(ModelForm):
     class Meta:
         model = Customers
@@ -99,8 +97,12 @@ class SellerForms(ModelForm):
 class SmartphoneForms(ModelForm):
     class Meta:
         model = Smartphone
-        fields = ('memory_capacity', 'ram_capacity', 'warranty_period', 'stock', 'seller_Address', 'condition', 'brand')
+        fields = ('name', 'categories', 'price', 'image', 'memory_capacity', 'ram_capacity', 'warranty_period', 'stock', 'seller_Address', 'condition', 'brand', 'owner', 'description')
         labels = {
+            'name': '',
+            'categories': '',
+            'price': '',
+            'image': '',
             'memory_capacity': '',
             'ram_capacity': '',
             'warranty_period': '',
@@ -108,10 +110,15 @@ class SmartphoneForms(ModelForm):
             'seller_Address': '',
             'condition': '',
             'brand': '',
+            'owner': '',
+            'description': '',
         }
         
         #Styling Form
         widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
+            'categories': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select Categories'}),
+            'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Type Product Price (Numbers) e.g 1000000'}),
             'memory_capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '120GB'}),
             'ram_capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '10GB'}),
             'warranty_period': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '2 years'}),
@@ -119,4 +126,6 @@ class SmartphoneForms(ModelForm):
             'seller_Address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sent From (Type the Address here)'}),
             'condition': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Condition --'}),
             'brand': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Brand --'}),
+            'owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
         }

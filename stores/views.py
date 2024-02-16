@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Categories
+from stores.models import Products, Customers
 import locale
 from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms
 
@@ -28,15 +28,15 @@ def product_show(request, product_id):
 def add_product(request):
     submitted = False
     if request.method == 'POST':
-        product_add = ProductForms(request.POST, request.FILES)
+        product_add = ProductForms(request.POST)
         smartphone_add = SmartphoneForms(request.POST, request.FILES)
-        if product_add.is_valid() and smartphone_add.is_valid():
+        if product_add.is_valid(): #and smartphone_add.is_valid():
             product_add.save()
-            product_instance = product_add.save()
-            if product_instance.category.categories == 'Smartphone':
-                smartphone_instance = smartphone_add.save(commit=False)
-                smartphone_instance.product = product_instance
-                smartphone_instance.save()
+            # product_instance = product_add.save()
+            # if product_instance.categories.categories == 'Smartphone':
+            #     smartphone_instance = smartphone_add.save(commit=False)
+            #     smartphone_instance.product = product_instance
+            #     smartphone_instance.save()
             messages.success(request, 'Successfully added product')
             return redirect(reverse('homepage') + '?submitted=True')
     else:
