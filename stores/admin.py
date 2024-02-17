@@ -7,7 +7,6 @@ class CustomersDisplay(admin.ModelAdmin):
 class SellersDisplay(admin.ModelAdmin):
     list_display = ('store_name', 'email', 'birthdate', 'phone_number', 'address', 'gender')
 
-    
 class SmartphoneDisplay(admin.ModelAdmin):
     list_display = ('name', 'categories', 'price', 'memory_capacity', 'ram_capacity', 'warranty_period', 'stock', 'seller_Address', 'condition', 'brand', 'owner')
 

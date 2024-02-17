@@ -102,7 +102,7 @@ class Transactions(models.Model):
 # Product based on category
 class Smartphone(models.Model):
     name = models.CharField(max_length=100, default='')
-    categories = models.ForeignKey(Products, on_delete=models.CASCADE, default=None)
+    categories = models.ForeignKey(Products, on_delete=models.CASCADE, default=2)
     price = models.IntegerField(default=None)
     image = models.ImageField(upload_to='uploads/product', default=None)
     memory_capacity = models.CharField(max_length=30, blank=True, null=True)

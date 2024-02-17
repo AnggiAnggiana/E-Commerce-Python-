@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers
+from stores.models import Products, Customers, Smartphone
 import locale
 from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms
 
@@ -10,37 +10,33 @@ from django.urls import reverse
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
     
-    smartphone = Products.objects.all()
+    product = Products.objects.all()
+    smartphone = Smartphone.objects.all()
     
     return render(request, 'stores/homepage.html', {
+        'product': product,
         'smartphone': smartphone,
     })
     
-# Show product details in specific dynamic page
-def product_show(request, product_id):
-    list_product = Products.objects.get(pk=product_id)
+# Show product (smartphone) details in specific dynamic page
+def smartphone_show(request, smartphone_id):
+    list_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
     
     return render(request, 'stores/product_list.html', {
-        'list_product': list_product,
+        'list_product_smartphone': list_product_smartphone,
     })
 
 # Page to add new product
 def add_product(request):
     submitted = False
+    product_add = ProductForms()
     if request.method == 'POST':
-        product_add = ProductForms(request.POST)
         smartphone_add = SmartphoneForms(request.POST, request.FILES)
-        if product_add.is_valid(): #and smartphone_add.is_valid():
-            product_add.save()
-            # product_instance = product_add.save()
-            # if product_instance.categories.categories == 'Smartphone':
-            #     smartphone_instance = smartphone_add.save(commit=False)
-            #     smartphone_instance.product = product_instance
-            #     smartphone_instance.save()
+        if smartphone_add.is_valid():
+            smartphone_add.save()
             messages.success(request, 'Successfully added product')
             return redirect(reverse('homepage') + '?submitted=True')
     else:
-        product_add = ProductForms()
         smartphone_add = SmartphoneForms()
         if 'submitted' in request.GET:
             submitted = True
@@ -90,16 +86,16 @@ def add_seller_profile(request):
     })
     
 # Page to edit the product
-def edit_product(request, product_id):
-    edit_product = Products.objects.get(pk=product_id)
-    edit_form = ProductForms(request.POST or None, instance=edit_product)
+def edit_product_smartphone(request, smartphone_id):
+    edit_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
+    edit_form = ProductForms(request.POST or None, instance=edit_product_smartphone)
     if edit_form.is_valid():
         edit_form.save()
         messages.success(request, 'Successfully edit product details')
         return redirect('homepage')
     
     return render(request, 'stores/edit_product.html', {
-        'edit_product': edit_product,
+        'edit_product': edit_product_smartphone,
         'edit_form': edit_form,
     })
     

@@ -11,18 +11,13 @@ class ProductForms(ModelForm):
         labels = {
             'categories': '',
         }
-    
-    CATEGORIES_CHOICES = [
-        ('Laptop', 'Laptop'),
-        ('Smartphone', 'Smartphone'),
-        ('Foods', 'Foods'),
-        ('Book', 'Book'),
-        ('Outfit', 'Outfit'),
-    ]
-    
-    categories = forms.ChoiceField(choices=CATEGORIES_CHOICES)
-    
-    
+
+        # Styling Form
+        widgets = {
+            'categories': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Condition --'}),
+        }
+
+
 class ProfileForms(ModelForm):
     class Meta:
         model = Customers
@@ -117,7 +112,7 @@ class SmartphoneForms(ModelForm):
         #Styling Form
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
-            'categories': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select Categories'}),
+            'categories': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select Categories', 'readonly': 'readonly'}),
             'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Type Product Price (Numbers) e.g 1000000'}),
             'memory_capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '120GB'}),
             'ram_capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '10GB'}),
@@ -126,6 +121,6 @@ class SmartphoneForms(ModelForm):
             'seller_Address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sent From (Type the Address here)'}),
             'condition': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Condition --'}),
             'brand': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Brand --'}),
-            'owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --'}),
+            'owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --', 'readonly': 'readonly'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
         }
