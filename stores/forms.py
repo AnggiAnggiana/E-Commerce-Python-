@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from stores.models import Products, Customers, Sellers, Smartphone
+from stores.models import Products, Customers, Sellers, Smartphone, Foods
 from django.forms.widgets import SelectDateWidget
 
 
@@ -123,4 +123,38 @@ class SmartphoneForms(ModelForm):
             'brand': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Brand --'}),
             'owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --', 'readonly': 'readonly'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
+        }
+        
+class FoodForms(ModelForm):
+    class Meta:
+        model = Foods
+        fields = ('food_name', 'food_categories', 'food_price', 'food_image', 'storage_period', 'storage_condition', 'product_weight', 'number_product', 'food_stock', 'food_description', 'food_seller_Address', 'food_owner')
+        labels = {
+            'food_name': '',
+            'food_categories': '',
+            'food_price': '',
+            'food_image': '',
+            'storage_period': '',
+            'storage_condition': '',
+            'product_weight': '',
+            'number_product': '',
+            'food_stock': '',
+            'food_description': '',
+            'food_seller_Address': '',
+            'food_owner': '',
+        }
+        
+        #Styling Form
+        widgets = {
+            'food_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
+            'food_categories': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select Categories', 'readonly': 'readonly'}),
+            'food_price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Type Product Price (Numbers) e.g 500000'}),
+            'storage_period': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '1 bulan'}),
+            'storage_condition': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Beku (0°C)'}),
+            'product_weight': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '500gram'}),
+            'number_product': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '1 Pack (5pcs)'}),
+            'food_stock': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '400'}),
+            'food_description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
+            'food_seller_Address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sent From (Type the Address here)'}),
+            'food_owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --', 'readonly': 'readonly'}),
         }

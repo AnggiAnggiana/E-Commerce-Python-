@@ -99,7 +99,7 @@ class Transactions(models.Model):
     class Meta:
         verbose_name_plural = 'Transactions'
 
-# Product based on category
+# Product smartphone based on category
 class Smartphone(models.Model):
     name = models.CharField(max_length=100, default='')
     categories = models.ForeignKey(Products, on_delete=models.CASCADE, default=2)
@@ -146,3 +146,28 @@ class Smartphone(models.Model):
     
     class Meta:
         verbose_name_plural = 'Smartphones'
+        
+# Product Foods based on category
+class Foods(models.Model):
+    food_name = models.CharField(max_length=100, default='')
+    food_categories = models.ForeignKey(Products, on_delete=models.CASCADE, default=3)
+    food_price = models.IntegerField(default=None)
+    food_image = models.ImageField(upload_to='uploads/product', default=None)
+    storage_period = models.CharField(max_length=30, blank=True, null=True)
+    storage_condition = models.CharField(max_length=30, blank=True, null=True)
+    product_weight = models.CharField(max_length=30, blank=True, null=True)
+    number_product = models.CharField(max_length=30, blank=True, null=True)
+    food_stock = models.IntegerField(default=None)
+    food_description = models.TextField(max_length=300, blank=True, null=True)
+    food_seller_Address = models.CharField(max_length=80, blank=True, null=True)
+    food_owner = models.ForeignKey(Sellers, on_delete=models.CASCADE, default='')
+    
+    def __str__(self):
+        return self.food_name
+    
+    # Put (.) after 3 numbers from behind
+    def formatted_price(self):
+        return '{:,.0f}'.format(self.food_price).replace(',','.')
+    
+    class Meta:
+        verbose_name_plural = 'Foods'

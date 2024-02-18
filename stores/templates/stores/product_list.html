@@ -7,21 +7,21 @@
                 <div class="card">
                     <div class="product-id">
                         <div class="title-teks" style="width: 640px;">
-                            <h4> {{ list_product.name }} </h4>
+                            <h4> {{ list_product_smartphone.name }} </h4>
                             <div class="card-price">
-                                <h3 style="padding-top: 5px; margin-left: 26px;"> Rp.{{ list_product.formatted_price }} </h3>
+                                <h3 style="padding-top: 5px; margin-left: 26px;"> Rp.{{ list_product_smartphone.formatted_price }} </h3>
                             </div>
                             <br><br>
                         
                             <div class="owner-shop" style="display: flex; align-items: flex-start;">
-                                <img src="{{ list_product.owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%;">
-                                <h5>{{ list_product.owner }}</h5>
+                                <img src="{{ list_product_smartphone.owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%;">
+                                <h5>{{ list_product_smartphone.owner }}</h5>
                             </div><br><br><br><br>
                             
                             
                         </div>
                         <div class="product-pic" style="margin-left: 40px; margin-right: 10px;">
-                            <img src="{{ list_product.image.url }}" style="width: 480px; height: 450px;">
+                            <img src="{{ list_product_smartphone.image.url }}" style="width: 480px; height: 450px;">
                         </div>
                     </div>
                 </div><br>
@@ -29,11 +29,31 @@
                     <div class="card-sub-title">
                         <h3 style="padding-top: 5px; margin-left: 26px;">Product Spesifications:</h3>
                     </div>
-                    <h6>Category: {{ list_product.name }} </h6>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Category:</h6> <p style="margin-top: -1px;">{{ list_product_smartphone.categories }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Brand:</h6> <p style="margin-top: -1px;">{{ list_product_smartphone.brand }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Memory:</h6> <p style="margin-top: -1px;">{{ list_product_smartphone.memory_capacity }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Ram:</h6> <p>{{ list_product_smartphone.ram_capacity }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Stock:</h6> <p style="margin-top: -1px;">{{ list_product_smartphone.stock }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Garansi:</h6> <p style="margin-top: -1px;">{{ list_product_smartphone.warranty_period }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Condition:</h6> <p style="margin-top: -1px;">{{ list_product_smartphone.condition }}</p>
+                    </div>
                     <div class="card-sub-title">
                         <h3 style="padding-top: 5px; margin-left: 26px;">Product Description:</h3>
                     </div>
-                    <p>{{ list_product.description }}</p>
+                    <p>{{ list_product_smartphone.description }}</p>
                 </div><br>
                 <div class="card">
                     <div class="card-sub-title">

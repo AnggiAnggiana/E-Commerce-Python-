@@ -18,7 +18,7 @@
                     <i class="fa-solid fa-angle-down"></i>
                 </div>
             </div>
-            <div id="smartphoneForm" style="display: none;">
+            <!-- <div id="smartphoneForm" style="display: none;">
                 <div class="smartphone-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
                     <label for="id_smartphone_name" style="padding-bottom: 40px; flex-grow: 1;">Smartphone Name:</label>
                     <div class="form2" style="width: 430px">
@@ -99,9 +99,86 @@
                         {{ smartphone_add.categories }}
                     </div>
                 </div>
+                <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
+                <input type="submit" value="Submit" name="smartphone-form" class="btn btn-success">
+            </div> -->
+            <div id="foodForm" style="display: none;">
+                <div class="food-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+                    <label for="id_food_name" style="padding-bottom: 40px; flex-grow: 1;">Food Name:</label>
+                    <div class="form15" name="food-name" style="width: 430px">
+                        <input type="hidden" name="food-name" value="{{ food_add.name }}">
+                        <span>{{ food_add.food_name }}</span>
+                    </div>
+                </div>
+                <div class="food-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+                    <label for="id_food_image" style="padding-bottom: 40px; flex-grow: 1;">Product Picture:</label>
+                    <div class="form16" style="width: 430px">
+                        {{ food_add.food_image }}
+                    </div>
+                </div>
+                <div class="food-information3" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+                    <label for="id_food_price" style="padding-bottom: 40px; flex-grow: 1;">Price:</label>
+                    <div class="form17" style="width: 430px">
+                        {{ food_add.food_price }}
+                    </div>
+                </div>
+                <div class="food-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_storage-period" style="padding-bottom: 40px; flex-grow: 1;">Masa Penyimpanan:</label>
+                    <div class="form18" style="width: 430px">
+                        {{ food_add.storage_period }}
+                    </div>
+                </div>
+                <div class="food-information5" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_storage-condition" style="padding-bottom: 40px; flex-grow: 1;">Kondisi Penyimpanan:</label>
+                    <div class="form19" style="width: 430px">
+                        {{ food_add.storage_condition }}
+                    </div>
+                </div>
+                <div class="food-information6" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_product-weight" style="padding-bottom: 40px; flex-grow: 1;">Berat Produk:</label>
+                    <div class="form20" style="width: 430px">
+                        {{ food_add.product_weight }}
+                    </div>
+                </div>
+                <div class="food-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_number-product" style="padding-bottom: 40px; flex-grow: 1;">Jumlah Product:</label>
+                    <div class="form21" style="width: 430px">
+                        {{ food_add.number_product }}
+                    </div>
+                </div>
+                <div class="food-information8" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_stock" style="padding-bottom: 40px; flex-grow: 1;">Stock:</label>
+                    <div class="form22" style="width: 430px">
+                        {{ food_add.food_stock }}
+                    </div>
+                </div>
+                <div class="food-information9" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_seller-Address" style="padding-bottom: 40px; flex-grow: 1;">Sent From:</label>
+                    <div class="form23" style="width: 430px">
+                        {{ food_add.food_seller_Address }}
+                    </div>
+                </div>
+                <div class="food-information10" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_owner" style="padding-bottom: 40px; flex-grow: 1;">Brand:</label>
+                    <div class="form24" style="width: 430px">
+                        {{ food_add.food_owner }}
+                    </div>
+                </div>
+                <div class="food-information11" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_description" style="padding-bottom: 40px; flex-grow: 1;">Description:</label>
+                    <div class="form25" style="width: 430px">
+                        {{ food_add.food_description }}
+                    </div>
+                </div><br>
+                <div class="food-information12" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+                    <label for="id_food_categories" style="padding-bottom: 40px; flex-grow: 1;">Category:</label>
+                    <div class="form26" style="width: 430px">
+                        {{ food_add.food_categories }}
+                    </div>
+                </div>
+                <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
+                <input type="submit" value="Submit" name="food-form" class="btn btn-success">
             </div>
-            <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
-            <input type="submit" value="Submit" class="btn btn-success">
         </form>
     </div>
 
@@ -156,21 +233,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let categoryField = document.querySelector('.form1 select')
-            let smartphoneField = document.getElementById('smartphoneForm')
-            // let smartphoneCategoriesForm = document.querySelector('.smartphone-information13')
-            let smartphoneCategoriesForm = document.querySelector('.form14 select')
-
-        //     smartphoneCategoriesForm.value = '2'
+            // let smartphoneField = document.getElementById('smartphoneForm')
+            // let smartphoneCategoriesForm = document.querySelector('.form14 select')
+            let foodField = document.getElementById('foodForm')
 
             categoryField.addEventListener('change', function() {
-                // console.log(categoryField.value)
-                console.log(smartphoneCategoriesForm.value)
-                if (categoryField.value === 'Smartphone') {
-                    console.log('ini smartphone')
-                    smartphoneField.style.display = 'block'
-            //         smartphoneCategoriesForm.value = '2'
+                console.log(categoryField.value)
+                // console.log(smartphoneCategoriesForm.value)
+                // if (categoryField.value === 'Smartphone') {
+                //     console.log('ini smartphone')
+                //     smartphoneField.style.display = 'block'
+                //     foodField.style.display = 'none'
+                if (categoryField.value === 'Foods') {
+                    console.log('ini makanan')
+                    foodField.style.display = 'block'
+                    // smartphoneField.style.display = 'none'
                 } else {
-                    smartphoneField.style.display = 'none'
+                    // smartphoneField.style.display = 'none'
+                    foodField.style.display = 'none'
                 }
             })
         })

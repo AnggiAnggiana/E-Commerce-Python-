@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Smartphone
+from stores.models import Products, Customers, Smartphone, Foods
 import locale
-from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms
+from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms
 
 from django.contrib import messages
 from django.urls import reverse
@@ -12,10 +12,12 @@ def homepage(request):
     
     product = Products.objects.all()
     smartphone = Smartphone.objects.all()
+    food = Foods.objects.all()
     
     return render(request, 'stores/homepage.html', {
         'product': product,
         'smartphone': smartphone,
+        'food': food,
     })
     
 # Show product (smartphone) details in specific dynamic page
@@ -32,18 +34,25 @@ def add_product(request):
     product_add = ProductForms()
     if request.method == 'POST':
         smartphone_add = SmartphoneForms(request.POST, request.FILES)
+        food_add = FoodForms(request.POST, request.FILES)
         if smartphone_add.is_valid():
             smartphone_add.save()
             messages.success(request, 'Successfully added product')
             return redirect(reverse('homepage') + '?submitted=True')
+        elif food_add.is_valid():
+            food_add.save()
+            messages.success(request, 'Successfully added product')
+            return redirect(reverse('homepage') + '?submitted=True')
     else:
         smartphone_add = SmartphoneForms()
+        food_add = FoodForms()
         if 'submitted' in request.GET:
             submitted = True
     
     return render(request, 'stores/product_add.html', {
         'product_add': product_add,
         'smartphone_add': smartphone_add,
+        'food_add': food_add,
         'submitted': submitted,
     })
     
@@ -88,7 +97,7 @@ def add_seller_profile(request):
 # Page to edit the product
 def edit_product_smartphone(request, smartphone_id):
     edit_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
-    edit_form = ProductForms(request.POST or None, instance=edit_product_smartphone)
+    edit_form = SmartphoneForms(request.POST or None, instance=edit_product_smartphone)
     if edit_form.is_valid():
         edit_form.save()
         messages.success(request, 'Successfully edit product details')

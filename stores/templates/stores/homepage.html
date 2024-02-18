@@ -29,7 +29,6 @@
         <div class="container">
             <div class="flex-container">
                 {% for gadget in smartphone %}
-                    {{ gadget.categories }}
                     <div class="item">
                         <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
                         <div class="product-title" style="height: 90px; width: 195px;">
@@ -42,6 +41,21 @@
                         </div>
                         <br>
                         <a href="{% url 'edit_product_smartphone' gadget.id %}" class="btn btn-warning">Edit Product</a>
+                    </div>
+                {% endfor %}
+                {% for makanan in food %}
+                    <div class="item">
+                        <img src="{{ makanan.food_image.url }}" style="width: 201px; height: 170px;">
+                        <div class="product-title" style="height: 90px; width: 195px;">
+                            <h6> <a href="{% url 'smartphone_show' makanan.id %}" style="text-decoration: none; color: black;"> {{ makanan.food_name|truncatechars:45 }} </a> </h6>
+                        </div>
+                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ makanan.formatted_price }} </h5>
+                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
+                            <img src="{{ makanan.food_owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                            <h6> {{ makanan.food_owner.store_name }} </h6>
+                        </div>
+                        <br>
+                        <a href="{% url 'edit_product_smartphone' makanan.id %}" class="btn btn-warning">Edit Product</a>
                     </div>
                 {% endfor %}
             </div>
