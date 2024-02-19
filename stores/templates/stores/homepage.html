@@ -21,15 +21,17 @@
             {% endfor %}
         {% endif %}
     {% else %}<br>
-        <h3> Category: </h3><br>
-        {% for category in product %}
-            {{ category.categories }}
-        {% endfor %}<br>
-
         <div class="container">
+            {% for category in product %}
+                {% if category.categories == 'Smartphone' or category.categories == 'Foods' %}
+                    <div class="category-tipe" onclick="showProducts('{{ category.categories }}')" style="display: inline-block; border-radius: 15px; text-decoration: none; padding: 10px 20px; color: black; background-color: white; border: 2px solid black; width: 190px; margin-right: 7px; text-align: center; cursor: pointer;">
+                        {{ category.categories }}
+                    </div>
+                {% endif %}
+            {% endfor %}<br>
             <div class="flex-container">
                 {% for gadget in smartphone %}
-                    <div class="item">
+                    <div class="item smartphone-product">
                         <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
                         <div class="product-title" style="height: 90px; width: 195px;">
                             <h6> <a href="{% url 'smartphone_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
@@ -44,10 +46,10 @@
                     </div>
                 {% endfor %}
                 {% for makanan in food %}
-                    <div class="item">
+                    <div class="item food-product">
                         <img src="{{ makanan.food_image.url }}" style="width: 201px; height: 170px;">
                         <div class="product-title" style="height: 90px; width: 195px;">
-                            <h6> <a href="{% url 'smartphone_show' makanan.id %}" style="text-decoration: none; color: black;"> {{ makanan.food_name|truncatechars:45 }} </a> </h6>
+                            <h6> <a href="{% url 'food_show' makanan.id %}" style="text-decoration: none; color: black;"> {{ makanan.food_name|truncatechars:45 }} </a> </h6>
                         </div>
                         <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ makanan.formatted_price }} </h5>
                         <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
@@ -55,7 +57,7 @@
                             <h6> {{ makanan.food_owner.store_name }} </h6>
                         </div>
                         <br>
-                        <a href="{% url 'edit_product_smartphone' makanan.id %}" class="btn btn-warning">Edit Product</a>
+                        <a href="{% url 'edit_product_food' makanan.id %}" class="btn btn-warning">Edit Product</a>
                     </div>
                 {% endfor %}
             </div>
@@ -82,4 +84,27 @@
             border: 1px solid #ccc;
         }
     </style>
+
+    <script>
+        function showProducts(category) {
+            let smartphoneProducts = document.querySelectorAll('.smartphone-product')
+            let foodProducts = document.querySelectorAll('.food-product')
+
+            if (category === 'Smartphone') {
+                smartphoneProducts.forEach(function(product) {
+                    product.style.display = 'block'
+                })
+                foodProducts.forEach(function(product) {
+                    product.style.display = 'none'
+                })
+            } else if (category === 'Foods') {
+                smartphoneProducts.forEach(function(product) {
+                    product.style.display = 'none'
+                })
+                foodProducts.forEach(function(product) {
+                    product.style.display = 'block'
+                })
+            }
+        }
+    </script>
 {% endblock %}

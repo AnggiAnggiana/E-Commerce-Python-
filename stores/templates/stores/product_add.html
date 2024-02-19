@@ -8,17 +8,17 @@
         <div class="title-add-product" style="text-align: center;">
             <h2> Add Product </h2>
         </div><br>
-        <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 710px; margin-left: 170px; margin-top: 20px;">
+        <div class="product-information1" style="display: flex; align-items: flex-start; margin-left: 192px; margin-right: 10px;">
+            <label for="id_product_category" style="padding-bottom: 40px; margin-right: 120px;">Product Category:</label>
+            <div class="form1" style="width: 430px">
+                {{ product_add.categories }}
+                <i class="fa-solid fa-angle-down"></i>
+            </div>
+        </div>
+        <form action="" class="" method="POST" enctype="multipart/form-data" style="width: 710px; margin-left: 170px; margin-top: 20px;">
             {% csrf_token %}
 
-            <div class="product-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_product_category" style="padding-bottom: 40px; flex-grow: 1;">Product Category:</label>
-                <div class="form1" style="width: 430px">
-                    {{ product_add.categories }}
-                    <i class="fa-solid fa-angle-down"></i>
-                </div>
-            </div>
-            <!-- <div id="smartphoneForm" style="display: none;">
+            <div id="smartphoneForm" style="display: none;">
                 <div class="smartphone-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
                     <label for="id_smartphone_name" style="padding-bottom: 40px; flex-grow: 1;">Smartphone Name:</label>
                     <div class="form2" style="width: 430px">
@@ -101,13 +101,18 @@
                 </div>
                 <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
                 <input type="submit" value="Submit" name="smartphone-form" class="btn btn-success">
-            </div> -->
+                <!-- <input type="submit" id="smartphoneFormSubmitBtn" style="display: none;"> -->
+                <!-- <input type="button" value="Submit" name="smartphone-form" id="smartphoneFormSubmitBtn" class="btn btn-success" onclick="submitSmartphoneForm()"> -->
+            </div>
+        </form>
+        <form action="" class="" method="POST" enctype="multipart/form-data" style="width: 710px; margin-left: 170px; margin-top: 20px;">
+            {% csrf_token %}
+
             <div id="foodForm" style="display: none;">
                 <div class="food-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
                     <label for="id_food_name" style="padding-bottom: 40px; flex-grow: 1;">Food Name:</label>
                     <div class="form15" name="food-name" style="width: 430px">
-                        <input type="hidden" name="food-name" value="{{ food_add.name }}">
-                        <span>{{ food_add.food_name }}</span>
+                        {{ food_add.food_name }}
                     </div>
                 </div>
                 <div class="food-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
@@ -178,6 +183,8 @@
                 </div>
                 <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
                 <input type="submit" value="Submit" name="food-form" class="btn btn-success">
+                <!-- <input type="submit" id="foodFormSubmitBtn" style="display: none;"> -->
+                <!-- <input type="button" id="foodFormSubmitBtn" value="Submit" name="food-form" class="btn btn-success" onclick="submitFoodForm()"> -->
             </div>
         </form>
     </div>
@@ -233,26 +240,28 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let categoryField = document.querySelector('.form1 select')
-            // let smartphoneField = document.getElementById('smartphoneForm')
-            // let smartphoneCategoriesForm = document.querySelector('.form14 select')
+            let smartphoneField = document.getElementById('smartphoneForm')
+            let smartphoneCategoriesForm = document.querySelector('.form14 select')
             let foodField = document.getElementById('foodForm')
 
             categoryField.addEventListener('change', function() {
                 console.log(categoryField.value)
                 // console.log(smartphoneCategoriesForm.value)
-                // if (categoryField.value === 'Smartphone') {
-                //     console.log('ini smartphone')
-                //     smartphoneField.style.display = 'block'
-                //     foodField.style.display = 'none'
-                if (categoryField.value === 'Foods') {
+                if (categoryField.value === 'Smartphone') {
+                    console.log('ini smartphone')
+                    smartphoneField.style.display = 'block'
+                    foodField.style.display = 'none'
+                } else if (categoryField.value === 'Foods') {
                     console.log('ini makanan')
                     foodField.style.display = 'block'
-                    // smartphoneField.style.display = 'none'
+                    smartphoneField.style.display = 'none'
                 } else {
-                    // smartphoneField.style.display = 'none'
+                    smartphoneField.style.display = 'none'
                     foodField.style.display = 'none'
                 }
             })
         })
     </script>
 {% endblock %}
+
+

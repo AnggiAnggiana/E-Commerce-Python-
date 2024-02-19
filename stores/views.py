@@ -24,8 +24,16 @@ def homepage(request):
 def smartphone_show(request, smartphone_id):
     list_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
     
-    return render(request, 'stores/product_list.html', {
+    return render(request, 'stores/product_smartphone_list.html', {
         'list_product_smartphone': list_product_smartphone,
+    })
+    
+# Show product (food) details in specific dynamic page
+def food_show(request, food_id):
+    list_product_food = Foods.objects.get(pk=food_id)
+    
+    return render(request, 'stores/product_food_list.html', {
+        'list_product_food': list_product_food,
     })
 
 # Page to add new product
@@ -33,16 +41,18 @@ def add_product(request):
     submitted = False
     product_add = ProductForms()
     if request.method == 'POST':
-        smartphone_add = SmartphoneForms(request.POST, request.FILES)
-        food_add = FoodForms(request.POST, request.FILES)
-        if smartphone_add.is_valid():
-            smartphone_add.save()
-            messages.success(request, 'Successfully added product')
-            return redirect(reverse('homepage') + '?submitted=True')
-        elif food_add.is_valid():
-            food_add.save()
-            messages.success(request, 'Successfully added product')
-            return redirect(reverse('homepage') + '?submitted=True')
+        if 'smartphone-form' in request.POST:
+            smartphone_add = SmartphoneForms(request.POST, request.FILES)
+            if smartphone_add.is_valid():
+                smartphone_add.save()
+                messages.success(request, 'Successfully added product')
+                return redirect(reverse('homepage') + '?submitted=True')
+        elif 'food-form' in request.POST:
+            food_add = FoodForms(request.POST, request.FILES)
+            if food_add.is_valid():
+                food_add.save()
+                messages.success(request, 'Successfully added product')
+                return redirect(reverse('homepage') + '?submitted=True')
     else:
         smartphone_add = SmartphoneForms()
         food_add = FoodForms()
@@ -55,6 +65,36 @@ def add_product(request):
         'food_add': food_add,
         'submitted': submitted,
     })
+    
+    
+# Page to edit the product (smartphone)
+def edit_product_smartphone(request, smartphone_id):
+    edit_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
+    edit_form = SmartphoneForms(request.POST or None, instance=edit_product_smartphone)
+    if edit_form.is_valid():
+        edit_form.save()
+        messages.success(request, 'Successfully edit product details')
+        return redirect('homepage')
+    
+    return render(request, 'stores/edit_product_smartphone.html', {
+        'edit_product_smartphone': edit_product_smartphone,
+        'edit_form': edit_form,
+    })
+    
+# Page to edit the product (food)
+def edit_product_food(request, food_id):
+    edit_product_food = Foods.objects.get(pk=food_id)
+    edit_form = FoodForms(request.POST or None, instance=edit_product_food)
+    if edit_form.is_valid():
+        edit_form.save()
+        messages.success(request, 'Successfully edit product details')
+        return redirect('homepage')
+    
+    return render(request, 'stores/edit_product_food.html', {
+        'edit_product_food': edit_product_food,
+        'edit_form': edit_form,
+    })
+    
     
 # to add Customers Profile
 def add_customer_profile(request):
@@ -94,21 +134,7 @@ def add_seller_profile(request):
         'profile_form': profile_form,
     })
     
-# Page to edit the product
-def edit_product_smartphone(request, smartphone_id):
-    edit_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
-    edit_form = SmartphoneForms(request.POST or None, instance=edit_product_smartphone)
-    if edit_form.is_valid():
-        edit_form.save()
-        messages.success(request, 'Successfully edit product details')
-        return redirect('homepage')
-    
-    return render(request, 'stores/edit_product.html', {
-        'edit_product': edit_product_smartphone,
-        'edit_form': edit_form,
-    })
-    
-    
+
 # Page of user profile
 def customerProfile(request):
     submitted = False

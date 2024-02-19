@@ -1,0 +1,108 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <body>
+        <div class="whole-body">
+            <div class="container">
+                <div class="card">
+                    <div class="product-id">
+                        <div class="title-teks" style="width: 640px;">
+                            <h4> {{ list_product_food.food_name }} </h4>
+                            <div class="card-price">
+                                <h3 style="padding-top: 5px; margin-left: 26px;"> Rp.{{ list_product_food.formatted_price }} </h3>
+                            </div>
+                            <br><br>
+                        
+                            <div class="owner-shop" style="display: flex; align-items: flex-start;">
+                                <img src="{{ list_product_food.food_owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%;">
+                                <h5>{{ list_product_food.food_owner }}</h5>
+                            </div><br><br><br><br>
+                            
+                            
+                        </div>
+                        <div class="product-pic" style="margin-left: 40px; margin-right: 10px;">
+                            <img src="{{ list_product_food.food_image.url }}" style="width: 480px; height: 450px;">
+                        </div>
+                    </div>
+                </div><br>
+                <div class="card">
+                    <div class="card-sub-title">
+                        <h3 style="padding-top: 5px; margin-left: 26px;">Product Spesifications:</h3>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Category:</h6> <p style="margin-top: -1px;">{{ list_product_food.food_categories }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Masa Penyimpanan:</h6> <p style="margin-top: -1px;">{{ list_product_food.storage_period }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Kondisi Penyimpanan:</h6> <p style="margin-top: -1px;">{{ list_product_food.storage_condition }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Berat Produk:</h6> <p>{{ list_product_food.product_weight }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Jumlah Produk:</h6> <p style="margin-top: -1px;">{{ list_product_food.number_product }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Stock:</h6> <p style="margin-top: -1px;">{{ list_product_food.food_stock }}</p>
+                    </div>
+                    <div class="spesification-pos" style="display: flex;">
+                        <h6 style="margin-right: 5px;">Dikirim dari:</h6> <p style="margin-top: -1px;">{{ list_product_food.food_seller_Address }}</p>
+                    </div>
+                    <div class="card-sub-title">
+                        <h3 style="padding-top: 5px; margin-left: 26px;">Product Description:</h3>
+                    </div>
+                    <p>{{ list_product_food.food_description }}</p>
+                </div><br>
+                <div class="card">
+                    <div class="card-sub-title">
+                        <h3 style="padding-top: 5px; margin-left: 26px;">Review Product:</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <style>
+            .whole-body {
+                background-color: rgba(14, 12, 12, 0.959);
+                margin-top: 0px;
+            }
+
+            .container {
+                margin-left: 70px;
+            }
+
+            .card {
+                height: 820px;
+                width: 1180px;
+            }
+
+            .card-price {
+                width: 460px;
+                height: 50px;
+                background-color: rgba(14, 12, 12, 0.959);
+                color: rgba(206, 19, 128, 0.795);
+                margin-bottom: 20px;
+                margin-top: 60px;
+            }
+
+            .card-sub-title {
+                width: 1160px;
+                height: 50px;
+                background-color: rgba(230, 221, 221, 0.959);
+                color: rgba(206, 19, 128, 0.795);
+                margin-bottom: 20px;
+                margin-top: 60px;
+            }
+
+            .product-id {
+                margin-top: 10px;
+                margin-left: 40px;
+                display: flex;
+                align-items: flex-start;
+            }
+        </style>
+    </body>
+{% endblock %}
