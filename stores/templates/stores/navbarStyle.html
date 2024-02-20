@@ -18,28 +18,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'add_customer_profile' %}" style="color: white;">Add Customer Profile</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;">Customer Profile</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" style="color: white;">Action</a></li>
-                        <li><a class="dropdown-item" href="#" style="color: white;">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" style="color: white;">Something else here</a></li>
-                    </ul>
-                </li>
+                </li> -->
+                <form class="d-flex" role="search" action="{% url 'search_results' %}" method="POST">
+                    {% csrf_token %}
+                    
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="width: 330px;">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
                 <li class="nav-item">
                     <a class="nav-link disabled" aria-disabled="true" style="color: white;">Disabled</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success" type="submit">Search</button>
-            </form>
+            <div class="nav-item">
+                <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;">Customer Profile</a>
+            </div>
         </div>
     </div>
 </nav>

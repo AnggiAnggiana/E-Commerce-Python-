@@ -19,7 +19,7 @@ def homepage(request):
         'smartphone': smartphone,
         'food': food,
     })
-    
+
 # Show product (smartphone) details in specific dynamic page
 def smartphone_show(request, smartphone_id):
     list_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
@@ -65,8 +65,8 @@ def add_product(request):
         'food_add': food_add,
         'submitted': submitted,
     })
-    
-    
+
+
 # Page to edit the product (smartphone)
 def edit_product_smartphone(request, smartphone_id):
     edit_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
@@ -80,7 +80,7 @@ def edit_product_smartphone(request, smartphone_id):
         'edit_product_smartphone': edit_product_smartphone,
         'edit_form': edit_form,
     })
-    
+
 # Page to edit the product (food)
 def edit_product_food(request, food_id):
     edit_product_food = Foods.objects.get(pk=food_id)
@@ -94,8 +94,8 @@ def edit_product_food(request, food_id):
         'edit_product_food': edit_product_food,
         'edit_form': edit_form,
     })
-    
-    
+
+
 # to add Customers Profile
 def add_customer_profile(request):
     submitted = False
@@ -114,7 +114,7 @@ def add_customer_profile(request):
         'submitted': submitted,
         'profile_form': profile_form,
     })
-    
+
 # To add Sellers Profile
 def add_seller_profile(request):
     submitted = False
@@ -133,7 +133,7 @@ def add_seller_profile(request):
         'submitted': submitted,
         'profile_form': profile_form,
     })
-    
+
 
 # Page of user profile
 def customerProfile(request):
@@ -157,3 +157,17 @@ def customerProfile(request):
         'form': form,
         'submitted': submitted,
     })
+
+# Search bar
+def search_results(request):
+    if request.method == "POST":
+        search = request.POST['search']
+        smartphones = Smartphone.objects.filter(name__icontains=search)
+        food = Foods.objects.filter(food_name__icontains=search)
+        return render(request, 'stores/search_result.html', {
+            'search': search,
+            'smartphones': smartphones,
+            'food': food,
+        })
+    else:
+        return render(request, 'stores/search_result.html', {})

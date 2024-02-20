@@ -22,9 +22,12 @@
         {% endif %}
     {% else %}<br>
         <div class="container">
+            <div class="category-tipe" onclick="showAllProducts()">
+                All
+            </div>
             {% for category in product %}
                 {% if category.categories == 'Smartphone' or category.categories == 'Foods' %}
-                    <div class="category-tipe" onclick="showProducts('{{ category.categories }}')" style="display: inline-block; border-radius: 15px; text-decoration: none; padding: 10px 20px; color: black; background-color: white; border: 2px solid black; width: 190px; margin-right: 7px; text-align: center; cursor: pointer;">
+                    <div class="category-tipe" onclick="showProducts('{{ category.categories }}')">
                         {{ category.categories }}
                     </div>
                 {% endif %}
@@ -79,9 +82,28 @@
 
         .item {
             width: calc(20% - 20px);
-            margin: 15px;
+            margin: 10px;
             padding: 0px;
             border: 1px solid #ccc;
+        }
+
+        .category-tipe {
+            display: inline-block;
+            border-radius: 15px;
+            text-decoration: none;
+            padding: 10px 20px;
+            color: black;
+            background-color: white;
+            border: 2px solid black;
+            width: 190px;
+            margin-right: 7px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .category-tipe:hover {
+            background-color: rgb(112,52,87);
+            color: rgba(247, 238, 238, 0.897);
         }
     </style>
 
@@ -105,6 +127,13 @@
                     product.style.display = 'block'
                 })
             }
+        }
+
+        function showAllProducts() {
+            let allProducts = document.querySelectorAll('.item')
+            allProducts.forEach(function(product) {
+                product.style.display = 'block'
+            })
         }
     </script>
 {% endblock %}
