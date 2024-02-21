@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from stores.models import Products, Customers, Sellers, Smartphone, Foods
+from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone
 from django.forms.widgets import SelectDateWidget
 
 
@@ -158,3 +158,23 @@ class FoodForms(ModelForm):
             'food_seller_Address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sent From (Type the Address here)'}),
             'food_owner': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --', 'readonly': 'readonly'}),
         }
+        
+class Comment_SmartphoneForm(forms.ModelForm):
+    class Meta:
+        model = Comment_Smartphone
+        fields = ('user', 'smartphone', 'text', 'pictures')
+        label = {
+            'user': '',
+            'smartphone': '',
+            'text': '',
+            'pictures': '',
+        }
+        
+        #Styling Form
+        widgets = {
+            'user': forms.Select(attrs={'class': 'form-control'}),
+            'smartphone': forms.Select(attrs={'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Type your review here'}),
+        }
+        
+CommentPictureFormSet = forms.inlineformset_factory(Smartphone, Comment_Smartphone, fields=('pictures',), extra=2)

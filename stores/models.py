@@ -171,3 +171,16 @@ class Foods(models.Model):
     
     class Meta:
         verbose_name_plural = 'Foods'
+
+class Comment_Smartphone(models.Model):
+    user = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    smartphone = models.ForeignKey(Smartphone, on_delete=models.CASCADE)
+    text = models.TextField(max_length=300, blank=True, null=True)
+    pictures = models.ImageField(upload_to='uploads/comment_smartphone', default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.text
+    
+    class Meta:
+        verbose_name_plural = 'Comment_Smartphone'

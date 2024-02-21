@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Smartphone, Foods
+from stores.models import Products, Customers, Smartphone, Foods, Comment_Smartphone
 import locale
-from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms
+from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, CommentPictureFormSet
 
 from django.contrib import messages
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 def homepage(request):
@@ -23,11 +24,28 @@ def homepage(request):
 # Show product (smartphone) details in specific dynamic page
 def smartphone_show(request, smartphone_id):
     list_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
+    # customerProfile = Customers.objects.get(owner_id=request.user.id)
+    review_smartphone = Comment_Smartphone.objects.all()
     
+    submitted = False
+    if request.method == 'POST':
+        commment_smartphone_form = Comment_SmartphoneForm(request.POST, request.FILES, instance=list_product_smartphone)
+        if commment_smartphone_form.is_valid():
+            commment_smartphone_form.save()
+            messages.success(request, 'Review successfully added')
+            return redirect(reverse('homepage') + '?submitted=True')
+    else:
+        commment_smartphone_form = Comment_SmartphoneForm()
+        if 'submitted' in request.GET:
+            submitted = True
+            
     return render(request, 'stores/product_smartphone_list.html', {
+        'submitted': submitted,
+        'commment_smartphone_form': commment_smartphone_form,
         'list_product_smartphone': list_product_smartphone,
+        'review_smartphone': review_smartphone,
     })
-    
+
 # Show product (food) details in specific dynamic page
 def food_show(request, food_id):
     list_product_food = Foods.objects.get(pk=food_id)
