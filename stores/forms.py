@@ -160,6 +160,8 @@ class FoodForms(ModelForm):
         }
         
 class Comment_SmartphoneForm(forms.ModelForm):
+    # pictures = forms.FileField(required=False, widget=MultipleFileInput(attrs={"multiple": True}))
+    
     class Meta:
         model = Comment_Smartphone
         fields = ('user', 'smartphone', 'text', 'pictures')
@@ -176,5 +178,9 @@ class Comment_SmartphoneForm(forms.ModelForm):
             'smartphone': forms.Select(attrs={'class': 'form-control'}),
             'text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Type your review here'}),
         }
+    
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['pictures'].widget.attrs["accept"] = ".jpg, .jpeg, .png"
         
-CommentPictureFormSet = forms.inlineformset_factory(Smartphone, Comment_Smartphone, fields=('pictures',), extra=2)
+# CommentPictureFormSet = forms.inlineformset_factory(Smartphone, Comment_Smartphone, fields=('pictures',), extra=6)

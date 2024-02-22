@@ -55,19 +55,27 @@
                     </div>
                     <p style="margin-left: 20px; white-space: pre-wrap;">{{ list_product_smartphone.description }}</p>
                 </div><br>
-                <div class="card">
+                <div class="card-review">
                     <div class="card-sub-title">
                         <h3 style="padding-top: 5px; margin-left: 26px;">Review Product:</h3>
                     </div>
                     <div class="review-style" style="margin-left: 20px;">
                         <div>
                             {% for comment in review_smartphone %}
-                                <p>{{ comment.text }}</p>
-                                <img src="{{ comment.pictures.url }}" style="width: 90px; height: 90px;">
+                                <div class="review-owner" style="display: flex; align-items: flex-start;">
+                                    <img src="{{ comment.user.image.url }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                                    <div>
+                                        <h6>{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
+                                        <p style="margin-top: -8px; margin-bottom: 20px;">{{ comment.created_at }}</p>
+                                        <p style="white-space: pre-wrap; margin-bottom: 5px;">{{ comment.text }}</p>
+                                        <img src="{{ comment.pictures.url }}" style="width: 70px; height: 70px;">
+                                    </div>
+                                </div>
+
+                                <br><br><br>
                                 {% for picture in comment.pictures.all %}
                                     <img src="{{ picture.url }}" alt="Comment-Picture">
                                 {% endfor %}
-                                <p>Posted by {{ comment.user.first_name }} {{ comment.user.last_name }} on {{ comment.created_at }}</p>
                             {% empty %}
                                 <h5>No comments yet</h5>
                             {% endfor %}
@@ -78,18 +86,26 @@
                                 {% csrf_token %}
 
                                 <div class="user-review" style="width: 590px; display: flex; margin-bottom: 10px;">
-                                    <p style="margin-right: 50px;">User:</p>{{ commment_smartphone_form.user }}
+                                    <p style="margin-right: 50px;">User:</p>{{ comment_smartphone_form.user }}
                                 </div>
                                 <div class="smartphone-review" style="width: 590px; display: flex; margin-bottom: 10px;">
-                                    <p style="margin-right: 26px;">Product:</p>{{ commment_smartphone_form.smartphone }}
+                                    <p style="margin-right: 26px;">Product:</p>{{ comment_smartphone_form.smartphone }}
                                 </div>
                                 <div class="text-review" style="width: 590px; height: 130px; display: flex; margin-bottom: 40px;">
-                                    <p style="margin-right: 34px;">Review:</p>{{ commment_smartphone_form.text }}
+                                    <p style="margin-right: 34px;">Review:</p>{{ comment_smartphone_form.text }}
                                 </div>
-                                <div class="pictures-review" style="display: block;">
-                                    {{ commment_smartphone_form.pictures }}
-                                </div>
+                                <!-- <div class="pictures-review" style="display: block;">
+                                    hoek: {{ comment_smartphone_form.pictures }}
+                                </div> -->
+                                {% for picture in picture_formset %}
+                                    <div class="pictures-review" style="display: block;">
+                                        {{ picture.pictures }}
+                                    </div>
+                                {% endfor %}
 
+                                <!-- <div class="pictures-review" style="display: block;">
+                                    {{ picture_formset.pictures }}
+                                </div> -->
                                 <br><br>
                                 <input type="Submit" value="Add" class="btn btn-primary"></input>
                             </form>
@@ -113,6 +129,12 @@
             .card {
                 height: 820px;
                 width: 1180px;
+            }
+
+            .card-review {
+                height: 1320px;
+                width: 1180px;
+                background-color: white;
             }
 
             .card-price {
