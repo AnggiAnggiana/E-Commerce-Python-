@@ -1,0 +1,87 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="seller-shop" style="display: flex; align-items: flex-start; margin-top: 10px; margin-left: 40px;">
+                <img src="{{ store_profile.image.url }}" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+                <div>
+                    <h5 style="margin-top: 10px;">{{ store_profile.store_name }}</h5>
+                </div>
+            </div><hr><br>
+        </div>
+    </div><br><br>
+    <div class="container">
+        <div class="container-product">
+            <div class="flex-container">
+                {% for gadget in smartphone %}
+                    <div class="item smartphone-product">
+                        <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
+                        <div class="product-title" style="height: 90px; width: 195px;">
+                            <h6> <a href="{% url 'smartphone_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
+                        </div>
+                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
+                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
+                            <img src="{{ gadget.owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                            <h6> {{ gadget.owner.store_name }} </h6>
+                        </div>
+                        <br>
+                        <a href="{% url 'edit_product_smartphone' gadget.id %}" class="btn btn-warning">Edit Product</a>
+                    </div>
+                {% endfor %}
+                {% for makanan in food %}
+                    <div class="item food-product">
+                        <img src="{{ makanan.food_image.url }}" style="width: 201px; height: 170px;">
+                        <div class="product-title" style="height: 90px; width: 195px;">
+                            <h6> <a href="{% url 'food_show' makanan.id %}" style="text-decoration: none; color: black;"> {{ makanan.food_name|truncatechars:45 }} </a> </h6>
+                        </div>
+                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ makanan.formatted_price }} </h5>
+                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
+                            <img src="{{ makanan.food_owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                            <h6> {{ makanan.food_owner.store_name }} </h6>
+                        </div>
+                        <br>
+                        <a href="{% url 'edit_product_food' makanan.id %}" class="btn btn-warning">Edit Product</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+        .container {
+            margin-left: 0px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            margin-left: -10px;
+            margin-right: -90px;
+            height: 220px;
+            width: 1780px;
+            margin-top: 10px;
+        }
+
+        .container-product {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1150px;
+        }
+
+        .item {
+            width: calc(20% - 20px);
+            margin: 10px;
+            padding: 0px;
+            border: 1px solid #ccc;
+        }
+    </style>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Smartphone, Foods, Comment_Smartphone
+from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone
 import locale
-from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, CommentPictureFormSet
+from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm #CommentPictureFormSet
 
 from django.contrib import messages
 from django.urls import reverse
@@ -23,8 +23,8 @@ def homepage(request):
 
 # Show product (smartphone) details in specific dynamic page
 def smartphone_show(request, smartphone_id):
-    list_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
-    review_smartphone = Comment_Smartphone.objects.all()
+    list_product_smartphone = get_object_or_404(Smartphone, pk=smartphone_id)
+    review_smartphone = Comment_Smartphone.objects.filter(smartphone=list_product_smartphone)
     customerProfile = Customers.objects.get(owner_id=request.user.id)
     
     submitted = False
@@ -36,12 +36,6 @@ def smartphone_show(request, smartphone_id):
             # commment_smartphone_form.save()
             # picture_formset.save()
             
-            # comments = []
-            
-            # for pic in comment_smartphone_form.cleaned_data.get('pictures'):
-            #     if pic:
-            #         new_pic = Comment_Smartphone(picture=pic)
-            #         comments.append(new_pic)
             
             # VERSI 2
             comment_instance = comment_smartphone_form.save(commit=False)
@@ -74,6 +68,18 @@ def food_show(request, food_id):
     
     return render(request, 'stores/product_food_list.html', {
         'list_product_food': list_product_food,
+    })
+    
+# Show sellers store
+def seller_store(request, store_name):
+    store_profile = get_object_or_404(Sellers, store_name=store_name)
+    smartphone = Smartphone.objects.all()
+    food = Foods.objects.all()
+    
+    return render(request, 'stores/store_profile.html', {
+        'store_profile': store_profile,
+        'smartphone': smartphone,
+        'food': food,
     })
 
 # Page to add new product
