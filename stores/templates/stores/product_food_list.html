@@ -55,9 +55,57 @@
                     </div>
                     <p style="margin-left: 20px; white-space: pre-wrap;">{{ list_product_food.food_description }}</p>
                 </div><br>
-                <div class="card">
+                <div class="card-review">
                     <div class="card-sub-title">
                         <h3 style="padding-top: 5px; margin-left: 26px;">Review Product:</h3>
+                    </div>
+                    <div class="review-style" style="margin-left: 20px;">
+                        <div>
+                            {% for comment in review_food %}
+                                <div class="review-owner" style="display: flex; align-items: flex-start;">
+                                    <img src="{{ comment.user.image.url }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                                    <div>
+                                        <h6>{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
+                                        <p style="margin-top: -8px; margin-bottom: 20px;">{{ comment.created_at }}</p>
+                                        <p style="white-space: pre-wrap; margin-bottom: 15px;">{{ comment.food }}</p>
+                                        <p style="white-space: pre-wrap; margin-bottom: 5px;">{{ comment.text }}</p>
+                                        <img src="{{ comment.pictures.url }}" style="width: 70px; height: 70px;">
+                                    </div>
+                                </div>
+
+                                <br><br><br>
+                                {% for picture in comment.pictures.all %}
+                                    <img src="{{ picture.url }}" alt="Comment-Picture">
+                                {% endfor %}
+                            {% empty %}
+                                <h5>No comments yet</h5>
+                            {% endfor %}
+                        </div><br><br>
+                        <div class="add-review">
+                            <input type="button" id="add-review-button" style="color: white; width: 100px; height: 40px; border-radius: 10%; background-color: rgb(112,52,87);" value="Add Review">
+                        </div>
+                        <br>
+                        <div id="comment-form-container" style="display: none;">
+                            <h4>Add a comment:</h4>
+                            <form id="comment-form" method="POST" enctype="multipart/form-data" style="width: 800px;">
+                                {% csrf_token %}
+
+                                <div class="user-review" style="width: 590px; display: flex; margin-bottom: 10px;">
+                                    <p style="margin-right: 50px;">User:</p>{{ comment_food_form.user }}
+                                </div>
+                                <div class="smartphone-review" style="width: 590px; display: flex; margin-bottom: 10px;">
+                                    <p style="margin-right: 26px;">Product:</p>{{ comment_food_form.food }}
+                                </div>
+                                <div class="text-review" style="width: 590px; height: 130px; display: flex; margin-bottom: 40px;">
+                                    <p style="margin-right: 34px;">Review:</p>{{ comment_food_form.text }}
+                                </div>
+                                <div class="pictures-review" style="display: block; display: flex; margin-bottom: 5px;">
+                                    <p style="margin-right: 34px;">Add Picture:</p> {{ comment_food_form.pictures }}
+                                </div>
+                                <br><br>
+                                <input type="Submit" value="Add" class="btn btn-primary"></input>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,6 +125,12 @@
             .card {
                 height: 820px;
                 width: 1180px;
+            }
+
+            .card-review {
+                height: 1020px;
+                width: 1180px;
+                background-color: white;
             }
 
             .card-price {
@@ -104,5 +158,12 @@
                 align-items: flex-start;
             }
         </style>
+        
+        <script>
+            document.getElementById('add-review-button').addEventListener('click', function() {
+                document.getElementById('add-review-button').style.display = 'none'
+                document.getElementById('comment-form-container').style.display = 'block'
+            })
+        </script>
     </body>
 {% endblock %}

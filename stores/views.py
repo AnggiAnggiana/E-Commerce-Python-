@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone
+from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods
 import locale
-from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm #CommentPictureFormSet
+from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm #CommentPictureFormSet
 
 from django.contrib import messages
 from django.urls import reverse
@@ -64,10 +64,31 @@ def smartphone_show(request, smartphone_id):
 
 # Show product (food) details in specific dynamic page
 def food_show(request, food_id):
-    list_product_food = Foods.objects.get(pk=food_id)
+    list_product_food = get_object_or_404(Foods, pk=food_id)
+    review_food = Comment_Foods.objects.filter(food=list_product_food)
+    customerProfile = Customers.objects.get(owner_id=request.user.id)
+    
+    submitted = False
+    if request.method == 'POST':
+        comment_food_form = Comment_FoodForm(request.POST, request.FILES, initial={'food': list_product_food, 'user': customerProfile})
+        if comment_food_form.is_valid():
+            comment_instance = comment_food_form.save(commit=False)
+            comment_instance.user = customerProfile
+            comment_instance.food = list_product_food
+            comment_instance.save()
+            
+            messages.success(request, 'Review successfully added')
+            return redirect(reverse('homepage') + '?submitted=True')
+    else:
+        comment_food_form = Comment_FoodForm(initial={'food': list_product_food, 'user': customerProfile})
+        if 'submitted' in request.GET:
+            submitted = True
     
     return render(request, 'stores/product_food_list.html', {
         'list_product_food': list_product_food,
+        'review_food': review_food,
+        'comment_food_form': comment_food_form,
+        'submitted': submitted,
     })
     
 # Show sellers store

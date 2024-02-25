@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone
+from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods
 from django.forms.widgets import SelectDateWidget
 
 
@@ -184,3 +184,21 @@ class Comment_SmartphoneForm(forms.ModelForm):
     #     self.fields['pictures'].widget.attrs["accept"] = ".jpg, .jpeg, .png"
         
 # CommentPictureFormSet = forms.inlineformset_factory(Smartphone, Comment_Smartphone, fields=('pictures',), extra=6)
+
+class Comment_FoodForm(forms.ModelForm):
+    class Meta:
+        model = Comment_Foods
+        fields = ('user', 'food', 'text', 'pictures')
+        label = {
+            'user': '',
+            'food': '',
+            'text': '',
+            'pictures': '',
+        }
+        
+        #Styling Form
+        widgets = {
+            'user': forms.Select(attrs={'class': 'form-control'}),
+            'food': forms.Select(attrs={'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Type your review here'}),
+        }

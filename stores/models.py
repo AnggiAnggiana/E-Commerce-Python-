@@ -172,6 +172,7 @@ class Foods(models.Model):
     class Meta:
         verbose_name_plural = 'Foods'
 
+
 class Comment_Smartphone(models.Model):
     user = models.ForeignKey(Customers, on_delete=models.CASCADE)
     smartphone = models.ForeignKey(Smartphone, on_delete=models.CASCADE)
@@ -184,3 +185,30 @@ class Comment_Smartphone(models.Model):
     
     class Meta:
         verbose_name_plural = 'Comment_Smartphone'
+
+class Comment_Foods(models.Model):
+    user = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    food = models.ForeignKey(Foods, on_delete=models.CASCADE)
+    text = models.TextField(max_length=300, blank=True, null=True)
+    pictures = models.ImageField(upload_to='uploads/comment_food', default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.text
+    
+    class Meta:
+        verbose_name_plural = 'Comment_Food'
+
+class Shopping_Cart(models.Model):
+    user = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    product_smartphone = models.ForeignKey(Smartphone, on_delete=models.CASCADE, blank=True, null=True)
+    product_food = models.ForeignKey(Foods, on_delete=models.CASCADE, blank=True, null=True)
+    quantity = models.IntegerField(default=1)
+    total_price = models.IntegerField(default=None)
+    
+    def save(self, *args, **kwargs):
+        if self.product_smartphone:
+            self.total_price = self.product_smartphone.price * self.quantity
+        elif self.product_food:
+            self.total_price = self.product_food.food_price * self.quantity
+        super().save(*args, **kwargs)
