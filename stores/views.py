@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods
+from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, Shopping_Cart
 import locale
 from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm #CommentPictureFormSet
 
@@ -29,15 +29,22 @@ def smartphone_show(request, smartphone_id):
     
     submitted = False
     if request.method == 'POST':
+        # Check if the request method for adding product to the cart shop
+        if 'add_to_cart' in request.POST:
+            shopping_cart_item, created = Shopping_Cart.objects.get_or_create(
+                user=customerProfile,
+                product_smartphone=list_product_smartphone,
+            )
+            if created:
+                messages.success(request, 'Product added to cart')
+            else:
+                messages.info(request, 'Product is already in the cart')
+            return redirect('smartphone_show', smartphone_id=smartphone_id)
+        
+        # Check if the request method for submitting 'review comment' by user
         comment_smartphone_form = Comment_SmartphoneForm(request.POST, request.FILES, initial={'smartphone': list_product_smartphone, 'user': customerProfile})
         # picture_formset = CommentPictureFormSet(request.POST, request.FILES)
         if comment_smartphone_form.is_valid(): #and picture_formset.is_valid():
-            # VERSI 1
-            # commment_smartphone_form.save()
-            # picture_formset.save()
-            
-            
-            # VERSI 2
             comment_instance = comment_smartphone_form.save(commit=False)
             comment_instance.user = customerProfile
             comment_instance.smartphone = list_product_smartphone
@@ -58,9 +65,10 @@ def smartphone_show(request, smartphone_id):
         'comment_smartphone_form': comment_smartphone_form,
         'list_product_smartphone': list_product_smartphone,
         'review_smartphone': review_smartphone,
+        # 'shopping_cart_item': shopping_cart_item,
         # 'picture_formset': picture_formset,
     })
-    
+
 
 # Show product (food) details in specific dynamic page
 def food_show(request, food_id):
@@ -238,3 +246,14 @@ def search_results(request):
         })
     else:
         return render(request, 'stores/search_result.html', {})
+    
+# Cart/Keranjang belanja
+def cart_shop(request):
+    cart_data = Shopping_Cart.objects.all()
+    
+    # Calculate total price
+    # for item in cart_data:
+    #     item.total_price = item.product_smartphone.price * item.quantity
+    return render(request, 'stores/cart_shop.html', {
+        'cart_data': cart_data,
+    })

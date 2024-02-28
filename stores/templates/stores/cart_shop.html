@@ -1,0 +1,82 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="width: 1150px; height: auto; margin-top: 40px;">
+            <div class="cart-details-product" style="margin-left: 20px;">
+                {% for data in cart_data %}
+                    <div class="instruction" style="display: flex; margin-top: 10px;">
+                        <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
+                        <p>Checkout list produk yang akan kamu beli sekarang juga!</p><br>
+                    </div>
+
+                    <div class="cart-subtitle" style="display: flex; font-weight: bold; text-decoration: underline;">
+                        <p style="margin-right: 310px;">Product</p>
+                        <p style="margin-right: 105px;">Unit Price</p>
+                        <p style="margin-right: 90px;">Quantity</p>
+                        <p>Total Price</p>
+                    </div>
+
+                    <div class="cart-lists" style="display: flex;">
+                        <div class="product-smartphone" style="margin-right: 70px; display: flex; align-items: flex-start; width: 299px;">
+                            {% if data.product_smartphone %}
+                                <img src="{{ data.product_smartphone.image.url }}" style="width: 70px; height: 60px; margin-right: 5px;">
+                                <p><a href="{% url 'smartphone_show' data.product_smartphone.pk %}" style="text-decoration: none; color: black;">{{ data.product_smartphone|truncatechars:65 }}</a></p>
+                            {% endif %}
+                            {% if data.product_food %}
+                                <img src="{{ data.product_food.food_image.url }}" style="width: 70px; height: 60px; margin-right: 5px;">
+                                <p><a href="{% url 'food_show' data.product_food.pk %}" style="text-decoration: none; color: black;">{{ data.product_food|truncatechars:65 }}</a></p>
+                            {% endif %}
+                        </div>
+                        <!-- <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
+                            Total harga: {{ data.total_price }}
+                        </div> -->
+                        <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
+                            Rp.{{ data.formatted_price }}
+                        </div>
+                        <div class="product-quantity" style="margin-right: 40px; margin-top: 15px;">
+                            <button onclick="decreaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
+                            <button id="quantity{{ data.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ data.quantity }}</button>
+                            <button onclick="increaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
+                        </div>
+                        <div class="total_price" id="totalPrice{{ data.id }}">
+                            {{ data.total_price }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function updateTotalPrice(quantityId) {
+            let price = parseFloat(document.getElementById('totalPrice' +  quantityId).innerText)
+            let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
+            let totalPrice = price * quantity
+            document.getElementById('totalPrice' + quantityId).innerText = totalPrice
+        }
+        
+        function decreaseQuantity(quantityId) {
+            let quantityElement = document.getElementById('quantity' + quantityId)
+            let currentQuantity = parseInt(quantityElement.textContent)
+
+            // To decrease the quantity
+            if (currentQuantity > 1) {
+                quantityElement.textContent = currentQuantity - 1
+                updateTotalPrice(quantityId)
+            }
+        }
+
+        function increaseQuantity(quantityId) {
+            let quantityElement = document.getElementById('quantity' + quantityId)
+            let currentQuantity = parseInt(quantityElement.textContent)
+
+            // To increase the quantity
+            quantityElement.textContent = currentQuantity + 1
+            updateTotalPrice(quantityId)
+        }
+
+
+    </script>
+{% endblock %}

@@ -212,3 +212,10 @@ class Shopping_Cart(models.Model):
         elif self.product_food:
             self.total_price = self.product_food.food_price * self.quantity
         super().save(*args, **kwargs)
+        
+    # Put (.) after 3 numbers from behind
+    def formatted_price(self):
+        return '{:,.0f}'.format(self.total_price).replace(',','.')
+    
+    class Meta:
+        verbose_name_plural = 'Shopping_Cart'
