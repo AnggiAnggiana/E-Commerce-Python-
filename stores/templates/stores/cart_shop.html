@@ -1,82 +1,105 @@
 {% extends 'basic.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="card" style="width: 1150px; height: auto; margin-top: 40px;">
-            <div class="cart-details-product" style="margin-left: 20px;">
-                {% for data in cart_data %}
-                    <div class="instruction" style="display: flex; margin-top: 10px;">
-                        <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
-                        <p>Checkout list produk yang akan kamu beli sekarang juga!</p><br>
-                    </div>
-
-                    <div class="cart-subtitle" style="display: flex; font-weight: bold; text-decoration: underline;">
-                        <p style="margin-right: 310px;">Product</p>
-                        <p style="margin-right: 105px;">Unit Price</p>
-                        <p style="margin-right: 90px;">Quantity</p>
-                        <p>Total Price</p>
-                    </div>
-
-                    <div class="cart-lists" style="display: flex;">
-                        <div class="product-smartphone" style="margin-right: 70px; display: flex; align-items: flex-start; width: 299px;">
-                            {% if data.product_smartphone %}
-                                <img src="{{ data.product_smartphone.image.url }}" style="width: 70px; height: 60px; margin-right: 5px;">
-                                <p><a href="{% url 'smartphone_show' data.product_smartphone.pk %}" style="text-decoration: none; color: black;">{{ data.product_smartphone|truncatechars:65 }}</a></p>
+    <body style="background-color: rgba(14, 12, 12, 0.959);">
+        <div class="container">
+            <div class="card-title" style="width: 1150px; height: 90px; margin-top: 40px; background-color: white; margin-bottom: -25px;">
+                <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
+                    {% if cart_data %}
+                        {% for data in cart_data %}
+                            {% if forloop.first %}
+                                <div class="instruction" style="display: flex; margin-top: 10px;">
+                                    <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
+                                    <p>Checkout list produk yang akan kamu beli sekarang juga!</p><br>
+                                </div>
                             {% endif %}
-                            {% if data.product_food %}
-                                <img src="{{ data.product_food.food_image.url }}" style="width: 70px; height: 60px; margin-right: 5px;">
-                                <p><a href="{% url 'food_show' data.product_food.pk %}" style="text-decoration: none; color: black;">{{ data.product_food|truncatechars:65 }}</a></p>
-                            {% endif %}
-                        </div>
-                        <!-- <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
-                            Total harga: {{ data.total_price }}
-                        </div> -->
-                        <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
-                            Rp.{{ data.formatted_price }}
-                        </div>
-                        <div class="product-quantity" style="margin-right: 40px; margin-top: 15px;">
-                            <button onclick="decreaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
-                            <button id="quantity{{ data.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ data.quantity }}</button>
-                            <button onclick="increaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
-                        </div>
-                        <div class="total_price" id="totalPrice{{ data.id }}">
-                            {{ data.total_price }}
-                        </div>
-                    </div>
-                {% endfor %}
+                        {% empty %}
+
+                        {% endfor %}
+                    {% endif %}
+                    <div class="cart-subtitle" style="display: flex; font-weight: bold; margin-bottom: -20px;">
+                        <p style="margin-left: 120px; margin-right: 210px;">Product</p>
+                        <p style="margin-right: 135px;">Unit Price</p>
+                        <p style="margin-right: 100px;">Quantity</p>
+                        <p style="margin-right: 110px;">Total Price</p>
+                        <p>Action</p>
+                    </div><hr>
+                </div>
+            </div>
+            <div class="card-product" style="width: 1150px; height: auto; margin-top: 40px; background-color: white;">
+                <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
+                    {% for data in cart_data %}
+                        <div class="cart-lists" style="display: flex; margin-bottom: 40px; width: 1100px; background-color: rgb(241, 229, 229);">
+                            <div class="product-smartphone" style="margin-right: 70px; display: flex; align-items: flex-start; width: 299px; height: 80px; background-color: rgb(241, 229, 229); margin-top: 15px;">
+                                {% if data.product_smartphone %}
+                                    <img src="{{ data.product_smartphone.image.url }}" style="width: 70px; height: 60px; margin-right: 5px; margin-top: 10px;">
+                                    <p style="margin-top: 10px;"><a href="{% url 'smartphone_show' data.product_smartphone.pk %}" style="text-decoration: none; color: black;">{{ data.product_smartphone|truncatechars:65 }}</a></p>
+                                {% endif %}
+                                {% if data.product_food %}
+                                    <img src="{{ data.product_food.food_image.url }}" style="width: 70px; height: 60px; margin-right: 5px; margin-top: 10px;">
+                                    <p style="margin-top: 10px;"><a href="{% url 'food_show' data.product_food.pk %}" style="text-decoration: none; color: black;">{{ data.product_food|truncatechars:65 }}</a></p>
+                                {% endif %}
+                            </div>
+                            <!-- <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
+                                Total harga: {{ data.total_price }}
+                            </div> -->
+                            <div class="product-price" data-id="{{ data.id }}" style="margin-right: 40px; margin-top: 35px; width: 150px; background-color: white;">
+                                Rp.{{ data.formatted_price }}
+                            </div>
+                            <div class="product-quantity" style="margin-right: 40px; margin-top: 35px;">
+                                <button onclick="decreaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
+                                <button id="quantity{{ data.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ data.quantity }}</button>
+                                <button onclick="increaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
+                            </div>
+                            <div class="total_price" id="totalPrice{{ data.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
+                                <p style="font-weight: 500;">Rp.{{ data.formatted_price }}</p>
+                            </div>
+                            <div class="product-action" style="margin-top: 30px;">
+                                <form action="{% url 'delete_cart_item' data.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div><br>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <script>
-        function updateTotalPrice(quantityId) {
-            let price = parseFloat(document.getElementById('totalPrice' +  quantityId).innerText)
-            let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
-            let totalPrice = price * quantity
-            document.getElementById('totalPrice' + quantityId).innerText = totalPrice
-        }
-        
-        function decreaseQuantity(quantityId) {
-            let quantityElement = document.getElementById('quantity' + quantityId)
-            let currentQuantity = parseInt(quantityElement.textContent)
+        <script>
+            // Script for an updated total price
+            function updateTotalPrice(quantityId) {
+                let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
+                let priceText = priceElement.innerText.trim().replace('Rp.', '')
+                let price = parseFloat(priceText.split('.').join(''))
+                let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
+                let totalPrice = price * quantity
+                document.getElementById('totalPrice' + quantityId).innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
+            }
+            
+            // Script to calculate total price as decrease
+            function decreaseQuantity(quantityId) {
+                let quantityElement = document.getElementById('quantity' + quantityId)
+                let currentQuantity = parseInt(quantityElement.textContent)
 
-            // To decrease the quantity
-            if (currentQuantity > 1) {
-                quantityElement.textContent = currentQuantity - 1
+                // To decrease the quantity
+                if (currentQuantity > 1) {
+                    quantityElement.textContent = currentQuantity - 1
+                    updateTotalPrice(quantityId)
+                }
+            }
+
+            // Script to calculate total price as increase
+            function increaseQuantity(quantityId) {
+                let quantityElement = document.getElementById('quantity' + quantityId)
+                let currentQuantity = parseInt(quantityElement.textContent)
+
+                // To increase the quantity
+                quantityElement.textContent = currentQuantity + 1
                 updateTotalPrice(quantityId)
             }
-        }
 
-        function increaseQuantity(quantityId) {
-            let quantityElement = document.getElementById('quantity' + quantityId)
-            let currentQuantity = parseInt(quantityElement.textContent)
-
-            // To increase the quantity
-            quantityElement.textContent = currentQuantity + 1
-            updateTotalPrice(quantityId)
-        }
-
-
-    </script>
+        </script>
+    </body>
 {% endblock %}

@@ -5,7 +5,7 @@ from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, Foo
 
 from django.contrib import messages
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 
 def homepage(request):
@@ -65,7 +65,6 @@ def smartphone_show(request, smartphone_id):
         'comment_smartphone_form': comment_smartphone_form,
         'list_product_smartphone': list_product_smartphone,
         'review_smartphone': review_smartphone,
-        # 'shopping_cart_item': shopping_cart_item,
         # 'picture_formset': picture_formset,
     })
 
@@ -78,6 +77,19 @@ def food_show(request, food_id):
     
     submitted = False
     if request.method == 'POST':
+        # Check if the request method for adding product to the cart shop
+        if 'add_to_cart' in request.POST:
+            shopping_cart_item, created = Shopping_Cart.objects.get_or_create(
+                user=customerProfile,
+                product_food=list_product_food,
+            )
+            if created:
+                messages.success(request, 'Product added to cart')
+            else:
+                messages.info(request, 'Product is already in the cart')
+            return redirect('food_show', food_id=food_id)
+        
+        # Check if the request method for submitting 'review comment' by user
         comment_food_form = Comment_FoodForm(request.POST, request.FILES, initial={'food': list_product_food, 'user': customerProfile})
         if comment_food_form.is_valid():
             comment_instance = comment_food_form.save(commit=False)
@@ -251,9 +263,11 @@ def search_results(request):
 def cart_shop(request):
     cart_data = Shopping_Cart.objects.all()
     
-    # Calculate total price
-    # for item in cart_data:
-    #     item.total_price = item.product_smartphone.price * item.quantity
     return render(request, 'stores/cart_shop.html', {
         'cart_data': cart_data,
     })
+    
+def delete_cart_item(request, item_id):
+    cart_item = Shopping_Cart.objects.get(pk=item_id)
+    cart_item.delete()
+    return redirect('cart_shop')

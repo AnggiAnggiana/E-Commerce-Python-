@@ -1,6 +1,10 @@
 {% extends 'basic.html' %}
 
 {% block content %}
+    <head>
+        <script src="https://kit.fontawesome.com/9417a4ac8c.js" crossorigin="anonymous"></script>
+    </head>
+
     <body>
         <div class="whole-body">
             <div class="container">
@@ -17,12 +21,11 @@
                                 <img src="{{ list_product_smartphone.owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
                                 <div>
                                     <h5>{{ list_product_smartphone.owner }}</h5>
-                                    <div class="visit-store">
-                                        <a href="{% url 'seller_store' list_product_smartphone.owner.store_name %}" class="btn" style="color: white; width: 180px; height: 40px; border-radius: 20px; background-color: rgb(112,52,87); text-decoration: none;">Visit Store</a>
-                                        Add to chart
+                                    <div class="visit-store" style="display: flex;">
+                                        <a href="{% url 'seller_store' list_product_smartphone.owner.store_name %}" class="btn" style="color: rgb(24, 231, 24); width: 180px; height: 40px; border-radius: 20px; background-color: rgba(20, 20, 20, 0.842); text-decoration: none; font-weight: 500; margin-right: 10px;"><i class="fa-solid fa-store" style="color: white;"></i> Visit Store</a>
                                         <form method="post" action="{% url 'smartphone_show' smartphone_id=list_product_smartphone.pk %}">
                                             {% csrf_token %}
-                                            <button type="submit" name="add_to_cart" class="btn btn-success">Add to Cart</button>
+                                            <button type="submit" name="add_to_cart" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">Add to Cart <i class="fa-solid fa-cart-shopping" style="color: rgb(24, 231, 24);"></i></button>
                                         </form>
                                     </div>
                                 </div>

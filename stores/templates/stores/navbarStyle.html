@@ -1,4 +1,8 @@
 {% load static %}
+<head>
+    <script src="https://kit.fontawesome.com/9417a4ac8c.js" crossorigin="anonymous"></script>
+</head>
+
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(75, 0, 44, 0.795); color: white;">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'homepage' %}">
@@ -21,18 +25,18 @@
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;">Customer Profile</a>
                 </li> -->
-                <form class="d-flex" role="search" action="{% url 'search_results' %}" method="POST">
+                <form class="d-flex" role="search" action="{% url 'search_results' %}" method="POST" style="margin-right: 10px;">
                     {% csrf_token %}
                     
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="width: 330px;">
                     <button class="btn btn-success" type="submit">Search</button>
                 </form>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cart_shop' %}" style="color: white;">Keranjang</a>
+                    <a class="nav-link" href="{% url 'cart_shop' %}" style="color: white;"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
                 </li>
             </ul>
             <div class="nav-item">
-                <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;">Customer Profile</a>
+                <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;"><i class="fa-solid fa-user"></i> Customer Profile</a>
             </div>
         </div>
     </div>

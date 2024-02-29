@@ -14,8 +14,17 @@
                             <br><br>
                         
                             <div class="owner-shop" style="display: flex; align-items: flex-start;">
-                                <img src="{{ list_product_food.food_owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%;">
-                                <h5>{{ list_product_food.food_owner }}</h5>
+                                <img src="{{ list_product_food.food_owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+                                <div>
+                                    <h5>{{ list_product_food.food_owner }}</h5>
+                                    <div class="visit-store" style="display: flex;">
+                                        <a href="{% url 'seller_store' list_product_food.food_owner.store_name %}" class="btn" style="color: rgb(24, 231, 24); width: 180px; height: 40px; border-radius: 20px; background-color: rgba(20, 20, 20, 0.842); text-decoration: none; font-weight: 500; margin-right: 10px;"><i class="fa-solid fa-store" style="color: white;"></i> Visit Store</a>
+                                        <form method="post" action="{% url 'food_show' food_id=list_product_food.pk %}">
+                                            {% csrf_token %}
+                                            <button type="submit" name="add_to_cart" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">Add to Cart <i class="fa-solid fa-cart-shopping" style="color: rgb(24, 231, 24);"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div><br><br><br><br>
                             
                             
