@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <body>
+        <div class="whole" style="background-color: rgba(189, 199, 199, 0.856); margin-top: -15px; height: auto;">
+            <div class="container" style="margin-left: 15px;">
+                <div class="card-title" style="width: 1150px; height: 130px; margin-top: 10px; background-color: white; margin-bottom: -25px;">
+                    <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
+                        <div class="title-checkout" style="text-align: center;">
+                            <h4 style="margin-top: 15px;">Confirm Your Payment</h4>
+                        </div>
+                        <div class="customer-details" style="display: flex; margin-top: 17px;">
+                            {% for product in product_from_cart %}
+                                Recipient: {{ product.user }}
+                                {{ product.user.address }}
+                            {% endfor %}
+                        </div>
+                        <div>
+                            {% for product in product_from_cart %}
+                                Contact: {{ product.user.phone_number }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div><br><br>
+                <div class="card-product" style="background-color: yellow; margin-top: 20px;">
+                    <div class="checkout-product" style="margin-left: 20px;">
+                        {% for product in product_from_cart %}
+                            {% if product.product_smartphone %}
+                                <img src="{{ product.product_smartphone.image.url }}" style="width: 60px; height: 60px;">
+                                {{ product.product_smartphone.name }}
+                            {% endif %}
+
+                            {% if product.product_food %}
+                                <img src="{{ product.product_food.food_image.url }}" style="width: 60px; height: 60px;">
+                                {{ product.product_food.food_name }}
+                            {% endif %}
+                            <div class="product-price" data-id="{{ product.id }}" style="margin-right: 40px; margin-top: 35px; width: 150px; background-color: white;">
+                                Rp.{{ product.formatted_price }}
+                            </div>
+                            <div class="product-quantity" style="margin-right: 40px; margin-top: 35px;">
+                                <span id="quantity{{ product.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ product.quantity }}</span>
+                            </div>
+                            <div class="total_price" id="totalPrice{{ product.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
+                                <p style="font-weight: 500;">Rp.{{ product.formatted_price }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+
+        <script>
+            function updateTotalPrice(quantityId) {
+                let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
+                let priceText = priceElement.innerText.trim().replace('Rp.', '')
+                let price = parseFloat(priceText.split('.').join(''))
+                let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
+                let totalPrice = price * quantity
+                let totalPriceElement = document.getElementById('totalPrice' + quantityId)
+                totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
+                totalPriceElement.style.fontWeight = '500'
+            }
+        </script>
+    </body>
+{% endblock %}

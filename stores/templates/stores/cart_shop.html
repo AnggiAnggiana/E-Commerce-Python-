@@ -1,67 +1,94 @@
 {% extends 'basic.html' %}
 
 {% block content %}
-    <body style="background-color: rgba(14, 12, 12, 0.959);">
-        <div class="container">
-            <div class="card-title" style="width: 1150px; height: 90px; margin-top: 40px; background-color: white; margin-bottom: -25px;">
-                <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
-                    {% if cart_data %}
-                        {% for data in cart_data %}
-                            {% if forloop.first %}
-                                <div class="instruction" style="display: flex; margin-top: 10px;">
-                                    <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
-                                    <p>Checkout list produk yang akan kamu beli sekarang juga!</p><br>
-                                </div>
-                            {% endif %}
-                        {% empty %}
+    <head>
+        <script src="https://kit.fontawesome.com/9417a4ac8c.js" crossorigin="anonymous"></script>
+    </head>
 
-                        {% endfor %}
-                    {% endif %}
-                    <div class="cart-subtitle" style="display: flex; font-weight: bold; margin-bottom: -20px;">
-                        <p style="margin-left: 120px; margin-right: 210px;">Product</p>
-                        <p style="margin-right: 135px;">Unit Price</p>
-                        <p style="margin-right: 100px;">Quantity</p>
-                        <p style="margin-right: 110px;">Total Price</p>
-                        <p>Action</p>
-                    </div><hr>
+    <body>
+        <div class="cart" style="background-color: rgba(14, 12, 12, 0.959); margin-top: -40px; margin-bottom: -20px;">
+            <div class="container">
+                <div class="card-title" style="width: 1150px; height: 90px; margin-top: 40px; background-color: white; margin-bottom: -25px;">
+                    <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
+                        {% if cart_data %}
+                            {% for data in cart_data %}
+                                {% if forloop.first %}
+                                    <div class="instruction" style="display: flex; margin-top: 10px;">
+                                        <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
+                                        <p>Checkout list produk yang akan kamu beli sekarang juga!</p><br>
+                                    </div>
+                                {% endif %}
+                            {% empty %}
+
+                            {% endfor %}
+                        {% endif %}
+                        <div class="cart-subtitle" style="display: flex; font-weight: bold; margin-bottom: -20px;">
+                            <p style="margin-left: 120px; margin-right: 210px;">Product</p>
+                            <p style="margin-right: 135px;">Unit Price</p>
+                            <p style="margin-right: 100px;">Quantity</p>
+                            <p style="margin-right: 110px;">Total Price</p>
+                            <p>Action</p>
+                        </div><hr>
+                    </div>
                 </div>
-            </div>
-            <div class="card-product" style="width: 1150px; height: auto; margin-top: 40px; background-color: white;">
-                <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
-                    {% for data in cart_data %}
-                        <div class="cart-lists" style="display: flex; margin-bottom: 40px; width: 1100px; background-color: rgb(241, 229, 229);">
-                            <div class="product-smartphone" style="margin-right: 70px; display: flex; align-items: flex-start; width: 299px; height: 80px; background-color: rgb(241, 229, 229); margin-top: 15px;">
+                <div class="card-product" style="width: 1150px; height: auto; margin-top: 40px; background-color: white;">
+                    <div class="cart-details-product" style="margin-left: 0px; margin-bottom: 20px;">
+                        {% for data in cart_data %}
+                            {% if data.product_smartphone %}
+                                <h6 style="padding-top: 10px; margin-left: 20px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' data.product_smartphone.owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ data.product_smartphone.owner }}</a></h6>
+                            {% endif %}
+                            {% if data.product_food %}
+                                <h6 style="padding-top: 10px; margin-left: 20px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' data.product_food.food_owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ data.product_food.food_owner }}</a> </h6>
+                            {% endif %}
+                            <div class="cart-lists" style="display: flex; margin-bottom: 20px; margin-left: 20px; width: 1100px; background-color: rgb(241, 229, 229);">
                                 {% if data.product_smartphone %}
-                                    <img src="{{ data.product_smartphone.image.url }}" style="width: 70px; height: 60px; margin-right: 5px; margin-top: 10px;">
-                                    <p style="margin-top: 10px;"><a href="{% url 'smartphone_show' data.product_smartphone.pk %}" style="text-decoration: none; color: black;">{{ data.product_smartphone|truncatechars:65 }}</a></p>
+                                    <div class="product-smartphone" style="margin-right: 70px; display: flex; align-items: flex-start; width: 299px; height: 80px; margin-top: 15px;">
+                                        <img src="{{ data.product_smartphone.image.url }}" style="width: 70px; height: 60px; margin-right: 5px; margin-top: 10px;">
+                                        <p style="margin-top: 10px;"><a href="{% url 'smartphone_show' data.product_smartphone.pk %}" style="text-decoration: none; color: black;">{{ data.product_smartphone|truncatechars:65 }}</a></p>
+                                    </div>
                                 {% endif %}
                                 {% if data.product_food %}
-                                    <img src="{{ data.product_food.food_image.url }}" style="width: 70px; height: 60px; margin-right: 5px; margin-top: 10px;">
-                                    <p style="margin-top: 10px;"><a href="{% url 'food_show' data.product_food.pk %}" style="text-decoration: none; color: black;">{{ data.product_food|truncatechars:65 }}</a></p>
+                                    <div class="product-food" style="margin-right: 70px; display: flex; align-items: flex-start; width: 299px; height: 80px; margin-top: 15px;">
+                                        <img src="{{ data.product_food.food_image.url }}" style="width: 70px; height: 60px; margin-right: 5px; margin-top: 10px;">
+                                        <p style="margin-top: 10px;"><a href="{% url 'food_show' data.product_food.pk %}" style="text-decoration: none; color: black;">{{ data.product_food|truncatechars:65 }}</a></p>
+                                    </div>
                                 {% endif %}
+                                
+                                <!-- <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
+                                    Total harga: {{ data.total_price }}
+                                </div> -->
+                                <div class="product-price" data-id="{{ data.id }}" style="margin-right: 40px; margin-top: 35px; width: 150px; background-color: white;">
+                                    Rp.{{ data.formatted_price }}
+                                </div>
+                                <div class="product-quantity" style="margin-right: 40px; margin-top: 35px;">
+                                    <button onclick="decreaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
+                                    <button id="quantity{{ data.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ data.quantity }}</button>
+                                    <button onclick="increaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
+                                </div>
+                                <div class="total_price" id="totalPrice{{ data.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
+                                    <p style="font-weight: 500;">Rp.{{ data.formatted_price }}</p>
+                                </div>
+                                <div class="product-action" style="margin-top: 30px;">
+                                    <form action="{% url 'delete_cart_item' data.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                    </form>
+                                </div>
                             </div>
-                            <!-- <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
-                                Total harga: {{ data.total_price }}
-                            </div> -->
-                            <div class="product-price" data-id="{{ data.id }}" style="margin-right: 40px; margin-top: 35px; width: 150px; background-color: white;">
-                                Rp.{{ data.formatted_price }}
-                            </div>
-                            <div class="product-quantity" style="margin-right: 40px; margin-top: 35px;">
-                                <button onclick="decreaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
-                                <button id="quantity{{ data.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ data.quantity }}</button>
-                                <button onclick="increaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
-                            </div>
-                            <div class="total_price" id="totalPrice{{ data.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
-                                <p style="font-weight: 500;">Rp.{{ data.formatted_price }}</p>
-                            </div>
-                            <div class="product-action" style="margin-top: 30px;">
-                                <form action="{% url 'delete_cart_item' data.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-outline-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div><br>
-                    {% endfor %}
+                            <form action="{% url 'cart_shop' %}" method="post">
+                                {% csrf_token %}
+                                
+                                <div class="choose" style="transform: translateY(-85px); margin-left: 2px;">
+                                    <input type="checkbox" name="selected_products" value="{{ data.id }}">
+                                </div>
+                                <div class="checkout-btn" style="text-align: center;">
+                                    <button type="submit" name="checkout" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">Checkout</button>
+                                </div>
+                            </form>
+                            
+                            <hr>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,7 +102,9 @@
                 let price = parseFloat(priceText.split('.').join(''))
                 let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
                 let totalPrice = price * quantity
-                document.getElementById('totalPrice' + quantityId).innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
+                let totalPriceElement = document.getElementById('totalPrice' + quantityId)
+                totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
+                totalPriceElement.style.fontWeight = '500'
             }
             
             // Script to calculate total price as decrease

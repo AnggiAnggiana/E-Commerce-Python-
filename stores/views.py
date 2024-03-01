@@ -6,7 +6,7 @@ from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, Foo
 from django.contrib import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
-
+from django.contrib.sessions.models import Session
 
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
@@ -263,6 +263,14 @@ def search_results(request):
 def cart_shop(request):
     cart_data = Shopping_Cart.objects.all()
     
+    if request.method == 'POST' and 'checkout' in request.POST:
+        # Get the choosen product data
+        selected_product_id = request.POST.getlist('selected_products')
+        # Save product data into session
+        request.session['selected_product_id'] = selected_product_id
+        
+        return redirect('checkout_product')
+    
     return render(request, 'stores/cart_shop.html', {
         'cart_data': cart_data,
     })
@@ -271,3 +279,14 @@ def delete_cart_item(request, item_id):
     cart_item = Shopping_Cart.objects.get(pk=item_id)
     cart_item.delete()
     return redirect('cart_shop')
+
+# Checkout product
+def checkout_product(request):
+    # product_from_cart = Shopping_Cart.objects.get(pk=product_id)
+    selected_product_id = request.session.get('selected_product_id', [])
+    
+    product_from_cart = Shopping_Cart.objects.filter(id__in=selected_product_id)
+    
+    return render (request, 'stores/checkout_product.html', {
+        'product_from_cart': product_from_cart,
+    })
