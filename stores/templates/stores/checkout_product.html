@@ -4,44 +4,70 @@
     <body>
         <div class="whole" style="background-color: rgba(189, 199, 199, 0.856); margin-top: -15px; height: auto;">
             <div class="container" style="margin-left: 15px;">
-                <div class="card-title" style="width: 1150px; height: 130px; margin-top: 10px; background-color: white; margin-bottom: -25px;">
+                <div class="card-title" style="width: 1150px; height: 210px; margin-top: 10px; background-color: white; margin-bottom: -25px;">
                     <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
                         <div class="title-checkout" style="text-align: center;">
                             <h4 style="margin-top: 15px;">Confirm Your Payment</h4>
                         </div>
                         <div class="customer-details" style="display: flex; margin-top: 17px;">
                             {% for product in product_from_cart %}
-                                Recipient: {{ product.user }}
-                                {{ product.user.address }}
+                                <p style="font-weight: 500; margin-right: 80px;" > Recipient: {{ product.user }}</p>
+                                <div id="adress=container">
+                                    <p id="text_address" style="display: block; margin-right: 10px;">{{ product.user.address }}</p>
+                                    <textarea id="input_address" name="user_address" style="display: none; width: 760px; height: 120px;">{{ product.user.address }}</textarea>
+                                    <button id="saveAddress" onclick="saveAddress()" style="display: none; width: 45px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white; margin-top: 5px;">Save</button>
+                                </div>
+                                <button id="editAddress" style="width: 45px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;" onclick="toggleEdit()">Edit</button>
                             {% endfor %}
                         </div>
                         <div>
                             {% for product in product_from_cart %}
-                                Contact: {{ product.user.phone_number }}
+                                <p style="font-weight: 500; margin-top: 0px;"> Contact: {{ product.user.phone_number }} </p>
                             {% endfor %}
                         </div>
                     </div>
                 </div><br><br>
-                <div class="card-product" style="background-color: yellow; margin-top: 20px;">
+                <div class="card-product" style="background-color: yellow; margin-top: 20px; width: 1150px; height: 550px;">
                     <div class="checkout-product" style="margin-left: 20px;">
                         {% for product in product_from_cart %}
-                            {% if product.product_smartphone %}
-                                <img src="{{ product.product_smartphone.image.url }}" style="width: 60px; height: 60px;">
-                                {{ product.product_smartphone.name }}
-                            {% endif %}
+                            <div class="head-product" style="display: flex; width: 1150px; padding-top: 10px;">
+                                {% if product.product_smartphone %}
+                                    <h6 style=" margin-left: 60px; margin-right: 285px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' product.product_smartphone.owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ product.product_smartphone.owner }}</a></h6>
+                                {% endif %}
+                                {% if product.product_food %}
+                                    <h6 style="margin-left: 60px; margin-right: 280px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' product.product_food.food_owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ product.product_food.food_owner }}</a> </h6>
+                                {% endif %}
+                                <h6 style="margin-right: 160px;">Unit Price</h6>
+                                <h6 style="margin-right: 130px;">Quantity</h6>
+                                <h6 style="margin-right: 20px;">Total Product Price</h6>
+                            </div><hr>
 
-                            {% if product.product_food %}
-                                <img src="{{ product.product_food.food_image.url }}" style="width: 60px; height: 60px;">
-                                {{ product.product_food.food_name }}
-                            {% endif %}
-                            <div class="product-price" data-id="{{ product.id }}" style="margin-right: 40px; margin-top: 35px; width: 150px; background-color: white;">
-                                Rp.{{ product.formatted_price }}
-                            </div>
-                            <div class="product-quantity" style="margin-right: 40px; margin-top: 35px;">
-                                <span id="quantity{{ product.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ product.quantity }}</span>
-                            </div>
-                            <div class="total_price" id="totalPrice{{ product.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
-                                <p style="font-weight: 500;">Rp.{{ product.formatted_price }}</p>
+                            <div class="cart-lists" style="display: flex; margin-bottom: 20px; margin-left: 20px; width: 1100px; background-color: rgb(241, 229, 229);">
+                                <div class="product-smartphone" style="margin-right: 110px; display: flex; align-items: flex-start; width: 299px; height: 80px; margin-top: 15px;">
+                                    {% if product.product_smartphone %}
+                                        <img src="{{ product.product_smartphone.image.url }}" style="width: 60px; height: 60px;">
+                                        {{ product.product_smartphone.name|truncatechars:65 }}
+                                    {% endif %}
+                                    {% if product.product_food %}
+                                        <img src="{{ product.product_food.food_image.url }}" style="width: 60px; height: 60px;">
+                                        {{ product.product_food.food_name|truncatechars:65 }}
+                                    {% endif %}
+                                </div>
+                                <div class="product-price" data-id="{{ product.id }}" style="margin-right: 50px; margin-top: 35px; width: 150px; background-color: white;">
+                                    Rp.{{ product.formatted_price }}
+                                </div>
+                                <div class="product-quantity" style="margin-right: 100px; margin-top: 35px;">
+                                    <button type="button" onclick="decreaseQuantity('{{ product.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
+                                    <button id="quantity{{ product.id }}" name="quantity{{ product.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ product.quantity }}</button>
+                                    <button type="button" onclick="increaseQuantity('{{ product.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
+                                </div>
+                                <!-- Input hidden to store the updated quantity value -->
+                                <input type="hidden" name="selected_products" value="{{ product.id }}">
+                                <input type="hidden" name="quantity{{ product.id }}" id="quantity_input_{{ product.id }}" value="{{ product.quantity }}">
+                                <!--  -->
+                                <div class="total_price" id="totalPrice{{ product.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
+                                    <p style="font-weight: 500;">Rp.{{ product.formatted_price }}</p>
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
@@ -51,6 +77,42 @@
 
 
         <script>
+            // Edit User Address
+            function toggleEdit() {
+                let addressText = document.getElementById("text_address");
+                let addressInput = document.getElementById("input_address");
+                let saveButton = document.getElementById("saveAddress");
+                let editButton = document.getElementById("editAddress");
+
+                if (addressText.style.display === "block") {
+                    addressText.style.display = "none";
+                    addressInput.style.display = "block";
+                    saveButton.style.display = "block";
+                    editButton.innerText = "Cancel";
+                    editButton.style.display = "none";
+                } else {
+                    addressText.style.display = "block";
+                    addressInput.style.display = "none";
+                    saveButton.style.display = "none";
+                    editButton.innerText = "Edit";
+                    editButton.style.display = "block";
+                }
+            }
+
+            function saveAddress() {
+                let addressText = document.getElementById("text_address")
+                let addressInput = document.getElementById("input_address")
+                let saveButton = document.getElementById("saveAddress")
+                let editButton = document.getElementById("editAddress")
+
+                addressText.innerText = addressInput.value
+                addressText.style.display = "block"
+                addressInput.style.display = "none"
+                saveButton.style.display = "none"
+                editButton.innerText = "Edit"
+                editButton.style.display = "block"
+            }
+
             function updateTotalPrice(quantityId) {
                 let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
                 let priceText = priceElement.innerText.trim().replace('Rp.', '')
@@ -61,6 +123,36 @@
                 totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
                 totalPriceElement.style.fontWeight = '500'
             }
+
+            // Script to calculate total price as decrease
+            function decreaseQuantity(quantityId) {
+                let quantityElement = document.getElementById('quantity_input_' + quantityId)
+                let quantityButton = document.getElementById('quantity' + quantityId)
+                let currentQuantity = parseInt(quantityElement.value)
+                if (currentQuantity > 1) {
+                    currentQuantity -= 1
+                    quantityElement.value = currentQuantity
+                    quantityButton.innerHTML = currentQuantity
+                    console.log('quantity_now: ', currentQuantity)
+                }
+                
+                updateTotalPrice(quantityId)
+            }
+
+            // Script to calculate total price as increase
+            function increaseQuantity(quantityId) {
+                let quantityElement = document.getElementById('quantity_input_' + quantityId)
+                let quantityButton = document.getElementById('quantity' + quantityId)
+                let currentQuantity = parseInt(quantityElement.value)
+                currentQuantity += 1
+                quantityElement.value = currentQuantity
+                quantityButton.innerHTML = currentQuantity
+                console.log('quantity_now: ', currentQuantity)
+
+                // To increase the quantity
+                updateTotalPrice(quantityId)
+            }
+
         </script>
     </body>
 {% endblock %}

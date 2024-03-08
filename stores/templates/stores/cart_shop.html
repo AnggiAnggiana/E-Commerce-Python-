@@ -24,9 +24,9 @@
                         {% endif %}
                         <div class="cart-subtitle" style="display: flex; font-weight: bold; margin-bottom: -20px;">
                             <p style="margin-left: 120px; margin-right: 210px;">Product</p>
-                            <p style="margin-right: 135px;">Unit Price</p>
+                            <p style="margin-right: 85px;">Unit Price</p>
                             <p style="margin-right: 100px;">Quantity</p>
-                            <p style="margin-right: 110px;">Total Price</p>
+                            <p style="margin-right: 130px;">Total Price</p>
                             <p>Action</p>
                         </div><hr>
                     </div>
@@ -53,18 +53,16 @@
                                         <p style="margin-top: 10px;"><a href="{% url 'food_show' data.product_food.pk %}" style="text-decoration: none; color: black;">{{ data.product_food|truncatechars:65 }}</a></p>
                                     </div>
                                 {% endif %}
-                                
-                                <!-- <div class="product-price" style="margin-right: 40px; margin-top: 15px;">
-                                    Total harga: {{ data.total_price }}
-                                </div> -->
-                                <div class="product-price" data-id="{{ data.id }}" style="margin-right: 40px; margin-top: 35px; width: 150px; background-color: white;">
+                                <div class="product-price" data-id="{{ data.id }}" style="margin-right: 60px; margin-top: 35px; width: 150px; background-color: white;">
                                     Rp.{{ data.formatted_price }}
                                 </div>
-                                <div class="product-quantity" style="margin-right: 40px; margin-top: 35px;">
-                                    <button onclick="decreaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
-                                    <button id="quantity{{ data.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ data.quantity }}</button>
-                                    <button onclick="increaseQuantity('{{ data.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
+                                <div class="product-quantity" style="margin-right: 120px; margin-top: 35px;">
+                                    <span style="width: 30px; color: black; font-weight: 250;">{{ data.quantity }}</span>
                                 </div>
+                                <!-- Input hidden to store the updated quantity value -->
+                                <input type="hidden" name="selected_products" value="{{ data.id }}">
+                                <input type="hidden" name="quantity{{ data.id }}" id="quantity_input_{{ data.id }}" value="{{ data.quantity }}">
+                                <!--  -->
                                 <div class="total_price" id="totalPrice{{ data.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
                                     <p style="font-weight: 500;">Rp.{{ data.formatted_price }}</p>
                                 </div>
@@ -80,55 +78,19 @@
                                 
                                 <div class="choose" style="transform: translateY(-85px); margin-left: 2px;">
                                     <input type="checkbox" name="selected_products" value="{{ data.id }}">
+                                    <input type="hidden" name="quantity{{ data.id }}" id="quantity_input_{{ data.id }}" value="{{ data.quantity }}">
                                 </div>
-                                <div class="checkout-btn" style="text-align: center;">
+
+                                <!-- Input hidden to store the updated quantity value -->
+                                <div class="checkout-btn" id="checkout-button" style="text-align: center;">
                                     <button type="submit" name="checkout" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">Checkout</button>
                                 </div>
-                            </form>
-                            
-                            <hr>
+                            </form><hr>
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <script>
-            // Script for an updated total price
-            function updateTotalPrice(quantityId) {
-                let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
-                let priceText = priceElement.innerText.trim().replace('Rp.', '')
-                let price = parseFloat(priceText.split('.').join(''))
-                let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
-                let totalPrice = price * quantity
-                let totalPriceElement = document.getElementById('totalPrice' + quantityId)
-                totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
-                totalPriceElement.style.fontWeight = '500'
-            }
-            
-            // Script to calculate total price as decrease
-            function decreaseQuantity(quantityId) {
-                let quantityElement = document.getElementById('quantity' + quantityId)
-                let currentQuantity = parseInt(quantityElement.textContent)
-
-                // To decrease the quantity
-                if (currentQuantity > 1) {
-                    quantityElement.textContent = currentQuantity - 1
-                    updateTotalPrice(quantityId)
-                }
-            }
-
-            // Script to calculate total price as increase
-            function increaseQuantity(quantityId) {
-                let quantityElement = document.getElementById('quantity' + quantityId)
-                let currentQuantity = parseInt(quantityElement.textContent)
-
-                // To increase the quantity
-                quantityElement.textContent = currentQuantity + 1
-                updateTotalPrice(quantityId)
-            }
-
-        </script>
     </body>
 {% endblock %}

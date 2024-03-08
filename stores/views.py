@@ -266,6 +266,7 @@ def cart_shop(request):
     if request.method == 'POST' and 'checkout' in request.POST:
         # Get the choosen product data
         selected_product_id = request.POST.getlist('selected_products')
+        
         # Save product data into session
         request.session['selected_product_id'] = selected_product_id
         
@@ -275,6 +276,7 @@ def cart_shop(request):
         'cart_data': cart_data,
     })
     
+    
 def delete_cart_item(request, item_id):
     cart_item = Shopping_Cart.objects.get(pk=item_id)
     cart_item.delete()
@@ -282,8 +284,10 @@ def delete_cart_item(request, item_id):
 
 # Checkout product
 def checkout_product(request):
-    # product_from_cart = Shopping_Cart.objects.get(pk=product_id)
     selected_product_id = request.session.get('selected_product_id', [])
+    # print(selected_product_id)
+    print(f"Product Id di checkout: {selected_product_id}")
+    
     
     product_from_cart = Shopping_Cart.objects.filter(id__in=selected_product_id)
     
