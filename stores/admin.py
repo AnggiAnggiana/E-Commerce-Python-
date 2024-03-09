@@ -2,7 +2,7 @@ from django.contrib import admin
 from stores.models import Customers, Sellers, Products, Transactions, Smartphone, Foods, Comment_Smartphone, Shopping_Cart
 
 class CustomersDisplay(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'birthdate', 'gender', 'address')
+    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'birthdate', 'gender')
     
 class SellersDisplay(admin.ModelAdmin):
     list_display = ('store_name', 'email', 'birthdate', 'phone_number', 'address', 'gender')

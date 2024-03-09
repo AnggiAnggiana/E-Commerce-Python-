@@ -21,7 +21,7 @@ class ProductForms(ModelForm):
 class ProfileForms(ModelForm):
     class Meta:
         model = Customers
-        fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'address', 'gender')
+        fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'country', 'province', 'city', 'district', 'postal_code', 'street', 'gender')
         labels = {
             'image': '',
             'first_name': '',
@@ -29,7 +29,12 @@ class ProfileForms(ModelForm):
             'email': '',
             'password': '',
             'phone_number': '',
-            'address': '',
+            'country': '',
+            'province': '',
+            'city': '',
+            'district': '',
+            'postal_code': '',
+            'street': '',
             'gender': '',
         }
         
@@ -39,7 +44,6 @@ class ProfileForms(ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+62 85xxxxx'}),
-            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your address'}),
         }
         
     GENDER_CHOICES = [

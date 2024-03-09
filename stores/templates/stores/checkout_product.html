@@ -22,7 +22,7 @@
                         </div>
                         <div>
                             {% for product in product_from_cart %}
-                                <p style="font-weight: 500; margin-top: 0px;"> Contact: {{ product.user.phone_number }} </p>
+                                <p id="contact-info" style="font-weight: 500; margin-top: 0px;"> Contact: {{ product.user.phone_number }} </p>
                             {% endfor %}
                         </div>
                     </div>
@@ -97,6 +97,9 @@
                     editButton.innerText = "Edit";
                     editButton.style.display = "block";
                 }
+
+                // Set the dynamic marginTop
+                adjustContactInfo()
             }
 
             function saveAddress() {
@@ -111,7 +114,25 @@
                 saveButton.style.display = "none"
                 editButton.innerText = "Edit"
                 editButton.style.display = "block"
+
+                // Set the dynamic marginTop
+                adjustContactInfo()
             }
+
+            // Script to set dynamic marginTop adjustment for contact information
+            function adjustContactInfo() {
+                let contactInfo = document.getElementById("contact-info")
+                let addressText = document.getElementById("text_address")
+                let addressInput = document.getElementById("input_address")
+
+                if (addressText.style.display === "block") {
+                    contactInfo.style.marginTop = "0px";
+                } else {
+                    contactInfo.style.marginTop = "-115px";
+                }
+            }
+
+            window.onload = adjustContactInfo;
 
             function updateTotalPrice(quantityId) {
                 let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
@@ -152,6 +173,7 @@
                 // To increase the quantity
                 updateTotalPrice(quantityId)
             }
+
 
         </script>
     </body>
