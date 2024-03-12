@@ -5,38 +5,60 @@
 
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(75, 0, 44, 0.795); color: white;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'homepage' %}">
-            <img src="{% static 'images/logo-brand.jpg' %}" alt="logo" style="width: 40px; height: 40px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        {% if user.is_authenticated %}
+            <a class="navbar-brand" href="{% url 'homepage' %}">
+                <img src="{% static 'images/logo-brand.jpg' %}" alt="logo" style="width: 40px; height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        {% else %}
+            <a class="navbar-brand" href="{% url 'login_user' %}">
+                <img src="{% static 'images/logo-brand.jpg' %}" alt="logo" style="width: 40px; height: 40px;">
+            </a>
+        {% endif %}
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}" style="color: white;">Home</a>
+                    {% if user.is_authenticated %}
+                        <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}" style="color: white;">Home</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_product' %}" style="color: white;">Add Product</a>
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'add_product' %}" style="color: white;">Add Product</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_customer_profile' %}" style="color: white;">Add Customer Profile</a>
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'add_customer_profile' %}" style="color: white;">Add Customer Profile</a>
+                    {% endif %}
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;">Customer Profile</a>
-                </li> -->
-                <form class="d-flex" role="search" action="{% url 'search_results' %}" method="POST" style="margin-right: 10px;">
-                    {% csrf_token %}
-                    
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="width: 330px;">
-                    <button class="btn btn-success" type="submit">Search</button>
-                </form>
+                {% if user.is_authenticated %}
+                    <form class="d-flex" role="search" action="{% url 'search_results' %}" method="POST" style="margin-right: 10px;">
+                        {% csrf_token %}
+                        
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="width: 330px;">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cart_shop' %}" style="color: white;"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'cart_shop' %}" style="color: white;"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'logout_user' %}" style="color: white;">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'login_user' %}" style="color: white;">Login</a>
+                    {% endif %}
                 </li>
             </ul>
             <div class="nav-item">
-                <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;"><i class="fa-solid fa-user"></i> Customer Profile</a>
+                {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'customerProfile' %}" style="color: white;"><i class="fa-solid fa-user"></i> Customer Profile</a>
+                {% endif %}
             </div>
         </div>
     </div>

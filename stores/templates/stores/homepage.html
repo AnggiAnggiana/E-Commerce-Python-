@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
     {% if submitted %}
         {% if messages %}
             {% for message in messages %}
@@ -17,6 +22,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
+                {{ message }}
             {% endfor %}
         {% endif %}
     {% else %}<br>
