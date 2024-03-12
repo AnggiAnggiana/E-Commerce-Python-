@@ -5,45 +5,75 @@
     <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 610px; margin-left: 170px; margin-top: 20px;">
         {% csrf_token %}
         
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+        <div class="profile-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
             <label for="id_first_name" style="padding-bottom: 40px; flex-grow: 1;">Profile Picture:</label>
-            <div class="form" style="width: 430px">
+            <div class="form1" style="width: 430px">
                 {{ profile_form.image }}
             </div>
         </div>
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+        <div class="profile-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
             <label for="id_first_name" style="padding-bottom: 40px; flex-grow: 1;">Store Name:</label>
-            <div class="form" style="width: 430px">
+            <div class="form2" style="width: 430px">
                 {{ profile_form.store_name }}
             </div>
         </div>
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+        <div class="profile-information3" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
             <label for="id_email" style="flex-grow: 1; padding-bottom: 40px">Email:</label>
-            <div class="form" style="width: 430px">
+            <div class="form3" style="width: 430px">
                 {{ profile_form.email }}
             </div>
         </div>
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+        <div class="profile-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
             <label for="id_birthdate" style="flex-grow: 1; padding-bottom: 40px">Birthdate:</label>
-            <div class="form" style="width: 430px">
+            <div class="form4" style="width: 430px">
                 {{ profile_form.birthdate }}
             </div>
         </div>
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+        <div class="profile-information5" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
             <label for="id_phone_number" style="flex-grow: 1; padding-bottom: 40px">Phone Number:</label>
-            <div class="form" style="width: 430px">
+            <div class="form5" style="width: 430px">
                 {{ profile_form.phone_number }}
             </div>
         </div>
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-            <label for="id_address" style="flex-grow: 1;">Address:</label>
-            <div class="form" style="width: 80px; height: 290px; padding-bottom: 0px;"></div>
-                {{ profile_form.address }}
+        <div class="profile-information6" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_country" style="flex-grow: 1; padding-bottom: 40px">Country:</label>
+            <div class="form6" style="width: 430px">
+                {{ profile_form.country }}
             </div>
         </div>
-        <div class="profile-information" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
+        <div class="profile-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_province" style="flex-grow: 1; padding-bottom: 40px">Province:</label>
+            <div class="form7" style="width: 430px">
+                {{ profile_form.province }}
+            </div>
+        </div>
+        <div class="profile-information8" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_city" style="flex-grow: 1; padding-bottom: 40px">City:</label>
+            <div class="form8" style="width: 430px">
+                {{ profile_form.city }}
+            </div>
+        </div>
+        <div class="profile-information9" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_district" style="flex-grow: 1; padding-bottom: 40px">Kecamatan:</label>
+            <div class="form9" style="width: 430px">
+                {{ profile_form.district }}
+            </div>
+        </div>
+        <div class="profile-information10" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_postal-code" style="flex-grow: 1; padding-bottom: 40px">Kode Pos:</label>
+            <div class="form10" style="width: 430px">
+                {{ profile_form.postal_code }}
+            </div>
+        </div>
+        <div class="profile-information11" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_street" style="flex-grow: 1; padding-bottom: 40px">Street:</label>
+            <div class="form11" style="width: 430px">
+                {{ profile_form.street }}
+            </div>
+        </div>
+        <div class="profile-information12" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
             <label for="id_gender" style="margin-right: 10px; padding-bottom: 40px; flex-grow: 1;">Gender:</label>
-            <div class="form" style="width: 430px;">
+            <div class="form12" style="width: 430px;">
                 {{ profile_form.gender }}
             </div>
         </div>

@@ -43,9 +43,45 @@
                                     {{ form.phone_number }}
                                 </div>
                             </div>
-                            <div class="profile-information6" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px; width: 380px;">
+                            <div class="profile-information6" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">        
+                                <label for="id_country" style="flex-grow: 1; padding-bottom: 40px; width: 140px;">Country:</label>
+                                <div class="form6" style="width: 380px; margin-left: 20px;">
+                                    {{ form.country }}
+                                </div>
+                            </div>
+                            <div class="profile-information7" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">        
+                                <label for="id_province" style="flex-grow: 1; padding-bottom: 40px">Province:</label>
+                                <div class="form7" style="width: 380px; margin-left: 20px;">
+                                    {{ form.province }}
+                                </div>
+                            </div>
+                            <div class="profile-information8" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">        
+                                <label for="id_city" style="flex-grow: 1; padding-bottom: 40px; width: 140px;">City:</label>
+                                <div class="form8" style="width: 380px; margin-left: 20px;">
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                            <div class="profile-information9" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">        
+                                <label for="id_district" style="flex-grow: 1; padding-bottom: 40px; width: 140px;">District:</label>
+                                <div class="form9" style="width: 380px; margin-left: 20px;">
+                                    {{ form.district }}
+                                </div>
+                            </div>
+                            <div class="profile-information10" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">        
+                                <label for="id_postal_code" style="flex-grow: 1; padding-bottom: 40px; width: 140px;">Postal Code:</label>
+                                <div class="form10" style="width: 380px; margin-left: 20px;">
+                                    {{ form.postal_code }}
+                                </div>
+                            </div>
+                            <div class="profile-information11" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">        
+                                <label for="id_street" style="flex-grow: 1; padding-bottom: 40px; width: 140px;">Street Name:</label>
+                                <div class="form11" style="width: 380px; margin-left: 20px;">
+                                    {{ form.street }}
+                                </div>
+                            </div>
+                            <div class="profile-information12" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px; width: 380px;">
                                 <label for="id_gender" style="margin-right: 90px; padding-bottom: 40px; flex-grow: 1;">Gender:</label>
-                                <div class="form6" style="width: 430px; margin-left: 20px;">
+                                <div class="form12" style="width: 430px; margin-left: 20px;">
                                     {{ form.gender }}
                                 </div>
                             </div>
@@ -67,14 +103,8 @@
                         </div>
                     </div><br>
                     <div>
-                        <div class="profile-information7" style="display: flex; align-items: flex-start; margin-left: 10px; margin-right: 0px;">
-                            <!-- <label for="id_address" style="flex-grow: 1;">Address:</label>
-                            <div class="form7" style="width: 120px; padding-bottom: 0px;"></div>
-                                {{ form.address }}
-                            </div><br> -->
-                            <div class="button-position" style="text-align: center;">
-                                <a href="{% url 'customerProfile' %}"><input type="submit" value="Save" class="btn btn-success"></a>
-                            </div>
+                        <div class="button-position" style="margin-left: 280px;">
+                            <a href="{% url 'customerProfile' %}"><input type="submit" value="Save" class="btn btn-success"></a>
                         </div>
                     </div>
                 </form><br>

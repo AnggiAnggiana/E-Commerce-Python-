@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-    <h1> My E-Commerce brok</h1><br>
     {% if submitted %}
         {% if messages %}
             {% for message in messages %}
@@ -22,17 +21,15 @@
         {% endif %}
     {% else %}<br>
         <div class="container">
-            <div class="category-tipe" onclick="showAllProducts()">
-                All
-            </div>
+            <div class="category-tipe" onclick="showAllProducts()">All</div>
             {% for category in product %}
                 {% if category.categories == 'Smartphone' or category.categories == 'Foods' %}
-                    <div class="category-tipe" onclick="showProducts('{{ category.categories }}')">
+                    <div class="category-tipe" onclick="showProducts(this, '{{ category.categories }}')">
                         {{ category.categories }}
                     </div>
                 {% endif %}
             {% endfor %}<br>
-            <div class="flex-container">
+            <div class="flex-container" id="randomProducts">
                 {% for gadget in smartphone %}
                     <div class="item smartphone-product">
                         <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
@@ -102,15 +99,29 @@
         }
 
         .category-tipe:hover {
+            background-color: rgb(20, 19, 19);
+            color: rgba(247, 238, 238, 0.897);
+        }
+
+        .category-tipe.selected {
             background-color: rgb(112,52,87);
             color: rgba(247, 238, 238, 0.897);
         }
     </style>
 
     <script>
-        function showProducts(category) {
+        function showProducts(element, category) {
             let smartphoneProducts = document.querySelectorAll('.smartphone-product')
             let foodProducts = document.querySelectorAll('.food-product')
+
+            // Remove 'mark' on selected product categories when choose other category
+            let categories = document.querySelectorAll('.category-tipe')
+            categories.forEach(function(cat) {
+                cat.classList.remove('selected');
+            })
+
+            // Add 'selected' class to the choosen category
+            element.classList.add('selected');
 
             if (category === 'Smartphone') {
                 smartphoneProducts.forEach(function(product) {
@@ -134,6 +145,22 @@
             allProducts.forEach(function(product) {
                 product.style.display = 'block'
             })
+
+            // Remove mark on selected category when user click 'All'
+            let categories = document.querySelectorAll('.category-tipe');
+            categories.forEach(function(cat) {
+                cat.classList.remove('selected');
+            })
         }
+
+        function shuffleProducts() {
+            let container = document.getElementById('randomProducts')
+            for (let i = container.children.length; i >= 0; i--) {
+                container.appendChild(container.children[Math.random() * i | 0]);
+            }
+        }
+
+        shuffleProducts()
+
     </script>
 {% endblock %}

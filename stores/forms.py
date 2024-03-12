@@ -18,7 +18,7 @@ class ProductForms(ModelForm):
         }
 
 
-class ProfileForms(ModelForm):
+class CustomersForms(ModelForm):
     class Meta:
         model = Customers
         fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'country', 'province', 'city', 'district', 'postal_code', 'street', 'gender')
@@ -44,6 +44,12 @@ class ProfileForms(ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+62 85xxxxx'}),
+            'country': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Negara'}),
+            'province': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Provinsi'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kota/Kabupaten'}),
+            'district': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kecamatan'}),
+            'postal_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kode Pos'}),
+            'street': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nama jalan/bangunan'}),
         }
         
     GENDER_CHOICES = [
@@ -62,13 +68,18 @@ class ProfileForms(ModelForm):
 class SellerForms(ModelForm):
     class Meta:
         model = Sellers
-        fields = ('owner_id', 'store_name', 'email', 'birthdate', 'phone_number', 'address', 'image', 'gender')
+        fields = ('owner_id', 'store_name', 'email', 'birthdate', 'phone_number', 'country', 'province', 'city', 'district', 'postal_code', 'street', 'image', 'gender')
         labels = {
             'store_name': '',
             'email': '',
             'birthdate': '',
             'phone_number': '',
-            'address': '',
+            'country': '',
+            'province': '',
+            'city': '',
+            'district': '',
+            'postal_code': '',
+            'street': '',
             'image': '',
             'gender': '',
         }
@@ -78,7 +89,12 @@ class SellerForms(ModelForm):
             'store_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Store Name'}),
             'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'example123@email.com'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+62 85xxxxx'}),
-            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Store Address'}),
+            'country': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Negara'}),
+            'province': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Provinsi'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kota/Kabupaten'}),
+            'district': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kecamatan'}),
+            'postal_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kode Pos'}),
+            'street': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nama jalan/bangunan'}),
         }
         
     GENDER_CHOICES = [

@@ -3,7 +3,7 @@
 {% block content %}
     {% if search %}
         <div class="container">
-            <h5 class="position" style="font-weight: 500; margin-right: 10px;">Search Result for:</h5> {{ search }}<br>
+            <h5 class="position" style="font-weight: 600; margin-right: 10px; ">Search Result for:</h5> <h6 style="margin-top: 4px;"> "{{ search }}"</h6><br>
             <div class="flex-container">
                 {% for gadget in smartphones %}
                     <div class="item smartphone-product">
@@ -16,11 +16,12 @@
                             <img src="{{ gadget.owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
                             <h6> {{ gadget.owner.store_name }} </h6>
                         </div>
+                        
                     </div>
                 {% empty %}
-                    {% if not food %}
+                    {% if not food and not smartphones %}
                         <div class="not-found" style="text-align: center; margin-top: 20px; display: flex;">
-                            <p style="margin-right: 5px;">Maaf</p> <h6 style="margin-top: 1px; margin-right: 5px;">"{{ search }}"</h6>  <p>pencarian tidak ditemukan</p>
+                            <p style="margin-right: 5px;">Maaf</p> <h6 style="margin-top: 1px; margin-right: 5px;">"{{ search }}"</h6>  <p>tidak ditemukan</p>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -37,12 +38,6 @@
                             <h6> {{ makanan.food_owner.store_name }} </h6>
                         </div>
                     </div>
-                {% empty %}
-                    {% if not smartphones %}
-                        <div class="not-found" style="text-align: center; margin-top: 20px; display: flex;">
-                            <p style="margin-right: 5px;">Maaf</p> <h6 style="margin-top: 1px; margin-right: 5px;">"{{ search }}"</h6>  <p>pencarian tidak ditemukan</p>
-                        </div>
-                    {% endif %}
                 {% endfor %}
             </div>
         </div>

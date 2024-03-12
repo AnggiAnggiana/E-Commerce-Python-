@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, Shopping_Cart
 import locale
-from .forms import ProductForms, ProfileForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm #CommentPictureFormSet
+from .forms import ProductForms, CustomersForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm #CommentPictureFormSet
 
 from django.contrib import messages
 from django.urls import reverse
@@ -187,13 +187,13 @@ def edit_product_food(request, food_id):
 def add_customer_profile(request):
     submitted = False
     if request.method == 'POST':
-        profile_form = ProfileForms(request.POST, request.FILES)
+        profile_form = CustomersForms(request.POST, request.FILES)
         if profile_form.is_valid():
             profile_form.save()
             messages.success(request, 'Profile successfully completed')
             return redirect(reverse('homepage') + '?submitted=True')
     else:
-        profile_form = ProfileForms()
+        profile_form = CustomersForms()
         if 'submitted' in request.GET:
             submitted = True
             
@@ -227,7 +227,7 @@ def customerProfile(request):
     submitted = False
     customerProfile = Customers.objects.get(owner_id=request.user.id)
     if request.method == 'POST':
-        form = ProfileForms(request.POST or None, request.FILES or None, instance=customerProfile)
+        form = CustomersForms(request.POST or None, request.FILES or None, instance=customerProfile)
         if form.is_valid():
             edit_profile = form.save(commit=False)
             edit_profile.owner_id = request.user.id
@@ -236,7 +236,7 @@ def customerProfile(request):
             return redirect(reverse('homepage') + '?submitted=True')
     
     else:
-        form = ProfileForms(instance=customerProfile)
+        form = CustomersForms(instance=customerProfile)
         if 'submitted' in request.GET:
             submitted = True
             

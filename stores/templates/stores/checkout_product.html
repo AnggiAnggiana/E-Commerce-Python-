@@ -13,8 +13,8 @@
                             {% for product in product_from_cart %}
                                 <p style="font-weight: 500; margin-right: 80px;" > Recipient: {{ product.user }}</p>
                                 <div id="adress=container">
-                                    <p id="text_address" style="display: block; margin-right: 10px;">{{ product.user.address }}</p>
-                                    <textarea id="input_address" name="user_address" style="display: none; width: 760px; height: 120px;">{{ product.user.address }}</textarea>
+                                    <p id="text_address" style="display: block; margin-right: 10px;">{{ product.user.street }}, {{ product.user.district }}, {{ product.user.city }}, {{ product.user.province }}, {{ product.user.country }} ({{ product.user.postal_code }})</p>
+                                    <textarea id="input_address" name="user_address" style="display: none; width: 760px; height: 120px;">{{ product.user.street }}, {{ product.user.district }}, {{ product.user.city }}, {{ product.user.province }}, {{ product.user.country }} ({{ product.user.postal_code }})</textarea>
                                     <button id="saveAddress" onclick="saveAddress()" style="display: none; width: 45px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white; margin-top: 5px;">Save</button>
                                 </div>
                                 <button id="editAddress" style="width: 45px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;" onclick="toggleEdit()">Edit</button>

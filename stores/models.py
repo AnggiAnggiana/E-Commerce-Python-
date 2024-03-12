@@ -55,7 +55,12 @@ class Sellers(models.Model):
     email = models.EmailField(max_length=60)
     birthdate = models.DateField(default=None, blank=True, null=True)
     phone_number = models.CharField(max_length=20)
-    address =  models.TextField(max_length=150)
+    country = models.CharField(max_length=100, default='')
+    province = models.CharField(max_length=130, default='')
+    city = models.CharField(max_length=130, default='')
+    district = models.CharField(max_length=130, default='')
+    postal_code = models.CharField(max_length=20, default='')
+    street = models.CharField(max_length=200, default='')
     image = models.ImageField(upload_to='uploads/sellers', default='')
     GENDER_CHOICES = [
         ('Male', 'Male'),
