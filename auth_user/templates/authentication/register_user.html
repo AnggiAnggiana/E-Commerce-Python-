@@ -1,0 +1,70 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+    <div class="title-page">
+        <h3 style="text-align: center; margin-top: 15px;">Regitser here</h3>
+    </div>
+
+    <div class="body-form">
+        <form method="post" class="size-form" style="width: 550px; margin-left: 420px;">
+            <div class="not-account" style="text-align: center; margin-top: 20px; margin-bottom: -10px;">
+                <p>Already have account? Please <a href="{% url 'login_user' %}">Login</a> </p>
+            </div>
+            {% csrf_token %}
+            
+            <div class="form-register" style="margin-bottom: 10px;">
+                <label for="username" class="form-label">Username:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-register" style="margin-bottom: 10px;">
+                <label for="email" class="form-label">Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="form-register" style="margin-bottom: 10px;">
+                <label for="id_password1" class="form-label">Password:</label>
+                <div class="input-group">
+                    {{ form.password1 }}
+                    <button type="button" id="togglePassword1" style="background-color: white; border: none; position: absolute; top: 20%; right: 5px;" onclick="togglePasswordVisibility('id_password1', 'togglePassword1')"><i id="eyeIcon1" class="fa-solid fa-eye-slash"></i></button>
+                </div>
+            </div>
+            <div class="form-register" style="margin-bottom: 10px;">
+                <label for="id_password2" class="form-label">Confirm Password:</label>
+                <div class="input-group">
+                    {{ form.password2 }}
+                    <button type="button" id="togglePassword2" style="background-color: white; border: none; position: absolute; top: 20%; right: 5px;" onclick="togglePasswordVisibility('id_password2', 'togglePassword2')"><i id="eyeIcon2" class="fa-solid fa-eye-slash"></i></button>
+                </div>
+            </div>
+            <div class="button-submit" style="margin-top: 20px; text-align: center;">
+                <input type="submit" value="Register" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">
+            </div>
+        </form>
+    </div>
+
+    <style>
+        .helptext {
+            display: none;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            document.getElementById("password1").setAttribute("id", "password1")
+            document.getElementById("password2").setAttribute("id", "password2")
+        })
+
+        function togglePasswordVisibility(inputId, buttonId) {
+            let input = document.getElementById(inputId);
+            let button = document.getElementById(buttonId);
+            let eyeIcon = button.querySelector('i');
+
+            if (input.type === "password") {
+                input.type = "text";
+                eyeIcon.className = "fa-solid fa-eye";
+            } else {
+                input.type = "password";
+                eyeIcon.className = "fa-solid fa-eye-slash";
+            }
+        }
+
+    </script>
+{% endblock %}

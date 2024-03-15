@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, Shopping_Cart
+from stores.models import Profile, Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, Shopping_Cart
 import locale
 from .forms import ProductForms, CustomersForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm #CommentPictureFormSet
 
@@ -186,10 +186,22 @@ def edit_product_food(request, food_id):
 # to add Customers Profile
 def add_customer_profile(request):
     submitted = False
+    profile_instance = Profile.objects.get(user=request.user)
+    print(f'1: {profile_instance}')
     if request.method == 'POST':
         profile_form = CustomersForms(request.POST, request.FILES)
         if profile_form.is_valid():
+            # Fill owner_id with activation_key from Profile
+            # activation_keys = profile_instance.activation_key
+            # print(f'2: {activation_keys}')
+            # new_customer = Customers.objects.get(owner_id=activation_keys)
+            # print(f'3: {new_customer}')
+            # new_customer.save()
+            # new_customer.user = request.user
+            # profile_form.instance = new_customer
+            profile_form.instance.owner_id = profile_instance
             profile_form.save()
+            print(f'4: {profile_form}')
             messages.success(request, 'Profile successfully completed')
             return redirect(reverse('homepage') + '?submitted=True')
     else:
@@ -226,6 +238,7 @@ def add_seller_profile(request):
 def customerProfile(request):
     submitted = False
     customerProfile = Customers.objects.get(owner_id=request.user.id)
+    print("customerProfile:", customerProfile)
     if request.method == 'POST':
         form = CustomersForms(request.POST or None, request.FILES or None, instance=customerProfile)
         if form.is_valid():

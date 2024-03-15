@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beli In | Activation Page</title>
+</head>
+<body>
+    <div class="wholeBody" style="background-color: rgba(14, 12, 12, 0.959); height: 650px; margin-left: -8px; margin-right: -8px; margin-top: -19px; margin-bottom: -10px;"><br>
+        <div class="cardActivation" style="width: 950px; height: 580px; background-color: white; margin-left: 190px; margin-right: 60px;">
+            <div class="activateTitle" style="text-align: center; margin-top: 15px;">
+                <h1>Activate Your Account</h1>
+            </div>
+            <div class="notification" style="margin-top: 20px; margin-bottom: 20px;">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="color: red;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="fieldInput" style="text-align: center; margin-top: 120px;">
+                    <label for="inputCode" class="form-label" style="font-weight: 550;" >Check your email, and insert the code below:</label><br><br>
+                    <input type="text" id="activation_key" name="activation_key" class="form-control" style="width: 300px; height: 30px; border-radius: 20px; text-align: center;" required>
+                </div>
+                <div class="button-submit" style="margin-top: 80px; text-align: center;">
+                    <input type="submit" value="Activate Account" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -13,7 +13,7 @@
     <div class="body-form">
         <form method="post" class="size-form" style="width: 550px; margin-left: 420px;">
             <div class="not-account" style="text-align: center; margin-top: 20px; margin-bottom: -10px;">
-                <p>Don't have account? Please "Register"</p>
+                <p>Don't have account? Please <a href="{% url 'register_user' %}">Register</a> </p>
             </div>
             {% csrf_token %}
             <div class="form-login" style="margin-bottom: 10px;">
@@ -22,11 +22,32 @@
             </div>
             <div class="form-login" style="margin-bottom: 10px;">
                 <label for="inputPassword" class="form-label">Password:</label>
-                <input type="password" class="form-control" name="password">
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" name="password">
+                    <button type="button" id="togglePassword1" style="background-color: rgb(232,240,254); border: none; position: absolute; top: 20%; right: 5px;" onclick="togglePasswordVisibility('togglePassword1')"><i id="eyeIcon1" class="fa-solid fa-eye-slash"></i></button>
+                </div>
             </div>
             <div class="button-submit" style="margin-top: 20px; text-align: center;">
                 <input type="submit" value="Login" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">
             </div>
         </form>
     </div>
+
+
+    <script>
+        function togglePasswordVisibility(buttonId) {
+            let input = document.getElementById('password');
+            let button = document.getElementById(buttonId);
+            let eyeIcon = button.querySelector('i');
+
+            if (input.type === "password") {
+                input.type = "text";
+                eyeIcon.className = "fa-solid fa-eye";
+            } else {
+                input.type = "password";
+                eyeIcon.className = "fa-solid fa-eye-slash";
+            }
+        }
+
+    </script>
 {% endblock %}

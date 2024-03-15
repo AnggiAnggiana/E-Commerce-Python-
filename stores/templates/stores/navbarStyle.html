@@ -29,11 +29,6 @@
                         <a class="nav-link" href="{% url 'add_product' %}" style="color: white;">Add Product</a>
                     {% endif %}
                 </li>
-                <li class="nav-item">
-                    {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'add_customer_profile' %}" style="color: white;">Add Customer Profile</a>
-                    {% endif %}
-                </li>
                 {% if user.is_authenticated %}
                     <form class="d-flex" role="search" action="{% url 'search_results' %}" method="POST" style="margin-right: 10px;">
                         {% csrf_token %}

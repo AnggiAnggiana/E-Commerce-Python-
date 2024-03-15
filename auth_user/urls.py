@@ -4,4 +4,7 @@ from . import views
 urlpatterns = [
     path('login_user', views.login_user, name="login_user"),
     path('logout_user', views.logout_user, name="logout_user"),
+    path('register_user', views.register_user, name="register_user"),
+    path('activation_user/<uidb64>/<token>/', views.activation_user, name="activation_user"),
+    path('generate_activation_key/', views.generate_activation_key, name="generate_activation_key"),
 ]

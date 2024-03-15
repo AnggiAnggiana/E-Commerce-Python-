@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+    <div class="instruction" style="text-align: center; margin-top: 15px;">
+        <h3>Complete Your Account First</h3>
+    </div>
     <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 610px; margin-left: 170px; margin-top: 20px;">
         {% csrf_token %}
 
@@ -9,6 +12,12 @@
             <label for="id_first_name" style="padding-bottom: 40px; flex-grow: 1;">Profile Picture:</label>
             <div class="form1" style="width: 430px">
                 {{ profile_form.image }}
+            </div>
+        </div>
+        <div class="profile-information0" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
+            <label for="id_owner_id" style="padding-bottom: 40px; flex-grow: 1;">Owner Id:</label>
+            <div class="form0" style="width: 430px">
+                {{ profile_form.owner_id }}
             </div>
         </div>
         <div class="profile-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
@@ -41,12 +50,6 @@
                 {{ profile_form.phone_number }}
             </div>
         </div>
-        <!-- <div class="profile-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-            <label for="id_address" style="flex-grow: 1;">Address:</label>
-            <div class="form7" style="width: 80px; height: 290px; padding-bottom: 0px;"></div>
-                {{ profile_form.address }}
-            </div>
-        </div> -->
         <div class="profile-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
             <label for="id_country" style="flex-grow: 1; padding-bottom: 40px">Country:</label>
             <div class="form7" style="width: 430px">

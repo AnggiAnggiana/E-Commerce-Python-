@@ -17,11 +17,11 @@ class Profile(models.Model):
 def save_profile(sender, instance, created, **kwargs):
     user = instance
     if created:
-        profile = Profile.objects.create(user=user)
+        profile = Profile(user=user)
         profile.save()
-    
+        
 class Customers(models.Model):
-    owner_id = models.IntegerField(blank=True, default=1)
+    owner_id = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=60)

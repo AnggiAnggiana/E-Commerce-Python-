@@ -1,5 +1,8 @@
 from django.contrib import admin
-from stores.models import Customers, Sellers, Products, Transactions, Smartphone, Foods, Comment_Smartphone, Shopping_Cart
+from stores.models import Customers, Sellers, Products, Transactions, Smartphone, Foods, Comment_Smartphone, Shopping_Cart, Profile
+
+class ProfileDisplay(admin.ModelAdmin):
+    list_display = ('user', 'activation_key', 'email_validated')
 
 class CustomersDisplay(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'email', 'phone_number', 'birthdate', 'street', 'district', 'city', 'province', 'country', 'gender')
@@ -19,6 +22,8 @@ class Comment_SmartphoneDisplay(admin.ModelAdmin):
 class Shopping_CartDisplay(admin.ModelAdmin):
     list_display = ('user', 'product_smartphone', 'product_food', 'quantity', 'total_price')
 
+
+admin.site.register(Profile, ProfileDisplay)
 admin.site.register(Customers, CustomersDisplay)
 admin.site.register(Sellers, SellersDisplay)
 admin.site.register(Products)
