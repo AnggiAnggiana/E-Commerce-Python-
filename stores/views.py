@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.sessions.models import Session
+from django.contrib.auth.decorators import login_required
 
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
@@ -22,6 +23,7 @@ def homepage(request):
     })
 
 # Show product (smartphone) details in specific dynamic page
+@login_required
 def smartphone_show(request, smartphone_id):
     list_product_smartphone = get_object_or_404(Smartphone, pk=smartphone_id)
     review_smartphone = Comment_Smartphone.objects.filter(smartphone=list_product_smartphone)
@@ -70,6 +72,7 @@ def smartphone_show(request, smartphone_id):
 
 
 # Show product (food) details in specific dynamic page
+@login_required
 def food_show(request, food_id):
     list_product_food = get_object_or_404(Foods, pk=food_id)
     review_food = Comment_Foods.objects.filter(food=list_product_food)
@@ -112,6 +115,7 @@ def food_show(request, food_id):
     })
     
 # Show sellers store
+@login_required
 def seller_store(request, store_name):
     store_profile = get_object_or_404(Sellers, store_name=store_name)
     smartphone = Smartphone.objects.all()
@@ -124,6 +128,7 @@ def seller_store(request, store_name):
     })
 
 # Page to add new product
+@login_required
 def add_product(request):
     submitted = False
     product_add = ProductForms()
@@ -155,6 +160,7 @@ def add_product(request):
 
 
 # Page to edit the product (smartphone)
+@login_required
 def edit_product_smartphone(request, smartphone_id):
     edit_product_smartphone = Smartphone.objects.get(pk=smartphone_id)
     edit_form = SmartphoneForms(request.POST or None, instance=edit_product_smartphone)
@@ -169,6 +175,7 @@ def edit_product_smartphone(request, smartphone_id):
     })
 
 # Page to edit the product (food)
+@login_required
 def edit_product_food(request, food_id):
     edit_product_food = Foods.objects.get(pk=food_id)
     edit_form = FoodForms(request.POST or None, instance=edit_product_food)
@@ -189,23 +196,13 @@ def add_customer_profile(request):
     profile_instance = Profile.objects.get(user=request.user)
     print(f'1: {profile_instance}')
     if request.method == 'POST':
-        profile_form = CustomersForms(request.POST, request.FILES)
+        profile_form = CustomersForms(request.POST, request.FILES, initial={'owner_id': profile_instance})
         if profile_form.is_valid():
-            # Fill owner_id with activation_key from Profile
-            # activation_keys = profile_instance.activation_key
-            # print(f'2: {activation_keys}')
-            # new_customer = Customers.objects.get(owner_id=activation_keys)
-            # print(f'3: {new_customer}')
-            # new_customer.save()
-            # new_customer.user = request.user
-            # profile_form.instance = new_customer
-            profile_form.instance.owner_id = profile_instance
             profile_form.save()
-            print(f'4: {profile_form}')
             messages.success(request, 'Profile successfully completed')
             return redirect(reverse('homepage') + '?submitted=True')
     else:
-        profile_form = CustomersForms()
+        profile_form = CustomersForms(initial={'owner_id': profile_instance})
         if 'submitted' in request.GET:
             submitted = True
             
@@ -215,6 +212,7 @@ def add_customer_profile(request):
     })
 
 # To add Sellers Profile
+@login_required
 def add_seller_profile(request):
     submitted = False
     if request.method == 'POST':
@@ -235,6 +233,7 @@ def add_seller_profile(request):
 
 
 # Page of user profile
+@login_required
 def customerProfile(request):
     submitted = False
     customerProfile = Customers.objects.get(owner_id=request.user.id)
@@ -259,6 +258,7 @@ def customerProfile(request):
     })
 
 # Search bar
+@login_required
 def search_results(request):
     if request.method == "POST":
         search = request.POST['search']
@@ -273,8 +273,17 @@ def search_results(request):
         return render(request, 'stores/search_result.html', {})
     
 # Cart/Keranjang belanja
+@login_required
 def cart_shop(request):
-    cart_data = Shopping_Cart.objects.all()
+    cart_date = Shopping_Cart.objects.all()
+    profile_instance = Profile.objects.get(user=request.user)
+    customer = Customers.objects.get(owner_id=profile_instance)
+    # customer = Customers.objects.filter(owner_id=profile_instance)
+    owner = Shopping_Cart.objects.filter(user=customer)
+    # print(f'data semua: {cart_date}')
+    # print(f'ownernya: {profile_instance}')
+    # print(f'customer: {customer}')
+    # print(f'user_saat ini: {owner}')
     
     if request.method == 'POST' and 'checkout' in request.POST:
         # Get the choosen product data
@@ -286,16 +295,19 @@ def cart_shop(request):
         return redirect('checkout_product')
     
     return render(request, 'stores/cart_shop.html', {
-        'cart_data': cart_data,
+        'cart_date': cart_date,
+        'owner': owner,
     })
     
     
+@login_required
 def delete_cart_item(request, item_id):
     cart_item = Shopping_Cart.objects.get(pk=item_id)
     cart_item.delete()
     return redirect('cart_shop')
 
 # Checkout product
+@login_required
 def checkout_product(request):
     selected_product_id = request.session.get('selected_product_id', [])
     # print(selected_product_id)

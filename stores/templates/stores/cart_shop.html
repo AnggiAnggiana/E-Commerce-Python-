@@ -10,8 +10,8 @@
             <div class="container">
                 <div class="card-title" style="width: 1150px; height: 90px; margin-top: 40px; background-color: white; margin-bottom: -25px;">
                     <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
-                        {% if cart_data %}
-                            {% for data in cart_data %}
+                        {% if owner %}
+                            {% for data in owner %}
                                 {% if forloop.first %}
                                     <div class="instruction" style="display: flex; margin-top: 10px;">
                                         <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
@@ -22,6 +22,7 @@
 
                             {% endfor %}
                         {% endif %}
+
                         <div class="cart-subtitle" style="display: flex; font-weight: bold; margin-bottom: -20px;">
                             <p style="margin-left: 120px; margin-right: 210px;">Product</p>
                             <p style="margin-right: 85px;">Unit Price</p>
@@ -31,13 +32,15 @@
                         </div><hr>
                     </div>
                 </div>
-                <div class="card-product" style="width: 1150px; height: auto; margin-top: 40px; background-color: white;">
+                <div class="card-product" style="width: 1150px; height: 500px; margin-top: 40px; background-color: white;">
                     <div class="cart-details-product" style="margin-left: 0px; margin-bottom: 20px;">
-                        {% for data in cart_data %}
+                        {% for data in owner %}
                             {% if data.product_smartphone %}
+                                <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
                                 <h6 style="padding-top: 10px; margin-left: 20px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' data.product_smartphone.owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ data.product_smartphone.owner }}</a></h6>
                             {% endif %}
                             {% if data.product_food %}
+                                <p style="font-weight: 500; margin-right: 4px;">{{ data.user }},</p>
                                 <h6 style="padding-top: 10px; margin-left: 20px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' data.product_food.food_owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ data.product_food.food_owner }}</a> </h6>
                             {% endif %}
                             <div class="cart-lists" style="display: flex; margin-bottom: 20px; margin-left: 20px; width: 1100px; background-color: rgb(241, 229, 229);">

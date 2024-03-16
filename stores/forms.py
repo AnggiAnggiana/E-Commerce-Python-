@@ -24,6 +24,7 @@ class CustomersForms(ModelForm):
         fields = ('owner_id', 'image', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'country', 'province', 'city', 'district', 'postal_code', 'street', 'gender')
         labels = {
             'image': '',
+            'owner_id': '',
             'first_name': '',
             'last_name': '',
             'email': '',
@@ -40,6 +41,7 @@ class CustomersForms(ModelForm):
         
         # Styling form
         widgets = {
+            'owner_id': forms.Select(attrs={'class': 'form-control', 'placeholder': '-- Choose Owner --', 'disabled': 'disabled'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
