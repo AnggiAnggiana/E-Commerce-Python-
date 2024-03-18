@@ -97,8 +97,13 @@
                                     </div>
                                 </div>
                             {% endif %}<br><br><hr><br>
-                            <div class="seller-login" style="margin-left: 60px;">
-                                <a href="{% url 'add_seller_profile' %}" class="btn btn-primary">Login as Seller</a>
+                            <div class="button-profile" style="display: flex; align-items: flex-start; width: 320px;">
+                                <div class="seller-login" style="margin-left: 20px;">
+                                    <a href="{% url 'logout_user' %}" class="btn btn-danger" style="color: white;">Logout</a>
+                                </div>
+                                <div class="seller-login" style="margin-left: 30px;">
+                                    <a href="{% url 'add_seller_profile' %}" class="btn btn-primary">Login as Seller</a>
+                                </div>
                             </div>
                         </div>
                     </div><br>

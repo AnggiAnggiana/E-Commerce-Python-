@@ -229,3 +229,32 @@ class Shopping_Cart(models.Model):
     
     class Meta:
         verbose_name_plural = 'Shopping_Cart'
+        
+        
+class ShippingType(models.Model):
+    REGULAR = 'Regular'
+    FAST = 'Fast'
+    CARGO = 'Cargo'
+    
+    DELIVERY_CHOICES = [
+        (REGULAR, 'Regular'),
+        (FAST, 'Fast'),
+        (CARGO, 'Cargo'),
+    ]
+    
+    delivery_type = models.CharField(max_length=100, choices=DELIVERY_CHOICES, default='')
+    price = models.IntegerField(default=None)
+    
+    def __str__(self):
+        return f'{self.delivery_type} - Price: {self.price}'
+    
+    # Put (.) after 3 numbers from behind
+    def formatted_price(self):
+        return '{:,.0f}'.format(self.price).replace(',','.')
+    
+    class Meta:
+        verbose_name_plural = 'Shipping Type'
+        
+ShippingType.objects.create(delivery_type=ShippingType.REGULAR, price=18000)
+ShippingType.objects.create(delivery_type=ShippingType.FAST, price=20000)
+ShippingType.objects.create(delivery_type=ShippingType.CARGO, price=13000)

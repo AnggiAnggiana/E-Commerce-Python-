@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from datetime import timedelta
 
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
@@ -246,7 +248,6 @@ def customerProfile(request):
             edit_profile.save()
             messages.success(request, 'Profile successfully edited')
             return redirect(reverse('homepage') + '?submitted=True')
-    
     else:
         form = CustomersForms(instance=customerProfile)
         if 'submitted' in request.GET:
@@ -319,3 +320,23 @@ def checkout_product(request):
     return render (request, 'stores/checkout_product.html', {
         'product_from_cart': product_from_cart,
     })
+    
+#Calculation for Shipping Options
+def calculate_estimated_time(delivery_type):
+    current_date = timezone.now()
+    if delivery_type == 'Regular':
+        estimated_time_start = current_date + timedelta(days=5)
+        estimated_time_end = current_date + timedelta(days=7)
+        estimated_time = f'Estimated Time ({estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")})'
+    elif delivery_type == 'Fast':
+        estimated_time_start = current_date + timedelta(days=3)
+        estimated_time_end = current_date + timedelta(days=5)
+        estimated_time = f'Estimated Time ({estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")})'
+    elif delivery_type == 'Cargo':
+        estimated_time_start = current_date + timedelta(days=6)
+        estimated_time_end = current_date + timedelta(days=9)
+        estimated_time = f'Estimated Time ({estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")})'
+    else:
+        estimated_time = 'Delivery type is not recognized'
+        
+    return estimated_time

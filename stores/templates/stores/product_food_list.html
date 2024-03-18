@@ -7,6 +7,9 @@
                 <div class="card">
                     <div class="product-id">
                         <div class="title-teks" style="width: 640px;">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
                             <h4> {{ list_product_food.food_name }} </h4>
                             <div class="card-price">
                                 <h3 style="padding-top: 5px; margin-left: 26px;"> Rp.{{ list_product_food.formatted_price }} </h3>
