@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods
+from stores.models import Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, ShippingType
 from django.forms.widgets import SelectDateWidget
 
 
@@ -223,4 +223,13 @@ class Comment_FoodForm(forms.ModelForm):
             'user': forms.Select(attrs={'class': 'form-control'}),
             'food': forms.Select(attrs={'class': 'form-control'}),
             'text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Type your review here'}),
+        }
+        
+class ShippingTypeForm(forms.ModelForm):
+    class Meta:
+        model = ShippingType
+        fields = ['delivery_type', 'price']
+        
+        widgets = {
+            'delivery_type': forms.RadioSelect(choices=ShippingType.DELIVERY_CHOICES),
         }

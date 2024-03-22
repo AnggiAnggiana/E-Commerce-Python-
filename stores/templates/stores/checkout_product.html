@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div><br><br>
-                <div class="card-product" style="background-color: yellow; margin-top: 20px; width: 1150px; height: 550px;">
+                <div class="card-product" style="background-color: yellow; margin-top: 20px; width: 1150px; height: 850px;">
                     <div class="checkout-product" style="margin-left: 20px;">
                         {% for product in product_from_cart %}
                             <div class="head-product" style="display: flex; width: 1150px; padding-top: 10px;">
@@ -70,11 +70,73 @@
                                 </div>
                             </div>
                         {% endfor %}
+                    </div><br>
+                    <button id="pilihButton">Pilih</button>
+
+                    <!-- Pop Up Form -->
+                    <div id="popupForm" style="display: none;">
+                        <form id="shippingForm" method="POST">
+                            {% csrf_token %}
+                            <div class="form-1">
+                                <!-- nnnnnn -->
+                                {% for delivery in shipping_types %}
+                                    <div class="chooseTypes" style="display: block;">
+                                        <input type="radio" name="delivery_type" value="{{ delivery.delivery_type }}">
+                                        <label>{{ delivery.delivery_type }}</label>
+                                        <span>Rp.{{ delivery.formatted_price }}</span>
+                                    </div>
+                                    {% if delivery.delivery_type == 'Regular' %}
+                                        <div class="estimated" style="display: flex; margin-top: -10px;">
+                                            <p>Estimasi sampai:</p>
+                                            <p style="font-weight: 500; word-spacing: -3px; font-size: smaller; margin-top: 3px; margin-left: 15px;">
+                                                {% for regular in estimated_time_regular %}
+                                                    {{ regular }}
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                    {% if delivery.delivery_type == 'Fast' %}
+                                        <div class="estimated" style="display: flex; margin-top: -10px;">
+                                            <p>Estimasi sampai:</p>
+                                            <p style="font-weight: 500; word-spacing: -3px; font-size: smaller; margin-top: 3px; margin-left: 15px;">
+                                                {% for fast in estimated_time_fast %}
+                                                    {{ fast }}
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                    {% if delivery.delivery_type == 'Cargo' %}
+                                        <div class="estimated" style="display: flex; margin-top: -10px;">
+                                            <p>Estimasi sampai:</p>
+                                            <p style="font-weight: 500; word-spacing: -3px; font-size: smaller; margin-top: 3px; margin-left: 15px;">
+                                                {% for cargo in estimated_time_cargo %}
+                                                    {{ cargo }}
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <button type="button" id="saveButton">Save</button>
+                        </form>
                     </div>
+
                 </div><br><br><br><br><br><br><br><br>
             </div>
         </div>
 
+        <style>
+            /* Choose Shipping Types Radio */
+            .chooseTypes {
+                margin-bottom: 10px;
+            }
+
+            .chooseTypes label {
+                display: inline-block;
+                width: 200px;
+                margin-right: 10px;
+            }
+        </style>
 
         <script>
             // Edit User Address
@@ -174,6 +236,46 @@
                 updateTotalPrice(quantityId)
             }
 
+            // ShippingChoices
+            document.addEventListener('DOMContentLoaded', function() {
+                let shippingField = document.querySelector('.form-1 select')
+            })
+
+            // Hide Delivery Types in a pop up
+            document.getElementById('pilihButton').addEventListener('click', function() {
+                document.getElementById('popupForm').style.display = 'block';
+                document.getElementById('pilihButton').style.display = 'none';
+            });
+
+            document.getElementById('saveButton').addEventListener('click', function() {
+                // Get the value of the selected radio options
+                let selectedValue = document.querySelector('input[name="delivery_type"]:checked').value;
+                console.log('The selected option:', selectedValue)
+
+                // Close pop up form
+                document.getElementById('popupForm').style.display = 'none';
+                document.getElementById('pilihButton').style.display = 'block';
+
+                // Show selected delivery option
+                if (selectedValue === 'Regular') {
+                    console.log('yang dipilih:', selectedValue)
+                    document.getElementById('popupForm').style.display = 'block';
+                    
+                    document.getElementById('regularInfo').style.display = 'block';
+                    document.getElementById('fastInfo').style.display = 'none';
+                    document.getElementById('cargoInfo').style.display = 'none';
+                } else if (selectedValue === 'Fast') {
+                    console.log('yang dipilih:', selectedValue)
+                    document.getElementById('regularInfo').style.display = 'none';
+                    document.getElementById('fastInfo').style.display = 'block';
+                    document.getElementById('cargoInfo').style.display = 'none';
+                } else if (selectedValue === 'Cargo') {
+                    console.log('yang dipilih:', selectedValue)
+                    document.getElementById('regularInfo').style.display = 'none';
+                    document.getElementById('fastInfo').style.display = 'none';
+                    document.getElementById('cargoInfo').style.display = 'block';
+                }
+            });
 
         </script>
     </body>

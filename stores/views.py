@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from stores.models import Profile, Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, Shopping_Cart
+from stores.models import Profile, Products, Customers, Sellers, Smartphone, Foods, Comment_Smartphone, Comment_Foods, Shopping_Cart, ShippingType
 import locale
-from .forms import ProductForms, CustomersForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm #CommentPictureFormSet
+from .forms import ProductForms, CustomersForms, SellerForms, SmartphoneForms, FoodForms, Comment_SmartphoneForm, Comment_FoodForm, ShippingTypeForm
 
 from django.contrib import messages
 from django.urls import reverse
@@ -312,30 +312,54 @@ def delete_cart_item(request, item_id):
 def checkout_product(request):
     selected_product_id = request.session.get('selected_product_id', [])
     # print(selected_product_id)
-    print(f"Product Id di checkout: {selected_product_id}")
-    
+    print(f"Product Id di checkoutnya: {selected_product_id}")
     
     product_from_cart = Shopping_Cart.objects.filter(id__in=selected_product_id)
     
+    shipping_types = ShippingType.objects.all()
+    
+    # form = ShippingTypeForm()
+    
+    if request.method == 'POST':
+        form = ShippingTypeForm(request.POST)
+        if form.is_valid():
+            delivery_type = form.cleaned_data['delivery_type']
+            price = ShippingType.objects.get(delivery_type=delivery_type).price
+            form.instance = price
+            form.save()
+            return redirect('homepage')
+    else:
+        form = ShippingTypeForm()
+    
+    # Call calculate_estimated_time
+    estimated_time_regular = calculate_estimated_time('Regular')
+    estimated_time_fast = calculate_estimated_time('Fast')
+    estimated_time_cargo = calculate_estimated_time('Cargo')
+    
     return render (request, 'stores/checkout_product.html', {
         'product_from_cart': product_from_cart,
+        'shipping_types': shipping_types,
+        'form': form,
+        'estimated_time_regular': estimated_time_regular,
+        'estimated_time_fast': estimated_time_fast,
+        'estimated_time_cargo': estimated_time_cargo,
     })
-    
+
 #Calculation for Shipping Options
 def calculate_estimated_time(delivery_type):
     current_date = timezone.now()
     if delivery_type == 'Regular':
         estimated_time_start = current_date + timedelta(days=5)
         estimated_time_end = current_date + timedelta(days=7)
-        estimated_time = f'Estimated Time ({estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")})'
+        estimated_time = f'{estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")}'
     elif delivery_type == 'Fast':
         estimated_time_start = current_date + timedelta(days=3)
         estimated_time_end = current_date + timedelta(days=5)
-        estimated_time = f'Estimated Time ({estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")})'
+        estimated_time = f'{estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")}'
     elif delivery_type == 'Cargo':
         estimated_time_start = current_date + timedelta(days=6)
         estimated_time_end = current_date + timedelta(days=9)
-        estimated_time = f'Estimated Time ({estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")})'
+        estimated_time = f'{estimated_time_start.strftime("%d %B %Y")} - {estimated_time_end.strftime("%d %B %Y")}'
     else:
         estimated_time = 'Delivery type is not recognized'
         

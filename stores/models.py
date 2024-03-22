@@ -255,6 +255,3 @@ class ShippingType(models.Model):
     class Meta:
         verbose_name_plural = 'Shipping Type'
         
-ShippingType.objects.create(delivery_type=ShippingType.REGULAR, price=18000)
-ShippingType.objects.create(delivery_type=ShippingType.FAST, price=20000)
-ShippingType.objects.create(delivery_type=ShippingType.CARGO, price=13000)
