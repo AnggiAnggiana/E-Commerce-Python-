@@ -1,0 +1,24 @@
+.container form {
+    width: 780px;
+    margin-left: 170px;
+}
+
+.container form .food-information1, .food-information2, .food-information3, .food-information4, .food-information5, .food-information6, .food-information7, .food-information8, .food-information9, .food-information10, .food-information11, .food-information12 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.container form .food-information1 label, .food-information2 label, .food-information3 label, .food-information4 label, .food-information5 label, .food-information6 label, .food-information7 label, .food-information8 label, .food-information9 label, .food-information10 label, .food-information11 label, .food-information12 label {
+    padding-bottom: 40px;
+    flex-grow: 1;
+}
+
+.container form .food-information1 .form1, .food-information2 .form2, .food-information3 .form3, .food-information4 .form4, .food-information5 .form5, .food-information6 .form6, .food-information7 .form7, .food-information8 .form8, .food-information9 .form9, .food-information10 .form10, .food-information11 .form11, .food-information12 .form12 {
+    width: 430px;
+}
+
+.container form .btn-warning {
+    margin-left: 290px;
+}

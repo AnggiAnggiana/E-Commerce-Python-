@@ -1,7 +1,9 @@
 {% extends 'basic.html' %}
 {% load static %}
 
+
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/homepage-style.css' %}">
     {% if messages %}
         {% for message in messages %}
             {{ message }}
@@ -38,13 +40,15 @@
             <div class="flex-container" id="randomProducts">
                 {% for gadget in smartphone %}
                     <div class="item smartphone-product">
-                        <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
-                        <div class="product-title" style="height: 90px; width: 195px;">
-                            <h6> <a href="{% url 'smartphone_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
+                        <img src="{{ gadget.image.url }}">
+                        <div class="product-title">
+                            <h6><a href="{% url 'smartphone_show' gadget.id %}"> {{ gadget.name|truncatechars:45 }}</a></h6>
                         </div>
-                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
-                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
-                            <img src="{{ gadget.owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <div class="product-price">
+                            <h5> Rp.{{ gadget.formatted_price }} </h5>
+                        </div>
+                        <div class="seller">
+                            <img src="{{ gadget.owner.image.url }}">
                             <h6> {{ gadget.owner.store_name }} </h6>
                         </div>
                         <br>
@@ -53,13 +57,15 @@
                 {% endfor %}
                 {% for makanan in food %}
                     <div class="item food-product">
-                        <img src="{{ makanan.food_image.url }}" style="width: 201px; height: 170px;">
-                        <div class="product-title" style="height: 90px; width: 195px;">
-                            <h6> <a href="{% url 'food_show' makanan.id %}" style="text-decoration: none; color: black;"> {{ makanan.food_name|truncatechars:45 }} </a> </h6>
+                        <img src="{{ makanan.food_image.url }}">
+                        <div class="product-title">
+                            <h6><a href="{% url 'food_show' makanan.id %}"> {{ makanan.food_name|truncatechars:45 }}</a></h6>
                         </div>
-                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ makanan.formatted_price }} </h5>
-                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
-                            <img src="{{ makanan.food_owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <div class="product-price">
+                            <h5> Rp.{{ makanan.formatted_price }} </h5>
+                        </div>
+                        <div class="seller">
+                            <img src="{{ makanan.food_owner.image.url }}">
                             <h6> {{ makanan.food_owner.store_name }} </h6>
                         </div>
                         <br>
@@ -70,103 +76,5 @@
         </div>
     {% endif %}
 
-    <style>
-        .container {
-            display: flex;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            width: 1950px;
-        }
-
-        .item {
-            width: calc(20% - 20px);
-            margin: 10px;
-            padding: 0px;
-            border: 1px solid #ccc;
-        }
-
-        .category-tipe {
-            display: inline-block;
-            border-radius: 15px;
-            text-decoration: none;
-            padding: 10px 20px;
-            color: black;
-            background-color: white;
-            border: 2px solid black;
-            width: 190px;
-            margin-right: 7px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .category-tipe:hover {
-            background-color: rgb(20, 19, 19);
-            color: rgba(247, 238, 238, 0.897);
-        }
-
-        .category-tipe.selected {
-            background-color: rgb(112,52,87);
-            color: rgba(247, 238, 238, 0.897);
-        }
-    </style>
-
-    <script>
-        function showProducts(element, category) {
-            let smartphoneProducts = document.querySelectorAll('.smartphone-product')
-            let foodProducts = document.querySelectorAll('.food-product')
-
-            // Remove 'mark' on selected product categories when choose other category
-            let categories = document.querySelectorAll('.category-tipe')
-            categories.forEach(function(cat) {
-                cat.classList.remove('selected');
-            })
-
-            // Add 'selected' class to the choosen category
-            element.classList.add('selected');
-
-            if (category === 'Smartphone') {
-                smartphoneProducts.forEach(function(product) {
-                    product.style.display = 'block'
-                })
-                foodProducts.forEach(function(product) {
-                    product.style.display = 'none'
-                })
-            } else if (category === 'Foods') {
-                smartphoneProducts.forEach(function(product) {
-                    product.style.display = 'none'
-                })
-                foodProducts.forEach(function(product) {
-                    product.style.display = 'block'
-                })
-            }
-        }
-
-        function showAllProducts() {
-            let allProducts = document.querySelectorAll('.item')
-            allProducts.forEach(function(product) {
-                product.style.display = 'block'
-            })
-
-            // Remove mark on selected category when user click 'All'
-            let categories = document.querySelectorAll('.category-tipe');
-            categories.forEach(function(cat) {
-                cat.classList.remove('selected');
-            })
-        }
-
-        function shuffleProducts() {
-            let container = document.getElementById('randomProducts')
-            for (let i = container.children.length; i >= 0; i--) {
-                container.appendChild(container.children[Math.random() * i | 0]);
-            }
-        }
-
-        shuffleProducts()
-
-    </script>
+    <script src="{% static 'js/homepage-function.js' %}"></script>
 {% endblock %}

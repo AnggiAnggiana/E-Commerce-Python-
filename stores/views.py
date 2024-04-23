@@ -10,6 +10,9 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
+import uuid
+from .midtrans_integration import create_transaction
+
 
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
@@ -300,12 +303,13 @@ def cart_shop(request):
         'owner': owner,
     })
     
-    
+
 @login_required
 def delete_cart_item(request, item_id):
     cart_item = Shopping_Cart.objects.get(pk=item_id)
     cart_item.delete()
     return redirect('cart_shop')
+
 
 # Checkout product
 @login_required
@@ -327,6 +331,13 @@ def checkout_product(request):
             price = ShippingType.objects.get(delivery_type=delivery_type).price
             form.instance = price
             form.save()
+            
+            # Generate unique order ID
+            order_id = str(uuid.uuid4())
+            
+            # Call Midtrans integration function with unique order ID and price
+            create_transaction(order_id, price)
+            
             return redirect('homepage')
     else:
         form = ShippingTypeForm()

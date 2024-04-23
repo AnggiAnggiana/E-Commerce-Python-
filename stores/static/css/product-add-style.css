@@ -1,0 +1,105 @@
+.container .title-add-product {
+    text-align: center;
+}
+
+.container .product-information1 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 192px;
+    margin-right: 10px;
+}
+
+.container .product-information1 label {
+    padding-bottom: 40px;
+    margin-right: 120px;
+}
+
+.container .product-information1 .form1 {
+    width: 430px;
+    position: relative;
+}
+
+.container .product-information1 .form1 select {
+    padding-right: 30px;
+}
+
+.container .product-information1 .form1 .fa-angle-down {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.container form {
+    width: 710px;
+    margin-left: 170px;
+    margin-top: 20px;
+}
+
+/* Smartphone Form */
+.container form #smartphoneForm {
+    display: none;
+}
+
+.container form #smartphoneForm .smartphone-information1, .smartphone-information2, .smartphone-information3, .smartphone-information4, .smartphone-information5, .smartphone-information6, .smartphone-information7, .smartphone-information8, .smartphone-information9, .smartphone-information10, .smartphone-information11, .smartphone-information12, .smartphone-information13 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.container form #smartphoneForm .smartphone-information1 label, .smartphone-information2 label, .smartphone-information3 label, .smartphone-information4 label, .smartphone-information5 label, .smartphone-information6 label, .smartphone-information7 label, .smartphone-information8 label, .smartphone-information9 label, .smartphone-information10 label, .smartphone-information11 label, .smartphone-information12 label, .smartphone-information13 label {
+    padding-bottom: 40px;
+    flex-grow: 1;
+}
+
+.container form #smartphoneForm .smartphone-information1 .form2, .smartphone-information2 .form3, .smartphone-information3 .form4, .smartphone-information4 .form5, .smartphone-information5 .form6, .smartphone-information6 .form7, .smartphone-information7 .form8, .smartphone-information8 .form9, .smartphone-information9 .form10, .smartphone-information10 .form11, .smartphone-information11 .form12, .smartphone-information12 .form13, .smartphone-information13 .form14 {
+    width: 430px;
+}
+
+.container form #smartphoneForm .smartphone-information9 .form10, .smartphone-information10 .form11 {
+    position: relative;
+}
+
+.container form #smartphoneForm .smartphone-information9 .form10 select, .smartphone-information10 .form11 select {
+    padding-right: 30px;
+}
+
+.container form #smartphoneForm .smartphone-information9 .form10 .fa-angle-down , .smartphone-information10 .form11 .fa-angle-down {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.container form #smartphoneForm a {
+    margin-left: 290px;
+    margin-right: 5px;
+}
+
+
+/* Food form */
+.container form #foodForm {
+    display: none;
+}
+
+.container form #foodForm .food-information1, .food-information2, .food-information3, .food-information4, .food-information5, .food-information6, .food-information7, .food-information8, .food-information9, .food-information10, .food-information11, .food-information12 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.container form #foodForm .food-information1 label, .food-information2 label, .food-information3 label, .food-information4 label, .food-information5 label, .food-information6 label, .food-information7 label, .food-information8 label, .food-information9 label, .food-information10 label, .food-information11 label, .food-information12 label {
+    padding-bottom: 40px;
+    flex-grow: 1;
+}
+
+.container form #foodForm .food-information1 .form15, .food-information2 .form16, .food-information3 .form17, .food-information4 .form18, .food-information5 .form19, .food-information6 .form20, .food-information7 .form21, .food-information8 .form22, .food-information9 .form23, .food-information10 .form24, .food-information11 .form25, .food-information12 .form26 {
+    width: 430px;
+}
+
+.container form #foodForm a {
+    margin-left: 290px;
+    margin-right: 5px;
+}

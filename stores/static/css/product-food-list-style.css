@@ -1,0 +1,251 @@
+/* Card 1 */
+.whole-body {
+    background-color: rgba(14, 12, 12, 0.959);
+    margin-top: 0px;
+}
+
+.whole-body .container {
+    margin-left: 70px;
+}
+
+.whole-body .container .card {
+    height: 820px;
+    width: 1180px;
+    margin-bottom: -45px;
+}
+
+.whole-body .container .card .product-id {
+    margin-top: 10px;
+    margin-left: 40px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.whole-body .container .card .product-id .title-text {
+    width: 640px;
+}
+
+.whole-body .container .card .product-id .title-text .card-price {
+    width: 460px;
+    height: 50px;
+    background-color: rgba(14, 12, 12, 0.959);
+    color: rgba(206, 19, 128, 0.795);
+    margin-bottom: 20px;
+    margin-top: 60px;
+}
+
+.whole-body .container .card .product-id .title-text .card-price h3 {
+    padding-top: 5px;
+    margin-left: 26px;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 55px;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop .visit-store {
+    display: flex;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop .visit-store a {
+    color: rgb(24, 231, 24);
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(20, 20, 20, 0.842);
+    text-decoration: none;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop .visit-store a i {
+    color: white;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop .visit-store form button {
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(112,52,87);
+    font-weight: 600;
+}
+
+.whole-body .container .card .product-id .title-text .owner-shop .visit-store form button i {
+    color: rgb(24, 231, 24);
+}
+
+.whole-body .container .card .product-id .product-pic {
+    margin-left: 40px;
+    margin-right: 10px;
+}
+
+.whole-body .container .card .product-id .product-pic img {
+    width: 480px;
+    height: 450px;
+}
+
+/* Card 2 (Product Spesification) */
+.whole-body .container .card2 {
+    height: 1020px;
+    width: 1180px;
+    background-color: white;
+}
+
+.whole-body .container .card2 .card-sub-title {
+    width: 1180px;
+    height: 50px;
+    background-color: rgba(230, 221, 221, 0.959);
+    color: rgba(206, 19, 128, 0.795);
+    margin-bottom: 20px;
+    margin-top: 60px;
+}
+
+.whole-body .container .card2 .card-sub-title h3 {
+    padding-top: 5px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.whole-body .container .card2 .spesification-pos {
+    display: flex;
+    margin-left: 20px;
+}
+
+.whole-body .container .card2 .spesification-pos h6 {
+    margin-right: 5px;
+}
+
+.whole-body .container .card2 .spesification-pos p {
+    margin-top: -1px;
+}
+
+.whole-body .container .card2 .description-text p {
+    margin-left: 20px;
+    white-space: pre-wrap;
+}
+
+/* Product Review Section */
+.whole-body .container .card-review {
+    height: 1020px;
+    width: 1180px;
+    background-color: white;
+}
+
+.whole-body .container .card-review .card-sub-title {
+    width: 1180px;
+    height: 50px;
+    background-color: rgba(230, 221, 221, 0.959);
+    color: rgba(206, 19, 128, 0.795);
+    margin-bottom: 20px;
+    margin-top: 60px;
+}
+
+.whole-body .container .card-review .card-sub-title h3 {
+    padding-top: 5px;
+    text-align: center; 
+}
+
+.whole-body .container .card-review .review-style {
+    margin-left: 20px;
+}
+
+.whole-body .container .card-review .review-style .review-owner {
+    display: flex;
+    align-items: flex-start;
+}
+
+.whole-body .container .card-review .review-style .review-owner img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.whole-body .container .card-review .review-style .review-owner .comment-content .created-time {
+    margin-top: -8px;
+    margin-bottom: 20px;
+}
+
+.whole-body .container .card-review .review-style .review-owner .comment-content .comment-food {
+    white-space: pre-wrap;
+    margin-bottom: 15px;
+}
+
+.whole-body .container .card-review .review-style .review-owner .comment-content .comment-text {
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+}
+
+.whole-body .container .card-review .review-style .review-owner .comment-content img {
+    width: 70px;
+    height: 70px;
+    border-radius: 0%;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container {
+    display: none;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form {
+    width: 800px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .user-review {
+    display: flex;
+    width: 590px;
+    margin-bottom: 10px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .user-review p {
+    margin-right: 50px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .food-review {
+    display: flex;
+    width: 590px;
+    margin-bottom: 10px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .food-review p {
+    margin-right: 26px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .text-review {
+    display: flex;
+    width: 590px;
+    height: 130px;
+    margin-bottom: 40px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .text-review p {
+    margin-right: 34px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .pictures-review {
+    display: block;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .pictures-review p {
+    margin-right: 34px;
+}
+
+.whole-body .container .card-review .review-style #comment-form-container form .btn-add {
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(112,52,87);
+    font-weight: 600;
+}

@@ -1,97 +1,100 @@
 {% extends 'basic.html' %}
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/checkout-product-style.css' %}">
+
     <body>
-        <div class="whole" style="background-color: rgba(189, 199, 199, 0.856); margin-top: -15px; height: auto;">
-            <div class="container" style="margin-left: 15px;">
-                <div class="card-title" style="width: 1280px; height: 210px; margin-top: 10px; background-color: white; margin-bottom: -25px;">
-                    <div class="cart-details-product" style="margin-left: 20px; margin-bottom: 20px;">
-                        <div class="title-checkout" style="text-align: center;">
-                            <h4 style="margin-top: 15px;">Confirm Your Payment</h4>
+        <div class="whole">
+            <div class="container">
+                <div class="card-title">
+                    <div class="cart-title-product">
+                        <div class="title-checkout">
+                            <h4>Confirm Your Payment</h4>
                         </div>
-                        <div class="customer-details" style="display: flex; margin-top: 17px;">
+                        <div class="customer-details">
                             {% for product in product_from_cart %}
-                                <p style="font-weight: 500; margin-right: 80px;" > Recipient: {{ product.user }}</p>
-                                <div id="adress=container">
-                                    <p id="text_address" style="display: block; margin-right: 10px;">{{ product.user.street }}, {{ product.user.district }}, {{ product.user.city }}, {{ product.user.province }}, {{ product.user.country }} ({{ product.user.postal_code }})</p>
-                                    <textarea id="input_address" name="user_address" style="display: none; width: 760px; height: 120px;">{{ product.user.street }}, {{ product.user.district }}, {{ product.user.city }}, {{ product.user.province }}, {{ product.user.country }} ({{ product.user.postal_code }})</textarea>
-                                    <button id="saveAddress" onclick="saveAddress()" style="display: none; width: 45px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white; margin-top: 5px;">Save</button>
+                                <p> Recipient: {{ product.user }}</p>
+                                <div id="address-container">
+                                    <p id="text_address">{{ product.user.street }}, {{ product.user.district }}, {{ product.user.city }}, {{ product.user.province }}, {{ product.user.country }} ({{ product.user.postal_code }})</p>
+                                    <textarea id="input_address" name="user_address">{{ product.user.street }}, {{ product.user.district }}, {{ product.user.city }}, {{ product.user.province }}, {{ product.user.country }} ({{ product.user.postal_code }})</textarea>
+                                    <button id="saveAddress" onclick="saveAddress()">Save</button>
                                 </div>
-                                <button id="editAddress" style="width: 45px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;" onclick="toggleEdit()">Edit</button>
+                                <button id="editAddress" onclick="toggleEdit()">Edit</button>
                             {% endfor %}
                         </div>
-                        <div>
+                        <div class="customer-contact">
                             {% for product in product_from_cart %}
-                                <p id="contact-info" style="font-weight: 500; margin-top: 0px;"> Contact: {{ product.user.phone_number }} </p>
+                                <p id="contact-info"> Contact: {{ product.user.phone_number }} </p>
                             {% endfor %}
                         </div>
                     </div>
-                </div><br><br>
-                <div class="card-product" style="background-color: yellow; margin-top: 20px; width: 1150px; height: 850px;">
-                    <div class="checkout-product" style="margin-left: 20px;">
+                </div>
+                <div class="card-product">
+                    <div class="checkout-product">
                         {% for product in product_from_cart %}
-                            <div class="head-product" style="display: flex; width: 1150px; padding-top: 10px;">
+                            <div class="head-product">
                                 {% if product.product_smartphone %}
-                                    <h6 style=" margin-left: 60px; margin-right: 285px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' product.product_smartphone.owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ product.product_smartphone.owner }}</a></h6>
+                                    <h6 class="product-exists"><i class="fa-solid fa-store"></i> <a href="{% url 'seller_store' product.product_smartphone.owner.store_name %}">{{ product.product_smartphone.owner }}</a></h6>
                                 {% endif %}
                                 {% if product.product_food %}
-                                    <h6 style="margin-left: 60px; margin-right: 280px;"><i class="fa-solid fa-store" style="color: rgb(112,52,87);"></i> <a href="{% url 'seller_store' product.product_food.food_owner.store_name %}" style="text-decoration: none; color: rgb(112,52,87);;">{{ product.product_food.food_owner }}</a> </h6>
+                                    <h6 class="product-exists"><i class="fa-solid fa-store"></i> <a href="{% url 'seller_store' product.product_food.food_owner.store_name %}">{{ product.product_food.food_owner }}</a></h6>
                                 {% endif %}
-                                <h6 style="margin-right: 160px;">Unit Price</h6>
-                                <h6 style="margin-right: 130px;">Quantity</h6>
-                                <h6 style="margin-right: 20px;">Total Product Price</h6>
+                                <h6 class="unit-price">Unit Price</h6>
+                                <h6 class="quantity">Quantity</h6>
+                                <h6 class="total-price">Total Product Price</h6>
                             </div><hr>
 
-                            <div class="cart-lists" style="display: flex; margin-bottom: 20px; margin-left: 20px; width: 1100px; background-color: rgb(241, 229, 229);">
-                                <div class="product-smartphone" style="margin-right: 110px; display: flex; align-items: flex-start; width: 299px; height: 80px; margin-top: 15px;">
+                            <div class="cart-lists">
+                                <div class="product-all">
                                     {% if product.product_smartphone %}
-                                        <img src="{{ product.product_smartphone.image.url }}" style="width: 60px; height: 60px;">
+                                        <img src="{{ product.product_smartphone.image.url }}">
                                         {{ product.product_smartphone.name|truncatechars:65 }}
                                     {% endif %}
                                     {% if product.product_food %}
-                                        <img src="{{ product.product_food.food_image.url }}" style="width: 60px; height: 60px;">
+                                        <img src="{{ product.product_food.food_image.url }}">
                                         {{ product.product_food.food_name|truncatechars:65 }}
                                     {% endif %}
                                 </div>
-                                <div class="product-price" data-id="{{ product.id }}" style="margin-right: 50px; margin-top: 35px; width: 150px; background-color: white;">
+                                <div class="product-price" data-id="{{ product.id }}">
                                     Rp.{{ product.formatted_price }}
                                 </div>
-                                <div class="product-quantity" style="margin-right: 100px; margin-top: 35px;">
-                                    <button type="button" onclick="decreaseQuantity('{{ product.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">-</button>
-                                    <button id="quantity{{ product.id }}" name="quantity{{ product.id }}" style="width: 60px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white;">{{ product.quantity }}</button>
-                                    <button type="button" onclick="increaseQuantity('{{ product.id }}')" style="width: 40px; height: 30px; border-radius: 20%; background-color: white; color: black;">+</button>
+                                <div class="product-quantity">
+                                    <button type="button" class="minus" onclick="decreaseQuantity('{{ product.id }}')">-</button>
+                                    <button id="quantity{{ product.id }}" class="quantity-now" name="quantity{{ product.id }}" data-product-type="{{ product.categories }}">{{ product.quantity }}</button>
+                                    <button type="button" class="plus" onclick="increaseQuantity('{{ product.id }}')">+</button>
                                 </div>
                                 <!-- Input hidden to store the updated quantity value -->
                                 <input type="hidden" name="selected_products" value="{{ product.id }}">
                                 <input type="hidden" name="quantity{{ product.id }}" id="quantity_input_{{ product.id }}" value="{{ product.quantity }}">
                                 <!--  -->
-                                <div class="total_price" id="totalPrice{{ product.id }}" style="margin-top: 35px; margin-right: 55px; width: 150px; background-color: white;">
-                                    <p style="font-weight: 500;">Rp.{{ product.formatted_price }}</p>
+                                <div class="total_price" id="totalPrice{{ product.id }}">
+                                    <p>Rp.{{ product.formatted_price }}</p>
                                 </div>
                             </div>
                         {% endfor %}
-                    </div><br>
-                    <div class="shippingOptions" style="margin-left: 600px;">
+                    </div>
+                    <div class="shippingOptions">
                         <p>Opsi Pengiriman:</p>
-                        <button id="pilihButton" style="width: 66px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white; margin-left: 20px;">Choose</button>
+                        <button id="pilihButton">Choose</button>
                     </div>
 
                     <!-- Pop Up Form -->
-                    <div id="popupForm" style="display: none;">
+                    <div id="popupForm">
                         <form id="shippingForm" method="POST">
                             {% csrf_token %}
                             <div class="form-1">
                                 <!-- nnnnnn -->
                                 {% for delivery in shipping_types %}
-                                    <div class="chooseTypes" style="display: block;">
+                                    <div class="chooseTypes">
                                         <input type="radio" name="delivery_type" value="{{ delivery.delivery_type }}">
                                         <label>{{ delivery.delivery_type }}</label>
                                         <span>Rp.{{ delivery.formatted_price }}</span>
                                     </div>
                                     {% if delivery.delivery_type == 'Regular' %}
-                                        <div class="estimated" style="display: flex; margin-top: -10px; margin-left: 30px;">
+                                        <div class="estimated">
                                             <p>Estimasi sampai:</p>
-                                            <p style="font-weight: 500; word-spacing: -3px; font-size: smaller; margin-top: 3px; margin-left: 15px;">
+                                            <p class="estimation-time">
                                                 {% for regular in estimated_time_regular %}
                                                     {{ regular }}
                                                 {% endfor %}
@@ -99,9 +102,9 @@
                                         </div>
                                     {% endif %}
                                     {% if delivery.delivery_type == 'Fast' %}
-                                        <div class="estimated" style="display: flex; margin-top: -10px; margin-left: 30px;">
+                                        <div class="estimated">
                                             <p>Estimasi sampai:</p>
-                                            <p style="font-weight: 500; word-spacing: -3px; font-size: smaller; margin-top: 3px; margin-left: 15px;">
+                                            <p class="estimation-time">
                                                 {% for fast in estimated_time_fast %}
                                                     {{ fast }}
                                                 {% endfor %}
@@ -109,9 +112,9 @@
                                         </div>
                                     {% endif %}
                                     {% if delivery.delivery_type == 'Cargo' %}
-                                        <div class="estimated" style="display: flex; margin-top: -10px; margin-left: 30px;">
+                                        <div class="estimated">
                                             <p>Estimasi sampai:</p>
-                                            <p style="font-weight: 500; word-spacing: -3px; font-size: smaller; margin-top: 3px; margin-left: 15px;">
+                                            <p class="estimation-time">
                                                 {% for cargo in estimated_time_cargo %}
                                                     {{ cargo }}
                                                 {% endfor %}
@@ -120,192 +123,42 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
-                            <button type="button" id="saveButton" style="width: 58px; height: 30px; border-radius: 20%; background-color: rgb(112,52,87); color: white; margin-left: 140px;">Save</button>
+                            <button type="button" id="saveButton">Save</button>
                         </form>
                     </div>
                     <div id="showDelivery">
 
+                    </div><br><br>
+                    <div class="payment">
+                        <button id="showPaymentButton">Payment</button>
+                    </div><br>
+
+                    <div class="totalPayment">
+                        
                     </div>
 
-                </div><br><br><br><br><br><br><br><br>
+                    <div id="paymentForm">
+                        <form id="midtransForm" method="POST">
+                            {% csrf_token %}
+                            <div class="form-2" id="paymentMethods">
+
+                            </div>
+                            <!-- Button to submit the form for Midtrans payment -->
+                            <button type="button" id="paymentButton">Bayar</button>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </div>
 
-        <style>
-            /* Choose Shipping Types Radio */
-            #popupForm {
-                margin-left: 600px;
-            }
-
-            .chooseTypes {
-                margin-bottom: 10px;
-                margin-left: 30px;
-            }
-
-            .chooseTypes label {
-                display: inline-block;
-                width: 200px;
-                margin-right: 10px;
-            }
-
-            .showSelectedTypes {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: flex-start;
-                margin-left: 650px;
-            }
-
-            .selectedValue {
-                display: block;
-                width: 250px;
-                margin-right: 10px;
-                margin-bottom: 10px;
-                margin-top: -50px;
-                font-weight: bold;
-            }
-
-            .formattedPrice {
-                display: block;
-                color: red;
-                margin-right: 30px;
-                margin-top: -50px;
-            }
-
-            .estimatedTime {
-                display: block;
-                margin-top: -48px;
-                margin-bottom: 10px;
-                margin-left: 10px;
-                font-weight: 500;
-                word-spacing: 0px;
-                font-size: smaller;
-                transform: translate(130px, 15px);
-            }
-
-            .estimated-Time {
-                transform: translate(-355px, -12px);
-            }
-        </style>
-
+        <script src="{% static 'js/checkout-product.js' %}"></script>
         <script>
-            // Edit User Address
-            function toggleEdit() {
-                let addressText = document.getElementById("text_address");
-                let addressInput = document.getElementById("input_address");
-                let saveButton = document.getElementById("saveAddress");
-                let editButton = document.getElementById("editAddress");
-
-                if (addressText.style.display === "block") {
-                    addressText.style.display = "none";
-                    addressInput.style.display = "block";
-                    saveButton.style.display = "block";
-                    editButton.innerText = "Cancel";
-                    editButton.style.display = "none";
-                } else {
-                    addressText.style.display = "block";
-                    addressInput.style.display = "none";
-                    saveButton.style.display = "none";
-                    editButton.innerText = "Edit";
-                    editButton.style.display = "block";
-                }
-
-                // Set the dynamic marginTop
-                adjustContactInfo()
-            }
-
-            function saveAddress() {
-                let addressText = document.getElementById("text_address")
-                let addressInput = document.getElementById("input_address")
-                let saveButton = document.getElementById("saveAddress")
-                let editButton = document.getElementById("editAddress")
-
-                addressText.innerText = addressInput.value
-                addressText.style.display = "block"
-                addressInput.style.display = "none"
-                saveButton.style.display = "none"
-                editButton.innerText = "Edit"
-                editButton.style.display = "block"
-
-                // Set the dynamic marginTop
-                adjustContactInfo()
-            }
-
-            // Script to set dynamic marginTop adjustment for contact information
-            function adjustContactInfo() {
-                let contactInfo = document.getElementById("contact-info")
-                let addressText = document.getElementById("text_address")
-                let addressInput = document.getElementById("input_address")
-
-                if (addressText.style.display === "block") {
-                    contactInfo.style.marginTop = "0px";
-                } else {
-                    contactInfo.style.marginTop = "-115px";
-                }
-            }
-
-            window.onload = adjustContactInfo;
-
-            function updateTotalPrice(quantityId) {
-                let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
-                let priceText = priceElement.innerText.trim().replace('Rp.', '')
-                let price = parseFloat(priceText.split('.').join(''))
-                let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
-                let totalPrice = price * quantity
-                let totalPriceElement = document.getElementById('totalPrice' + quantityId)
-                totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
-                totalPriceElement.style.fontWeight = '500'
-            }
-
-            // Script to calculate total price as decrease
-            function decreaseQuantity(quantityId) {
-                let quantityElement = document.getElementById('quantity_input_' + quantityId)
-                let quantityButton = document.getElementById('quantity' + quantityId)
-                let currentQuantity = parseInt(quantityElement.value)
-                if (currentQuantity > 1) {
-                    currentQuantity -= 1
-                    quantityElement.value = currentQuantity
-                    quantityButton.innerHTML = currentQuantity
-                    console.log('quantity_now: ', currentQuantity)
-                }
-                
-                updateTotalPrice(quantityId)
-            }
-
-            // Script to calculate total price as increase
-            function increaseQuantity(quantityId) {
-                let quantityElement = document.getElementById('quantity_input_' + quantityId)
-                let quantityButton = document.getElementById('quantity' + quantityId)
-                let currentQuantity = parseInt(quantityElement.value)
-                currentQuantity += 1
-                quantityElement.value = currentQuantity
-                quantityButton.innerHTML = currentQuantity
-                console.log('quantity_now: ', currentQuantity)
-
-                // To increase the quantity
-                updateTotalPrice(quantityId)
-            }
-
-            // ShippingChoices
-            document.addEventListener('DOMContentLoaded', function() {
-                let shippingField = document.querySelector('.form-1 select')
-            })
-
-            // Hide Delivery Types in a pop up
-            document.getElementById('pilihButton').addEventListener('click', function() {
-                document.getElementById('popupForm').style.display = 'block';
-                document.getElementById('pilihButton').style.display = 'none';
-
-                // Hide delivery types when popupForm is displayed
-                document.querySelectorAll('.selectedValue, .formattedPrice, .estimatedTime, .estimated-Time').forEach(element => {
-                    element.style.display = 'none';
-                })
-            });
-
             document.getElementById('saveButton').addEventListener('click', function() {
                 // Get the value of the selected radio options
                 // let selectedValue = document.querySelector('input[name="delivery_type"]:checked').value;
                 let selectedValue = document.querySelector('input[name="delivery_type"]:checked');
-                console.log('The selected option:', selectedValue)
+                // console.log('The selected option:', selectedValue)
 
                 let add = document.getElementById('showDelivery')
 
@@ -318,12 +171,12 @@
 
                 // Show selected delivery option
                 if (selectedValue.value === 'Regular') {
-                    console.log('yang dipilih:', selectedValue)
+                    // console.log('yang dipilih:', selectedValue)
                     let selected = document.querySelector('input[name="delivery_type"]:checked');
                     console.log('The selected:', selected)
                     // Get Formatted Price of the selected delivery type
                     let formattedPrice = selectedValue.nextElementSibling.nextElementSibling.textContent;
-                    console.log('Formatted Price:', formattedPrice);
+                    // console.log('Formatted Price:', formattedPrice);
                     // Get estimated time of the selected delivery_type
                     estimatedTime = "{% for regular in estimated_time_regular %}{{ regular }}{% endfor %}";
                     // Add to html / display on the web
@@ -331,12 +184,12 @@
                     // Set the style
                     add.classList.add('showSelectedTypes')
                 } else if (selectedValue.value === 'Fast') {
-                    console.log('yang dipilih:', selectedValue)
+                    // console.log('yang dipilih:', selectedValue)
                     let selected = document.querySelector('input[name="delivery_type"]:checked');
                     console.log('The selected:', selected)
                     // Get Formatted Price of the selected delivery type
                     let formattedPrice = selectedValue.nextElementSibling.nextElementSibling.textContent;
-                    console.log('Formatted Price:', formattedPrice);
+                    // console.log('Formatted Price:', formattedPrice);
                     // Get estimated time of the selected delivery_type
                     estimatedTime = "{% for fast in estimated_time_fast %}{{ fast }}{% endfor %}";
                     // Add to html / display on the web
@@ -344,12 +197,12 @@
                     // Set the style
                     add.classList.add('showSelectedTypes')
                 } else if (selectedValue.value === 'Cargo') {
-                    console.log('yang dipilih:', selectedValue)
+                    // console.log('yang dipilih:', selectedValue)
                     let selected = document.querySelector('input[name="delivery_type"]:checked');
                     console.log('The selected:', selected)
                     // Get Formatted Price of the selected delivery type
                     let formattedPrice = selectedValue.nextElementSibling.nextElementSibling.textContent;
-                    console.log('Formatted Price:', formattedPrice);
+                    // console.log('Formatted Price:', formattedPrice);
                     // Get estimated time of the selected delivery_type
                     estimatedTime = "{% for cargo in estimated_time_cargo %}{{ cargo }}{% endfor %}";
                     // Add to html / display on the web
@@ -358,32 +211,6 @@
                     add.classList.add('showSelectedTypes')
                 }
             });
-
-            // Make the 'choose' button in a dynamic positions
-            document.addEventListener('DOMContentLoaded', function() {
-                let showDelivery = document.getElementById('showDelivery');
-                let pilihButton = document.getElementById('pilihButton');
-
-                // Function to check if the showDelivery div has content
-                function checkShowDeliveryContent() {
-                    if (showDelivery.innerHTML.trim().length > 0) {
-                        // If content exists, add margin-left to pilihButton
-                        pilihButton.style.transform = 'translate(150px, -20px)';
-                    } else {
-                        // If no content exists, reset margin-left to default value
-                        pilihButton.style.marginLeft = '20px';
-                    }
-                }
-
-                // Call the function initially
-                checkShowDeliveryContent();
-
-                // Listen for changes in the showDelivery div content
-                showDelivery.addEventListener('DOMSubtreeModified', function() {
-                    // Call the function whenever the content changes
-                    checkShowDeliveryContent();
-                })
-            })
 
         </script>
     </body>

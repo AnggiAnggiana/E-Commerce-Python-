@@ -1,0 +1,168 @@
+.cart {
+    background-color: rgba(14, 12, 12, 0.959);
+    margin-top: -40px;
+    margin-bottom: -20px;
+}
+
+.cart .container .card-title {
+    width: 1150px;
+    height: 90px;
+    margin-top: 40px;
+    background-color: white;
+    margin-bottom: -25px;
+}
+
+.cart .container .card-title .cart-title-product {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.cart .container .card-title .cart-title-product .instruction {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cart .container .card-title .cart-title-product .instruction .user {
+    font-weight: 500;
+    margin-right: 4px;
+}
+
+.cart .container .card-title .cart-title-product .cart-subtitle {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: -20px;
+}
+
+.cart .container .card-title .cart-title-product .cart-subtitle .product {
+    margin-left: 120px;
+    margin-right: 210px;
+}
+
+.cart .container .card-title .cart-title-product .cart-subtitle .units {
+    margin-right: 85px;
+}
+
+.cart .container .card-title .cart-title-product .cart-subtitle .numbers {
+    margin-right: 100px;
+}
+
+.cart .container .card-title .cart-title-product .cart-subtitle .total-all {
+    margin-right: 130px;
+}
+
+
+.cart .container .card-product {
+    width: 1150px;
+    height: 950px;
+    margin-top: 40px;
+    background-color: white;
+}
+
+.cart .container .card-product .cart-details-product {
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+.cart .container .card-product .cart-details-product h6 {
+    padding-top: 10px;
+    margin-left: 20px;
+}
+
+.cart .container .card-product .cart-details-product h6 i {
+    color: rgb(112,52,87);
+}
+
+.cart .container .card-product .cart-details-product h6 a {
+    text-decoration: none;
+    color: rgb(112,52,87);
+}
+
+
+.cart .container .card-product .cart-details-product .cart-lists {
+    display: flex;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 1100px;
+    background-color: rgb(241, 229, 229);
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .product-smartphone, .product-food {
+    margin-right: 70px;
+    display: flex;
+    align-items: flex-start;
+    width: 299px;
+    height: 80px;
+    margin-top: 15px;
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .product-smartphone img, .product-food img {
+    width: 70px;
+    height: 60px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .product-smartphone p, .product-food p {
+    margin-top: 10px;
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .product-smartphone p a, .product-food p a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.cart .container .card-product .cart-details-product .cart-lists .product-price {
+    margin-right: 60px;
+    margin-top: 35px;
+    width: 150px;
+    background-color: white;
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .product-quantity {
+    margin-right: 120px;
+    margin-top: 35px;
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .product-quantity span {
+    width: 30px;
+    color: black;
+    font-weight: 250;
+}
+
+
+.cart .container .card-product .cart-details-product .cart-lists .total_price {
+    margin-top: 35px;
+    margin-right: 55px;
+    width: 150px;
+    background-color: white;
+}
+
+.cart .container .card-product .cart-details-product .cart-lists .total_price p {
+    font-weight: 500;
+}
+
+
+.cart .container .card-product .cart-details-product .cart-lists .product-action {
+    margin-top: 30px;
+}
+
+
+.cart .container .card-product .cart-details-product form .choose {
+    transform: translateY(-85px);
+    margin-left: 2px;
+}
+
+.cart .container .card-product .cart-details-product form .checkout-btn {
+    text-align: center;
+}
+
+.cart .container .card-product .cart-details-product form .checkout-btn button {
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(112,52,87);
+    font-weight: 600;
+}

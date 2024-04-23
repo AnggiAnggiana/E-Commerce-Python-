@@ -1,0 +1,77 @@
+/* Body */
+.container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+/* Set product as random and some categories based on the product categories */
+.container .category-tipe {
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    width: 190px;
+    margin-right: 7px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.container .category-tipe:hover {
+    background-color: rgb(20, 19, 19);
+    color: rgba(247, 238, 238, 0.897);
+}
+
+.container .category-tipe.selected {
+    background-color: rgb(112,52,87);
+    color: rgba(247, 238, 238, 0.897);
+}
+
+/* Product details display */
+.container .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1950px;
+}
+
+.container .flex-container .item {
+    width: calc(20% - 20px);
+    margin: 10px;
+    padding: 0px;
+    border: 1px solid #ccc;
+}
+
+.container .flex-container .item img {
+    width: 201px;
+    height: 170px;
+}
+
+.container .flex-container .item .product-title {
+    height: 90px;
+    width: 195px;
+}
+
+.container .flex-container .item .product-title h6 a {
+    text-decoration: none;
+    color: black;
+}
+
+.container .flex-container .item .product-price h5 {
+    color: rgba(0, 136, 226, 0.932);
+    padding-left: 14px;
+}
+
+.container .flex-container .item .seller {
+    display: flex;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+.container .flex-container .item .seller img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}

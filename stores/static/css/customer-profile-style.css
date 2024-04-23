@@ -1,0 +1,151 @@
+.whole-body {
+    margin-top: 0px;
+}
+
+.whole-body .container .card .title-profile {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.whole-body .container .card form {
+    width: 690px;
+    height: 920px;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+.whole-body .container .card form .profile-id {
+    display: flex;
+    align-items: flex-start;
+    width: 1050px;
+}
+
+.whole-body .container .card form .profile-id .info-details {
+    width: 1150px;
+}
+
+.whole-body .container .card form .profile-id .info-details .profile-information1, .profile-information2, .profile-information3, .profile-information4, .profile-information5, .profile-information6, .profile-information7, .profile-information8, .profile-information9, .profile-information10, .profile-information11 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.whole-body .container .card form .profile-id .info-details .profile-information12 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 10px;
+    margin-right: 0px;
+    width: 380px;
+}
+
+.whole-body .container .card form .profile-id .info-details .profile-information1 label, .profile-information2 label, .profile-information3 label, .profile-information4 label, .profile-information5 label, .profile-information6 label, .profile-information7 label, .profile-information8 label, .profile-information9 label, .profile-information10 label, .profile-information11 label {
+    padding-bottom: 40px;
+    flex-grow: 1;
+    width: 140px;
+}
+
+.whole-body .container .card form .profile-id .info-details .profile-information12 label {
+    margin-right: 130px;
+    flex-grow: 1;
+    width: 130px;
+}
+
+.whole-body .container .card form .profile-id .info-details .profile-information1 .form1, .profile-information2 .form2, .profile-information3 .form3, .profile-information4 .form4, .profile-information5 .form5, .profile-information6 .form6, .profile-information7 .form7, .profile-information8 .form8, .profile-information9 .form9, .profile-information10 .form10, .profile-information11 .form11 {
+    width: 380px;
+    margin-left: 20px;
+}
+
+.whole-body .container .card form .profile-id .info-details .profile-information12 .form12 {
+    width: 430px;
+    margin-left: 20px;
+}
+
+.birthdate-select {
+    width: 110px;
+    height: 40px;
+    margin-right: 9px;
+    text-align: center;
+}
+
+.birthdate-select:hover {
+    border-color:  orange;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section {
+    margin-left: 180px;
+    width: 290px;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section h4 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    width: 290px;
+    text-decoration: underline;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .profile-image-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .profile-image-container .size-profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .profile-image-container .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s ease;
+    border-radius: 50%;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .profile-image-container:hover .image-overlay {
+    opacity: 1;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .profile-image-container:hover .image-overlay .view-image {
+    color: white;
+    cursor: pointer;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .profile-image-container:hover .image-overlay input {
+    display: none;
+}
+
+
+
+.whole-body .container .card form .profile-id .picture-profile-section .button-profile {
+    display: flex;
+    align-items: flex-start;
+    width: 320px;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .button-profile .customer-logout {
+    margin-left: 20px;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .button-profile .customer-logout a {
+    color: white;
+}
+
+.whole-body .container .card form .profile-id .picture-profile-section .button-profile .seller-login {
+    margin-left: 30px;
+}
+
+
+.whole-body .container .card form .button-save .button-position {
+    margin-left: 280px;
+}

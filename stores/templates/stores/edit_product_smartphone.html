@@ -1,92 +1,95 @@
 {% extends 'basic.html' %}
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/edit-product-smartphone-style.css' %}">
+
     <div class="container">
         <h2> Edit Product Details </h2><hr><br>
-        <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 780px; margin-left: 170px;">
+        <form action="" class="form-control" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="smartphone-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                <label for="id_smartphone_name" style="padding-bottom: 40px; flex-grow: 1;">Smartphone Name:</label>
-                <div class="form2" style="width: 430px">
+            <div class="smartphone-information1">        
+                <label for="id_smartphone_name">Smartphone Name:</label>
+                <div class="form1">
                     {{ edit_form.name }}
                 </div>
             </div>
-            <div class="smartphone-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                <label for="id_smartphone_image" style="padding-bottom: 40px; flex-grow: 1;">Product Picture:</label>
-                <div class="form3" style="width: 430px">
+            <div class="smartphone-information2">        
+                <label for="id_smartphone_image">Product Picture:</label>
+                <div class="form2">
                     {{ edit_form.image }}
                 </div>
             </div>
-            <div class="smartphone-information3" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                <label for="id_smartphone_price" style="padding-bottom: 40px; flex-grow: 1;">Price:</label>
-                <div class="form4" style="width: 430px">
+            <div class="smartphone-information3">        
+                <label for="id_smartphone_price">Price:</label>
+                <div class="form3">
                     {{ edit_form.price }}
                 </div>
             </div>
-            <div class="smartphone-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_memory" style="padding-bottom: 40px; flex-grow: 1;">Memory Capacity:</label>
-                <div class="form5" style="width: 430px">
+            <div class="smartphone-information4">
+                <label for="id_smartphone_memory">Memory Capacity:</label>
+                <div class="form4">
                     {{ edit_form.memory_capacity }}
                 </div>
             </div>
-            <div class="smartphone-information5" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_ram" style="padding-bottom: 40px; flex-grow: 1;">RAM Capacity:</label>
-                <div class="form6" style="width: 430px">
+            <div class="smartphone-information5">
+                <label for="id_smartphone_ram">RAM Capacity:</label>
+                <div class="form5">
                     {{ edit_form.ram_capacity }}
                 </div>
             </div>
-            <div class="smartphone-information6" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_warranty" style="padding-bottom: 40px; flex-grow: 1;">Warranty Period:</label>
-                <div class="form7" style="width: 430px">
+            <div class="smartphone-information6">
+                <label for="id_smartphone_warranty">Warranty Period:</label>
+                <div class="form6">
                     {{ edit_form.warranty_period }}
                 </div>
             </div>
-            <div class="smartphone-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_stock" style="padding-bottom: 40px; flex-grow: 1;">Stock:</label>
-                <div class="form8" style="width: 430px">
+            <div class="smartphone-information7">
+                <label for="id_smartphone_stock">Stock:</label>
+                <div class="form7">
                     {{ edit_form.stock }}
                 </div>
             </div>
-            <div class="smartphone-information8" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_seller_Address" style="padding-bottom: 40px; flex-grow: 1;">Seller Address:</label>
-                <div class="form9" style="width: 430px">
+            <div class="smartphone-information8">
+                <label for="id_smartphone_seller_Address">Seller Address:</label>
+                <div class="form8">
                     {{ edit_form.seller_Address }}
                 </div>
             </div>
-            <div class="smartphone-information9" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_condition" style="padding-bottom: 40px; flex-grow: 1;">Condition:</label>
-                <div class="form10" style="width: 430px">
+            <div class="smartphone-information9">
+                <label for="id_smartphone_condition">Condition:</label>
+                <div class="form9">
                     {{ edit_form.condition }}
                     <i class="fa-solid fa-angle-down"></i>
                 </div>
             </div>
-            <div class="smartphone-information10" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_brand" style="padding-bottom: 40px; flex-grow: 1;">Brand:</label>
-                <div class="form11" style="width: 430px">
+            <div class="smartphone-information10">
+                <label for="id_smartphone_brand">Brand:</label>
+                <div class="form10">
                     {{ edit_form.brand }}
                     <i class="fa-solid fa-angle-down"></i>
                 </div>
             </div>
-            <div class="smartphone-information11" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_description" style="padding-bottom: 40px; flex-grow: 1;">Description:</label>
-                <div class="form12" style="width: 430px">
+            <div class="smartphone-information11">
+                <label for="id_smartphone_description">Description:</label>
+                <div class="form11">
                     {{ edit_form.description }}
                 </div>
             </div><br>
-            <div class="smartphone-information12" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_owner" style="padding-bottom: 40px; flex-grow: 1;">Owner:</label>
-                <div class="form13" style="width: 430px">
+            <div class="smartphone-information12">
+                <label for="id_smartphone_owner">Owner:</label>
+                <div class="form12">
                     {{ edit_form.owner }}
                 </div>
             </div>
-            <div class="smartphone-information13" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_smartphone_categories" style="padding-bottom: 40px; flex-grow: 1;">Category:</label>
-                <div class="form14" style="width: 430px">
+            <div class="smartphone-information13">
+                <label for="id_smartphone_categories">Category:</label>
+                <div class="form13">
                     {{ edit_form.categories }}
                 </div>
             </div>
-            <a href="{% url 'homepage' %}" class="btn btn-warning" style="margin-left: 290px;">Cancel</a>
+            <a href="{% url 'homepage' %}" class="btn btn-warning">Cancel</a>
             <a href="{% url 'homepage' %}"> <input type="submit" value="Edit" class="btn btn-success"></a>
         </form>
     </div>

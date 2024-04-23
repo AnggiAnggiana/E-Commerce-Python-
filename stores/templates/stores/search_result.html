@@ -1,39 +1,42 @@
 {% extends 'basic.html' %}
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/search-result-style.css' %}">
+
     {% if search %}
         <div class="container">
-            <h5 class="position" style="font-weight: 600; margin-right: 10px; ">Search Result for:</h5> <h6 style="margin-top: 4px;"> "{{ search }}"</h6><br>
+            <h5 class="position">Search Result for:</h5> <h6>"{{ search }}"</h6><br>
             <div class="flex-container">
                 {% for gadget in smartphones %}
                     <div class="item smartphone-product">
-                        <img src="{{ gadget.image.url }}" style="width: 201px; height: 170px;">
-                        <div class="product-title" style="height: 90px; width: 195px;">
-                            <h6> <a href="{% url 'smartphone_show' gadget.id %}" style="text-decoration: none; color: black;"> {{ gadget.name|truncatechars:45 }} </a> </h6>
+                        <img src="{{ gadget.image.url }}">
+                        <div class="product-title">
+                            <h6> <a href="{% url 'smartphone_show' gadget.id %}"> {{ gadget.name|truncatechars:45 }}</a></h6>
                         </div>
-                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ gadget.formatted_price }} </h5>
-                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
-                            <img src="{{ gadget.owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
-                            <h6> {{ gadget.owner.store_name }} </h6>
+                        <h5>Rp.{{ gadget.formatted_price }}</h5>
+                        <div class="seller">
+                            <img src="{{ gadget.owner.image.url }}">
+                            <h6>{{ gadget.owner.store_name }}</h6>
                         </div>
                     </div>
                 {% empty %}
                     {% if not food and not smartphones %}
-                        <div class="not-found" style="text-align: center; margin-top: 20px; display: flex;">
-                            <p style="margin-right: 5px;">Maaf</p> <h6 style="margin-top: 1px; margin-right: 5px;">"{{ search }}"</h6>  <p>tidak ditemukan</p>
+                        <div class="not-found">
+                            <p class="apologize-notFound">Maaf</p> <h6>"{{ search }}"</h6> <p>tidak ditemukan</p>
                         </div>
                     {% endif %}
                 {% endfor %}
 
                 {% for makanan in food %}
                     <div class="item food-product">
-                        <img src="{{ makanan.food_image.url }}" style="width: 201px; height: 170px;">
-                        <div class="product-title" style="height: 90px; width: 195px;">
-                            <h6> <a href="{% url 'food_show' makanan.id %}" style="text-decoration: none; color: black;"> {{ makanan.food_name|truncatechars:45 }} </a> </h6>
+                        <img src="{{ makanan.food_image.url }}">
+                        <div class="product-title">
+                            <h6> <a href="{% url 'food_show' makanan.id %}"> {{ makanan.food_name|truncatechars:45 }} </a></h6>
                         </div>
-                        <h5 style="color: rgba(0, 136, 226, 0.932); padding-left: 14px;"> Rp.{{ makanan.formatted_price }} </h5>
-                        <div class="seller" style="display: flex; margin-left: 10px; margin-bottom: 20px;">
-                            <img src="{{ makanan.food_owner.image.url }}" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <h5> Rp.{{ makanan.formatted_price }} </h5>
+                        <div class="seller">
+                            <img src="{{ makanan.food_owner.image.url }}">
                             <h6> {{ makanan.food_owner.store_name }} </h6>
                         </div>
                     </div>
@@ -42,27 +45,4 @@
         </div>
     {% endif %}
 
-
-    <style>
-        .container {
-            display: flex;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-            margin-top: 80px;
-        }
-
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            width: 1950px;
-            margin-top: 5px;
-        }
-
-        .item {
-            width: calc(20% - 20px);
-            margin: 10px;
-            padding: 0px;
-            border: 1px solid #ccc;
-        }
-    </style>
 {% endblock %}

@@ -1,91 +1,90 @@
 {% extends 'basic.html' %}
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/product-food-list-style.css' %}">
+
     <body>
         <div class="whole-body">
             <div class="container">
                 <div class="card">
                     <div class="product-id">
-                        <div class="title-teks" style="width: 640px;">
+                        <div class="title-text">
                             {% for message in messages %}
                                 {{ message }}
                             {% endfor %}
                             <h4> {{ list_product_food.food_name }} </h4>
                             <div class="card-price">
-                                <h3 style="padding-top: 5px; margin-left: 26px;"> Rp.{{ list_product_food.formatted_price }} </h3>
+                                <h3> Rp.{{ list_product_food.formatted_price }} </h3>
                             </div>
-                            <br><br>
-                        
-                            <div class="owner-shop" style="display: flex; align-items: flex-start;">
-                                <img src="{{ list_product_food.food_owner.image.url }}" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+                            <div class="owner-shop">
+                                <img src="{{ list_product_food.food_owner.image.url }}">
                                 <div>
                                     <h5>{{ list_product_food.food_owner }}</h5>
-                                    <div class="visit-store" style="display: flex;">
-                                        <a href="{% url 'seller_store' list_product_food.food_owner.store_name %}" class="btn" style="color: rgb(24, 231, 24); width: 180px; height: 40px; border-radius: 20px; background-color: rgba(20, 20, 20, 0.842); text-decoration: none; font-weight: 500; margin-right: 10px;"><i class="fa-solid fa-store" style="color: white;"></i> Visit Store</a>
+                                    <div class="visit-store">
+                                        <a href="{% url 'seller_store' list_product_food.food_owner.store_name %}" class="btn"><i class="fa-solid fa-store"></i> Visit Store</a>
                                         <form method="post" action="{% url 'food_show' food_id=list_product_food.pk %}">
                                             {% csrf_token %}
-                                            <button type="submit" name="add_to_cart" class="btn" style="width: 180px; height: 40px; border-radius: 20px; color: white; background-color: rgb(112,52,87); font-weight: 600;">Add to Cart <i class="fa-solid fa-cart-shopping" style="color: rgb(24, 231, 24);"></i></button>
+                                            <button type="submit" name="add_to_cart" class="btn">Add to Cart <i class="fa-solid fa-cart-shopping"></i></button>
                                         </form>
                                     </div>
                                 </div>
-                            </div><br><br><br><br>
-                            
-                            
+                            </div>
                         </div>
-                        <div class="product-pic" style="margin-left: 40px; margin-right: 10px;">
-                            <img src="{{ list_product_food.food_image.url }}" style="width: 480px; height: 450px;">
+                        <div class="product-pic">
+                            <img src="{{ list_product_food.food_image.url }}">
                         </div>
                     </div>
-                </div><br>
-                <div class="card">
+                </div>
+                <div class="card2">
                     <div class="card-sub-title">
-                        <h3 style="padding-top: 5px; margin-left: 26px;">Product Spesifications:</h3>
+                        <h3>Product Specifications</h3>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Category:</h6> <p style="margin-top: -1px;">{{ list_product_food.food_categories }}</p>
+                    <div class="spesification-pos">
+                        <h6>Category:</h6> <p>{{ list_product_food.food_categories }}</p>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Masa Penyimpanan:</h6> <p style="margin-top: -1px;">{{ list_product_food.storage_period }}</p>
+                    <div class="spesification-pos">
+                        <h6>Masa Penyimpanan:</h6> <p>{{ list_product_food.storage_period }}</p>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Kondisi Penyimpanan:</h6> <p style="margin-top: -1px;">{{ list_product_food.storage_condition }}</p>
+                    <div class="spesification-pos">
+                        <h6>Kondisi Penyimpanan:</h6> <p>{{ list_product_food.storage_condition }}</p>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Berat Produk:</h6> <p>{{ list_product_food.product_weight }}</p>
+                    <div class="spesification-pos">
+                        <h6>Berat Produk:</h6> <p>{{ list_product_food.product_weight }}</p>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Jumlah Produk:</h6> <p style="margin-top: -1px;">{{ list_product_food.number_product }}</p>
+                    <div class="spesification-pos">
+                        <h6>Jumlah Produk:</h6> <p>{{ list_product_food.number_product }}</p>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Stock:</h6> <p style="margin-top: -1px;">{{ list_product_food.food_stock }}</p>
+                    <div class="spesification-pos">
+                        <h6>Stock:</h6> <p>{{ list_product_food.food_stock }}</p>
                     </div>
-                    <div class="spesification-pos" style="display: flex; margin-left: 20px;">
-                        <h6 style="margin-right: 5px;">Dikirim dari:</h6> <p style="margin-top: -1px;">{{ list_product_food.food_seller_Address }}</p>
+                    <div class="spesification-pos">
+                        <h6>Dikirim dari:</h6> <p>{{ list_product_food.food_seller_Address }}</p>
                     </div>
                     <div class="card-sub-title">
-                        <h3 style="padding-top: 5px; margin-left: 26px;">Product Description:</h3>
+                        <h3>Product Description</h3>
                     </div>
-                    <p style="margin-left: 20px; white-space: pre-wrap;">{{ list_product_food.food_description }}</p>
+                    <div class="description-text">
+                        <p>{{ list_product_food.food_description }}</p>
+                    </div>
                 </div><br>
                 <div class="card-review">
                     <div class="card-sub-title">
-                        <h3 style="padding-top: 5px; margin-left: 26px;">Review Product:</h3>
+                        <h3>Product Review</h3>
                     </div>
-                    <div class="review-style" style="margin-left: 20px;">
+                    <div class="review-style">
                         <div>
                             {% for comment in review_food %}
-                                <div class="review-owner" style="display: flex; align-items: flex-start;">
-                                    <img src="{{ comment.user.image.url }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
-                                    <div>
+                                <div class="review-owner">
+                                    <img src="{{ comment.user.image.url }}">
+                                    <div class="comment-content">
                                         <h6>{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
-                                        <p style="margin-top: -8px; margin-bottom: 20px;">{{ comment.created_at }}</p>
-                                        <p style="white-space: pre-wrap; margin-bottom: 15px;">{{ comment.food }}</p>
-                                        <p style="white-space: pre-wrap; margin-bottom: 5px;">{{ comment.text }}</p>
-                                        <img src="{{ comment.pictures.url }}" style="width: 70px; height: 70px;">
+                                        <p class="created-time">{{ comment.created_at }}</p>
+                                        <p class="comment-food">{{ comment.food }}</p>
+                                        <p class="comment-text">{{ comment.text }}</p>
+                                        <img src="{{ comment.pictures.url }}">
                                     </div>
                                 </div>
-
-                                <br><br><br>
                                 {% for picture in comment.pictures.all %}
                                     <img src="{{ picture.url }}" alt="Comment-Picture">
                                 {% endfor %}
@@ -97,85 +96,32 @@
                             <input type="button" id="add-review-button" style="color: white; width: 100px; height: 40px; border-radius: 10%; background-color: rgb(112,52,87);" value="Add Review">
                         </div>
                         <br>
-                        <div id="comment-form-container" style="display: none;">
+                        <div id="comment-form-container">
                             <h4>Add a comment:</h4>
-                            <form id="comment-form" method="POST" enctype="multipart/form-data" style="width: 800px;">
+                            <form id="comment-form" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
 
-                                <div class="user-review" style="width: 590px; display: flex; margin-bottom: 10px;">
-                                    <p style="margin-right: 50px;">User:</p>{{ comment_food_form.user }}
+                                <div class="user-review">
+                                    <p>User:</p>{{ comment_food_form.user }}
                                 </div>
-                                <div class="smartphone-review" style="width: 590px; display: flex; margin-bottom: 10px;">
-                                    <p style="margin-right: 26px;">Product:</p>{{ comment_food_form.food }}
+                                <div class="food-review">
+                                    <p>Product:</p>{{ comment_food_form.food }}
                                 </div>
-                                <div class="text-review" style="width: 590px; height: 130px; display: flex; margin-bottom: 40px;">
-                                    <p style="margin-right: 34px;">Review:</p>{{ comment_food_form.text }}
+                                <div class="text-review">
+                                    <p>Review:</p>{{ comment_food_form.text }}
                                 </div>
-                                <div class="pictures-review" style="display: block; display: flex; margin-bottom: 5px;">
-                                    <p style="margin-right: 34px;">Add Picture:</p> {{ comment_food_form.pictures }}
+                                <div class="pictures-review">
+                                    <p>Add Picture:</p> {{ comment_food_form.pictures }}
                                 </div>
                                 <br><br>
-                                <input type="Submit" value="Add" class="btn btn-primary"></input>
+                                <input type="Submit" value="Add" class="btn-add"></input>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <style>
-            .whole-body {
-                background-color: rgba(14, 12, 12, 0.959);
-                margin-top: 0px;
-            }
-
-            .container {
-                margin-left: 70px;
-            }
-
-            .card {
-                height: 820px;
-                width: 1180px;
-            }
-
-            .card-review {
-                height: 1020px;
-                width: 1180px;
-                background-color: white;
-            }
-
-            .card-price {
-                width: 460px;
-                height: 50px;
-                background-color: rgba(14, 12, 12, 0.959);
-                color: rgba(206, 19, 128, 0.795);
-                margin-bottom: 20px;
-                margin-top: 60px;
-            }
-
-            .card-sub-title {
-                width: 1160px;
-                height: 50px;
-                background-color: rgba(230, 221, 221, 0.959);
-                color: rgba(206, 19, 128, 0.795);
-                margin-bottom: 20px;
-                margin-top: 60px;
-            }
-
-            .product-id {
-                margin-top: 10px;
-                margin-left: 40px;
-                display: flex;
-                align-items: flex-start;
-            }
-        </style>
         
-        <script>
-            document.getElementById('add-review-button').addEventListener('click', function() {
-                document.getElementById('add-review-button').style.display = 'none'
-                document.getElementById('comment-form-container').style.display = 'block'
-            })
-        </script>
+        <script src="{% static 'js/product-food-list-function.js' %}"></script>
     </body>
 {% endblock %}

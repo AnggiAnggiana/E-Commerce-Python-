@@ -1,0 +1,76 @@
+.container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 80px;
+}
+
+.container .position {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.container h6 {
+    margin-top: 4px;
+}
+
+.container .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1950px;
+    margin-top: 5px;
+}
+
+.container .flex-container .item {
+    width: calc(20% - 20px);
+    margin: 10px;
+    padding: 0px;
+    border: 1px solid #ccc;
+}
+
+.container .flex-container .item img {
+    width: 201px;
+    height: 170px;
+}
+
+.container .flex-container .item .product-title {
+    height: 90px;
+    width: 195px;
+}
+
+.container .flex-container .item .product-title h6 a {
+    text-decoration: none;
+    color: black;
+}
+
+.container .flex-container .item h5 {
+    color: rgba(0, 136, 226, 0.932);
+    padding-left: 14px;
+}
+
+.container .flex-container .item .seller {
+    display: flex;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+.container .flex-container .item .seller img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.container .flex-container .not-found {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+}
+
+.container .flex-container .not-found .apologize-notFound {
+    margin-right: 5px;
+}
+
+.container .flex-container .not-found h6 {
+    margin-top: 1px;
+    margin-right: 5px;
+}

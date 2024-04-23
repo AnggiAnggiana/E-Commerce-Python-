@@ -1,0 +1,312 @@
+.whole {
+    background-color: rgba(189, 199, 199, 0.856);
+    margin-top: -15px;
+    height: auto;
+}
+
+.whole .container {
+    margin-left: 15px;
+}
+
+.whole .container .card-title {
+    width: 1280px;
+    height: 210px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.whole .container .card-title .cart-title-product {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.whole .container .card-title .cart-title-product .title-checkout {
+    text-align: center;
+}
+
+.whole .container .card-title .cart-title-product .title-checkout h4 {
+    margin-top: 15px;
+}
+
+
+.whole .container .card-title .cart-title-product .customer-details {
+    display: flex;
+    margin-top: 17px;
+}
+
+.whole .container .card-title .cart-title-product .customer-details p {
+    font-weight: 500;
+    margin-right: 80px;
+}
+
+.whole .container .card-title .cart-title-product .customer-details #address-container p {
+    display: block;
+    margin-right: 10px;
+}
+
+.whole .container .card-title .cart-title-product .customer-details #address-container textarea {
+    display: none;
+    width: 760px;
+    height: 120px;
+}
+
+.whole .container .card-title .cart-title-product .customer-details #address-container button {
+    display: none;
+    width: 45px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-top: 5px;
+}
+
+.whole .container .card-title .cart-title-product .customer-details button {
+    width: 45px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+}
+
+
+/* .whole .container .card-title .cart-title-product .customer-contact {
+    margin-top: 120px;
+} */
+
+.whole .container .card-title .cart-title-product .customer-contact p {
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.whole .container .break {
+    margin-bottom: 20px;
+}
+
+
+.whole .container .card-product {
+    background-color: yellow;
+    width: 1280px;
+    height: 850px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.whole .container .card-product .checkout-product {
+    margin-left: 20px;
+}
+
+.whole .container .card-product .checkout-product .head-product {
+    display: flex;
+    width: 1150px;
+    padding-top: 10px;
+}
+
+.whole .container .card-product .checkout-product .head-product .product-exists {
+    margin-left: 60px;
+    margin-right: 285px;
+}
+
+.whole .container .card-product .checkout-product .head-product .product-exists i {
+    color: rgb(112,52,87);
+}
+
+.whole .container .card-product .checkout-product .head-product .product-exists a {
+    text-decoration: none;
+    color: rgb(112,52,87);
+}
+
+.whole .container .card-product .checkout-product .head-product .unit-price {
+    margin-right: 160px;
+}
+
+.whole .container .card-product .checkout-product .head-product .quantity {
+    margin-right: 130px;
+}
+
+.whole .container .card-product .checkout-product .head-product .total-price {
+    margin-right: 20px;
+}
+
+
+.whole .container .card-product .checkout-product .cart-lists {
+    display: flex;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 1100px;
+    background-color: rgb(241, 229, 229);
+}
+
+.whole .container .card-product .checkout-product .cart-lists .product-all {
+    margin-right: 110px;
+    display: flex;
+    align-items: flex-start;
+    width: 299px;
+    height: 80px;
+    margin-top: 15px;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .product-all img {
+    width: 60px;
+    height: 60px;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .product-price {
+    margin-right: 50px;
+    margin-top: 35px;
+    width: 150px;
+    background-color: white;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .product-quantity {
+    margin-right: 100px;
+    margin-top: 35px;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .product-quantity .minus, .plus {
+    width: 40px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: white;
+    color: black;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .product-quantity .quantity-now {
+    width: 60px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .total_price {
+    margin-top: 35px;
+    margin-right: 55px;
+    width: 150px;
+    background-color: white;
+}
+
+.whole .container .card-product .checkout-product .cart-lists .total_price p {
+    font-weight: 500;
+}
+
+.whole .container .card-product .shippingOptions {
+    margin-left: 600px;
+}
+
+.whole .container .card-product .shippingOptions button {
+    width: 68px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 20px;
+}
+
+.whole .container .card-product #popupForm {
+    display: none;
+    margin-left: 600px;
+}
+
+.whole .container .card-product #popupForm form .form-1 .chooseTypes {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 30px;
+}
+
+.whole .container .card-product #popupForm form .form-1 .chooseTypes label {
+    display: inline-block;
+    width: 200px;
+    margin-right: 10px;
+}
+
+.whole .container .card-product #popupForm form .form-1 .estimated {
+    display: flex;
+    margin-top: -10px;
+    margin-left: 30px;
+}
+
+.whole .container .card-product #popupForm form .form-1 .estimated .estimation-time {
+    font-weight: 500;
+    word-spacing: -3px;
+    font-size: smaller;
+    margin-top: 3px;
+    margin-left: 15px;
+}
+
+.whole .container .card-product #popupForm form button {
+    width: 58px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 140px;
+}
+
+.whole .container .card-product .payment {
+    margin-left: 600px;
+}
+
+.whole .container .card-product .payment button {
+    width: 75px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 20px;
+}
+
+.whole .container .card-product #paymentForm {
+    display: none;
+}
+
+.whole .container .card-product #paymentForm form button {
+    width: 58px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 140px;
+}
+
+/* From Javascript Functions */
+/* To show shipping options */
+.showSelectedTypes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-left: 650px;
+}
+
+.selectedValue {
+    display: block;
+    width: 250px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: -50px;
+    font-weight: bold;
+}
+
+/* To show price for the selected shipping options */
+.formattedPrice {
+    display: block;
+    color: red;
+    margin-right: 30px;
+    margin-top: -50px;
+}
+
+
+/* To show estimated Time for the selected shipping options */
+.estimatedTime {
+    display: block;
+    margin-top: -48px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-weight: 500;
+    word-spacing: 0px;
+    font-size: smaller;
+    transform: translate(130px, 15px);
+}
+
+.estimated-Time {
+    transform: translate(-355px, -12px);
+}

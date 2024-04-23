@@ -1,0 +1,50 @@
+.container form {
+    width: 780px;
+    margin-left: 170px;
+}
+
+.container form .smartphone-information1, .smartphone-information2, .smartphone-information3, .smartphone-information4, .smartphone-information5, .smartphone-information6, .smartphone-information7, .smartphone-information8, .smartphone-information9, .smartphone-information10, .smartphone-information11, .smartphone-information12, .smartphone-information13 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+
+.container form .smartphone-information1 label, .smartphone-information2 label, .smartphone-information3 label, .smartphone-information4 label, .smartphone-information5 label, .smartphone-information6 label, .smartphone-information7 label, .smartphone-information8 label, .smartphone-information9 label, .smartphone-information10 label, .smartphone-information11 label, .smartphone-information12 label, .smartphone-information13 label {
+    padding-bottom: 40px;
+    flex-grow: 1;
+} 
+
+.container form .smartphone-information1 .form1, .smartphone-information2 .form2, .smartphone-information3 .form3, .smartphone-information4 .form4, .smartphone-information5 .form5, .smartphone-information6 .form6, .smartphone-information7 .form7, .smartphone-information8 .form8, .smartphone-information9 .form9, .smartphone-information10 .form10, .smartphone-information11 .form11, .smartphone-information12 .form12, .smartphone-information13 .form13 {
+    width: 430px;
+}
+
+
+.container form .smartphone-information9 .form9 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+}
+
+.container form .smartphone-information9 .form9 i {
+    position: absolute;
+    margin-left: 400px;
+    margin-top: 10px;
+}
+
+.container form .smartphone-information10 .form10 {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+}
+
+.container form .smartphone-information10 .form10 i {
+    position: absolute;
+    margin-left: 400px;
+    margin-top: 10px;
+}
+
+.container form .btn-warning {
+    margin-left: 290px;
+}

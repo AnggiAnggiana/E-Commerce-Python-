@@ -2,10 +2,17 @@ import os
 from decouple import config
 from pathlib import Path
 
+# MAILTRAP CONFIGURATION
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
+
+# MIDTRANS (PAYMENT GATEWAY) CONFIGURATION
+MIDTRANS_CLIENT_KEY = config('MIDTRANS_CLIENT_KEY')
+MIDTRANS_SERVER_KEY = config('MIDTRANS_SERVER_KEY')
+MIDTRANS_IS_PRODUCTION = config('MIDTRANS_IS_PRODUCTION')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

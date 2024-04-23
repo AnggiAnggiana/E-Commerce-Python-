@@ -1,84 +1,87 @@
 {% extends 'basic.html' %}
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/edit-product-food-style.css' %}">
+
     <div class="container">
         <h2> Edit Product Details </h2><hr><br>
-        <form action="" class="form-control" method="POST" enctype="multipart/form-data" style="width: 780px; margin-left: 170px;">
+        <form action="" class="form-control" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="food-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                <label for="id_food_food-name" style="padding-bottom: 40px; flex-grow: 1;">Food Name:</label>
-                <div class="form2" style="width: 430px">
+            <div class="food-information1">        
+                <label for="id_food_food-name">Food Name:</label>
+                <div class="form1">
                     {{ edit_form.food_name }}
                 </div>
             </div>
-            <div class="food-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                <label for="id_food_food-image" style="padding-bottom: 40px; flex-grow: 1;">Product Picture:</label>
-                <div class="form3" style="width: 430px">
+            <div class="food-information2">        
+                <label for="id_food_food-image">Product Picture:</label>
+                <div class="form2">
                     {{ edit_form.food_image }}
                 </div>
             </div>
-            <div class="food-information3" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                <label for="id_food_food-price" style="padding-bottom: 40px; flex-grow: 1;">Price:</label>
-                <div class="form4" style="width: 430px">
+            <div class="food-information3">        
+                <label for="id_food_food-price">Price:</label>
+                <div class="form3">
                     {{ edit_form.food_price }}
                 </div>
             </div>
-            <div class="food-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_storage-period" style="padding-bottom: 40px; flex-grow: 1;">Masa Penyimpanan:</label>
-                <div class="form5" style="width: 430px">
+            <div class="food-information4">
+                <label for="id_food_storage-period">Masa Penyimpanan:</label>
+                <div class="form4">
                     {{ edit_form.storage_period }}
                 </div>
             </div>
-            <div class="food-information5" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_storage-condition" style="padding-bottom: 40px; flex-grow: 1;">Kondisi Penyimpanan:</label>
-                <div class="form6" style="width: 430px">
+            <div class="food-information5">
+                <label for="id_food_storage-condition">Kondisi Penyimpanan:</label>
+                <div class="form5">
                     {{ edit_form.storage_condition }}
                 </div>
             </div>
-            <div class="food-information6" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_product-weight" style="padding-bottom: 40px; flex-grow: 1;">Berat Produk:</label>
-                <div class="form7" style="width: 430px">
+            <div class="food-information6">
+                <label for="id_food_product-weight">Berat Produk:</label>
+                <div class="form6">
                     {{ edit_form.product_weight }}
                 </div>
             </div>
-            <div class="food-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_number-product" style="padding-bottom: 40px; flex-grow: 1;">Jumlah Produk:</label>
-                <div class="form8" style="width: 430px">
+            <div class="food-information7">
+                <label for="id_food_number-product">Jumlah Produk:</label>
+                <div class="form7">
                     {{ edit_form.number_product }}
                 </div>
             </div>
-            <div class="food-information8" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_stock" style="padding-bottom: 40px; flex-grow: 1;">Stock:</label>
-                <div class="form9" style="width: 430px">
+            <div class="food-information8">
+                <label for="id_food_stock">Stock:</label>
+                <div class="form8">
                     {{ edit_form.food_stock }}
                 </div>
             </div>
-            <div class="food-information9" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_seller-Address" style="padding-bottom: 40px; flex-grow: 1;">Seller Address:</label>
-                <div class="form10" style="width: 430px">
+            <div class="food-information9">
+                <label for="id_food_seller-Address">Seller Address:</label>
+                <div class="form9">
                     {{ edit_form.food_seller_Address }}
                 </div>
             </div>
-            <div class="food-information10" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_food-description" style="padding-bottom: 40px; flex-grow: 1;">Description:</label>
-                <div class="form12" style="width: 430px">
+            <div class="food-information10">
+                <label for="id_food_food-description">Description:</label>
+                <div class="form10">
                     {{ edit_form.food_description }}
                 </div>
             </div><br>
-            <div class="food-information11" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_food-owner" style="padding-bottom: 40px; flex-grow: 1;">Owner:</label>
-                <div class="form13" style="width: 430px">
+            <div class="food-information11">
+                <label for="id_food_food-owner">Owner:</label>
+                <div class="form11">
                     {{ edit_form.food_owner }}
                 </div>
             </div>
-            <div class="smartphone-information12" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                <label for="id_food_food-categories" style="padding-bottom: 40px; flex-grow: 1;">Category:</label>
-                <div class="form14" style="width: 430px">
+            <div class="food-information12">
+                <label for="id_food_food-categories">Category:</label>
+                <div class="form12">
                     {{ edit_form.food_categories }}
                 </div>
             </div>
-            <a href="{% url 'homepage' %}" class="btn btn-warning" style="margin-left: 290px;">Cancel</a>
+            <a href="{% url 'homepage' %}" class="btn btn-warning">Cancel</a>
             <a href="{% url 'homepage' %}"> <input type="submit" value="Edit" class="btn btn-success"></a>
         </form>
     </div>

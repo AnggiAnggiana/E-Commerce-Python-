@@ -1,263 +1,193 @@
 {% extends 'basic.html' %}
+{% load static %}
 
 {% block content %}
     <head>
+        <link rel="stylesheet" href="{% static 'css/product-add-style.css' %}">
         <script src="https://kit.fontawesome.com/9417a4ac8c.js" crossorigin="anonymous"></script>
     </head>
     <div class="container">
-        <div class="title-add-product" style="text-align: center;">
+        <div class="title-add-product">
             <h2> Add Product </h2>
         </div><br>
-        <div class="product-information1" style="display: flex; align-items: flex-start; margin-left: 192px; margin-right: 10px;">
-            <label for="id_product_category" style="padding-bottom: 40px; margin-right: 120px;">Product Category:</label>
-            <div class="form1" style="width: 430px">
+        <div class="product-information1">
+            <label for="id_product_category">Product Category:</label>
+            <div class="form1">
                 {{ product_add.categories }}
                 <i class="fa-solid fa-angle-down"></i>
             </div>
         </div>
-        <form action="" class="" method="POST" enctype="multipart/form-data" style="width: 710px; margin-left: 170px; margin-top: 20px;">
+        <form action="" class="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div id="smartphoneForm" style="display: none;">
-                <div class="smartphone-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                    <label for="id_smartphone_name" style="padding-bottom: 40px; flex-grow: 1;">Smartphone Name:</label>
-                    <div class="form2" style="width: 430px">
+            <div id="smartphoneForm">
+                <div class="smartphone-information1">        
+                    <label for="id_smartphone_name">Smartphone Name:</label>
+                    <div class="form2">
                         {{ smartphone_add.name }}
                     </div>
                 </div>
-                <div class="smartphone-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                    <label for="id_smartphone_image" style="padding-bottom: 40px; flex-grow: 1;">Product Picture:</label>
-                    <div class="form3" style="width: 430px">
+                <div class="smartphone-information2">        
+                    <label for="id_smartphone_image">Product Picture:</label>
+                    <div class="form3">
                         {{ smartphone_add.image }}
                     </div>
                 </div>
-                <div class="smartphone-information3" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                    <label for="id_smartphone_price" style="padding-bottom: 40px; flex-grow: 1;">Price:</label>
-                    <div class="form4" style="width: 430px">
+                <div class="smartphone-information3">        
+                    <label for="id_smartphone_price">Price:</label>
+                    <div class="form4">
                         {{ smartphone_add.price }}
                     </div>
                 </div>
-                <div class="smartphone-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_memory" style="padding-bottom: 40px; flex-grow: 1;">Memory Capacity:</label>
-                    <div class="form5" style="width: 430px">
+                <div class="smartphone-information4">
+                    <label for="id_smartphone_memory">Memory Capacity:</label>
+                    <div class="form5">
                         {{ smartphone_add.memory_capacity }}
                     </div>
                 </div>
-                <div class="smartphone-information5" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_ram" style="padding-bottom: 40px; flex-grow: 1;">RAM Capacity:</label>
-                    <div class="form6" style="width: 430px">
+                <div class="smartphone-information5">
+                    <label for="id_smartphone_ram">RAM Capacity:</label>
+                    <div class="form6">
                         {{ smartphone_add.ram_capacity }}
                     </div>
                 </div>
-                <div class="smartphone-information6" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_warranty" style="padding-bottom: 40px; flex-grow: 1;">Warranty Period:</label>
-                    <div class="form7" style="width: 430px">
+                <div class="smartphone-information6">
+                    <label for="id_smartphone_warranty">Warranty Period:</label>
+                    <div class="form7">
                         {{ smartphone_add.warranty_period }}
                     </div>
                 </div>
-                <div class="smartphone-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_stock" style="padding-bottom: 40px; flex-grow: 1;">Stock:</label>
-                    <div class="form8" style="width: 430px">
+                <div class="smartphone-information7">
+                    <label for="id_smartphone_stock">Stock:</label>
+                    <div class="form8">
                         {{ smartphone_add.stock }}
                     </div>
                 </div>
-                <div class="smartphone-information8" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_seller_Address" style="padding-bottom: 40px; flex-grow: 1;">Seller Address:</label>
-                    <div class="form9" style="width: 430px">
+                <div class="smartphone-information8">
+                    <label for="id_smartphone_seller_Address">Seller Address:</label>
+                    <div class="form9">
                         {{ smartphone_add.seller_Address }}
                     </div>
                 </div>
-                <div class="smartphone-information9" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_condition" style="padding-bottom: 40px; flex-grow: 1;">Condition:</label>
-                    <div class="form10" style="width: 430px">
+                <div class="smartphone-information9">
+                    <label for="id_smartphone_condition">Condition:</label>
+                    <div class="form10">
                         {{ smartphone_add.condition }}
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                 </div>
-                <div class="smartphone-information10" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_brand" style="padding-bottom: 40px; flex-grow: 1;">Brand:</label>
-                    <div class="form11" style="width: 430px">
+                <div class="smartphone-information10">
+                    <label for="id_smartphone_brand">Brand:</label>
+                    <div class="form11">
                         {{ smartphone_add.brand }}
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                 </div>
-                <div class="smartphone-information11" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_description" style="padding-bottom: 40px; flex-grow: 1;">Description:</label>
-                    <div class="form12" style="width: 430px">
+                <div class="smartphone-information11">
+                    <label for="id_smartphone_description">Description:</label>
+                    <div class="form12">
                         {{ smartphone_add.description }}
                     </div>
                 </div><br>
-                <div class="smartphone-information12" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_owner" style="padding-bottom: 40px; flex-grow: 1;">Owner:</label>
-                    <div class="form13" style="width: 430px">
+                <div class="smartphone-information12">
+                    <label for="id_smartphone_owner">Owner:</label>
+                    <div class="form13">
                         {{ smartphone_add.owner }}
                     </div>
                 </div>
-                <div class="smartphone-information13" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_smartphone_categories" style="padding-bottom: 40px; flex-grow: 1;">Category:</label>
-                    <div class="form14" style="width: 430px">
+                <div class="smartphone-information13">
+                    <label for="id_smartphone_categories">Category:</label>
+                    <div class="form14">
                         {{ smartphone_add.categories }}
                     </div>
                 </div>
-                <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
+                <a href="{% url 'homepage' %}" class="btn btn-danger">Cancel</a>
                 <input type="submit" value="Submit" name="smartphone-form" class="btn btn-success">
             </div>
         </form>
-        <form action="" class="" method="POST" enctype="multipart/form-data" style="width: 710px; margin-left: 170px; margin-top: 20px;">
+        <form action="" class="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div id="foodForm" style="display: none;">
-                <div class="food-information1" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                    <label for="id_food_name" style="padding-bottom: 40px; flex-grow: 1;">Food Name:</label>
-                    <div class="form15" name="food-name" style="width: 430px">
+            <div id="foodForm">
+                <div class="food-information1">        
+                    <label for="id_food_name">Food Name:</label>
+                    <div class="form15" name="food-name">
                         {{ food_add.food_name }}
                     </div>
                 </div>
-                <div class="food-information2" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                    <label for="id_food_image" style="padding-bottom: 40px; flex-grow: 1;">Product Picture:</label>
-                    <div class="form16" style="width: 430px">
+                <div class="food-information2">        
+                    <label for="id_food_image">Product Picture:</label>
+                    <div class="form16">
                         {{ food_add.food_image }}
                     </div>
                 </div>
-                <div class="food-information3" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">        
-                    <label for="id_food_price" style="padding-bottom: 40px; flex-grow: 1;">Price:</label>
-                    <div class="form17" style="width: 430px">
+                <div class="food-information3">        
+                    <label for="id_food_price">Price:</label>
+                    <div class="form17">
                         {{ food_add.food_price }}
                     </div>
                 </div>
-                <div class="food-information4" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_storage-period" style="padding-bottom: 40px; flex-grow: 1;">Masa Penyimpanan:</label>
-                    <div class="form18" style="width: 430px">
+                <div class="food-information4">
+                    <label for="id_food_storage-period">Masa Penyimpanan:</label>
+                    <div class="form18">
                         {{ food_add.storage_period }}
                     </div>
                 </div>
-                <div class="food-information5" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_storage-condition" style="padding-bottom: 40px; flex-grow: 1;">Kondisi Penyimpanan:</label>
-                    <div class="form19" style="width: 430px">
+                <div class="food-information5">
+                    <label for="id_food_storage-condition">Kondisi Penyimpanan:</label>
+                    <div class="form19">
                         {{ food_add.storage_condition }}
                     </div>
                 </div>
-                <div class="food-information6" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_product-weight" style="padding-bottom: 40px; flex-grow: 1;">Berat Produk:</label>
-                    <div class="form20" style="width: 430px">
+                <div class="food-information6">
+                    <label for="id_food_product-weight">Berat Produk:</label>
+                    <div class="form20">
                         {{ food_add.product_weight }}
                     </div>
                 </div>
-                <div class="food-information7" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_number-product" style="padding-bottom: 40px; flex-grow: 1;">Jumlah Product:</label>
-                    <div class="form21" style="width: 430px">
+                <div class="food-information7">
+                    <label for="id_food_number-product">Jumlah Product:</label>
+                    <div class="form21">
                         {{ food_add.number_product }}
                     </div>
                 </div>
-                <div class="food-information8" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_stock" style="padding-bottom: 40px; flex-grow: 1;">Stock:</label>
-                    <div class="form22" style="width: 430px">
+                <div class="food-information8">
+                    <label for="id_food_stock">Stock:</label>
+                    <div class="form22">
                         {{ food_add.food_stock }}
                     </div>
                 </div>
-                <div class="food-information9" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_seller-Address" style="padding-bottom: 40px; flex-grow: 1;">Sent From:</label>
-                    <div class="form23" style="width: 430px">
+                <div class="food-information9">
+                    <label for="id_food_seller-Address">Sent From:</label>
+                    <div class="form23">
                         {{ food_add.food_seller_Address }}
                     </div>
                 </div>
-                <div class="food-information10" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_owner" style="padding-bottom: 40px; flex-grow: 1;">Brand:</label>
-                    <div class="form24" style="width: 430px">
+                <div class="food-information10">
+                    <label for="id_food_owner">Brand:</label>
+                    <div class="form24">
                         {{ food_add.food_owner }}
                     </div>
                 </div>
-                <div class="food-information11" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_description" style="padding-bottom: 40px; flex-grow: 1;">Description:</label>
-                    <div class="form25" style="width: 430px">
+                <div class="food-information11">
+                    <label for="id_food_description">Description:</label>
+                    <div class="form25">
                         {{ food_add.food_description }}
                     </div>
                 </div><br>
-                <div class="food-information12" style="display: flex; align-items: flex-start; margin-left: 20px; margin-right: 10px;">
-                    <label for="id_food_categories" style="padding-bottom: 40px; flex-grow: 1;">Category:</label>
-                    <div class="form26" style="width: 430px">
+                <div class="food-information12">
+                    <label for="id_food_categories">Category:</label>
+                    <div class="form26">
                         {{ food_add.food_categories }}
                     </div>
                 </div>
-                <a href="{% url 'homepage' %}" class="btn btn-danger" style="margin-left: 290px; margin-right: 5px;">Cancel</a>
+                <a href="{% url 'homepage' %}" class="btn btn-danger">Cancel</a>
                 <input type="submit" value="Submit" name="food-form" class="btn btn-success">
             </div>
         </form>
     </div>
 
-    <style>
-        .form1 {
-            position: relative;
-        }
-
-        .form10 {
-            position: relative;
-        }
-
-        .form11 {
-            position: relative;
-        }
-
-        .form1 select {
-            padding-right: 30px;
-        }
-
-        .form10 select {
-            padding-right: 30px;
-        }
-
-        .form11 select{
-            padding-right: 30px;
-        }
-
-        .form1 .fa-angle-down {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
-
-        .form10 .fa-angle-down {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
-
-        .form11 .fa-angle-down {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
-
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let categoryField = document.querySelector('.form1 select')
-            let smartphoneField = document.getElementById('smartphoneForm')
-            let smartphoneCategoriesForm = document.querySelector('.form14 select')
-            let foodField = document.getElementById('foodForm')
-
-            categoryField.addEventListener('change', function() {
-                console.log(categoryField.value)
-                // console.log(smartphoneCategoriesForm.value)
-                if (categoryField.value === 'Smartphone') {
-                    console.log('ini smartphone')
-                    smartphoneField.style.display = 'block'
-                    foodField.style.display = 'none'
-                } else if (categoryField.value === 'Foods') {
-                    console.log('ini makanan')
-                    foodField.style.display = 'block'
-                    smartphoneField.style.display = 'none'
-                } else {
-                    smartphoneField.style.display = 'none'
-                    foodField.style.display = 'none'
-                }
-            })
-        })
-    </script>
+    <script  src="{% static 'js/product-add-function.js' %}"></script>
 {% endblock %}
 
 
