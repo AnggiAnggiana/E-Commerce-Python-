@@ -282,8 +282,8 @@ def cart_shop(request):
     cart_date = Shopping_Cart.objects.all()
     profile_instance = Profile.objects.get(user=request.user)
     customer = Customers.objects.get(owner_id=profile_instance)
-    # customer = Customers.objects.filter(owner_id=profile_instance)
     owner = Shopping_Cart.objects.filter(user=customer)
+    shipping_types = ShippingType.objects.all()
     # print(f'data semua: {cart_date}')
     # print(f'ownernya: {profile_instance}')
     # print(f'customer: {customer}')
@@ -298,17 +298,34 @@ def cart_shop(request):
         
         return redirect('checkout_product')
     
+    # Call calculate_estimated_time
+    estimated_time_regular = calculate_estimated_time('Regular')
+    estimated_time_fast = calculate_estimated_time('Fast')
+    estimated_time_cargo = calculate_estimated_time('Cargo')
+    
     return render(request, 'stores/cart_shop.html', {
         'cart_date': cart_date,
         'owner': owner,
+        'shipping_types': shipping_types,
+        'estimated_time_regular': estimated_time_regular,
+        'estimated_time_fast': estimated_time_fast,
+        'estimated_time_cargo': estimated_time_cargo,
     })
     
 
+# @login_required
+# def delete_cart_item(request, item_id):
+#     cart_item = Shopping_Cart.objects.get(pk=item_id)
+#     cart_item.delete()
+#     return redirect('cart_shop')
+
 @login_required
 def delete_cart_item(request, item_id):
-    cart_item = Shopping_Cart.objects.get(pk=item_id)
-    cart_item.delete()
-    return redirect('cart_shop')
+    if request.method == 'POST':
+        item = get_object_or_404(Shopping_Cart, pk=item_id)
+        item.delete()
+        return JsonResponse({'success': True})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 # Checkout product

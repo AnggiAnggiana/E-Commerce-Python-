@@ -5,6 +5,9 @@
     <head>
         <script src="https://kit.fontawesome.com/9417a4ac8c.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{% static 'css/cart-shop-style.css' %}">
+
+        <!-- Feather Icon (Installation) -->
+        <script src="https://unpkg.com/feather-icons"></script>
     </head>
 
     <body>
@@ -37,13 +40,13 @@
                 <div class="card-product">
                     <div class="cart-details-product">
                         {% for data in owner %}
-                            {% if data.product_smartphone %}
-                                <h6><i class="fa-solid fa-store"></i> <a href="{% url 'seller_store' data.product_smartphone.owner.store_name %}">{{ data.product_smartphone.owner }}</a></h6>
-                            {% endif %}
-                            {% if data.product_food %}
-                                <h6><i class="fa-solid fa-store"></i> <a href="{% url 'seller_store' data.product_food.food_owner.store_name %}">{{ data.product_food.food_owner }}</a></h6>
-                            {% endif %}
                             <div class="cart-lists">
+                                {% if data.product_smartphone %}
+                                    <h6><i class="fa-solid fa-store"></i> <a href="{% url 'seller_store' data.product_smartphone.owner.store_name %}">{{ data.product_smartphone.owner }}</a></h6>
+                                {% endif %}
+                                {% if data.product_food %}
+                                    <h6><i class="fa-solid fa-store"></i> <a href="{% url 'seller_store' data.product_food.food_owner.store_name %}">{{ data.product_food.food_owner }}</a></h6>
+                                {% endif %}
                                 {% if data.product_smartphone %}
                                     <div class="product-smartphone">
                                         <img src="{{ data.product_smartphone.image.url }}">
@@ -60,7 +63,10 @@
                                     Rp.{{ data.formatted_price }}
                                 </div>
                                 <div class="product-quantity">
-                                    <span>{{ data.quantity }}</span>
+                                    <!-- <span>{{ data.quantity }}</span> -->
+                                    <button type="button" class="minus" onclick="decreaseQuantity('{{ data.id }}')">-</button>
+                                    <span id="quantity{{ data.id }}" class="quantity-now" name="quantity{{ data.id }}" data-product-type="{{ data.categories }}">{{ data.quantity }}</span>
+                                    <button type="button" class="plus" onclick="increaseQuantity('{{ data.id }}')">+</button>
                                 </div>
                                 <!-- Input hidden to store the updated quantity value -->
                                 <input type="hidden" name="selected_products" value="{{ data.id }}">
@@ -70,30 +76,294 @@
                                     <p>Rp.{{ data.formatted_price }}</p>
                                 </div>
                                 <div class="product-action">
-                                    <form action="{% url 'delete_cart_item' data.id %}" method="post">
+                                    <!-- <form action="{% url 'delete_cart_item' data.id %}" method="post">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
-                                    </form>
+                                        <input type="submit" class="btn btn-outline-danger">Delete</input>
+                                    </form> -->
+                                    <i data-feather="trash-2" class="remove-item" data-id="{{ data.id }}"></i>
                                 </div>
                             </div>
                             <form action="{% url 'cart_shop' %}" method="post">
                                 {% csrf_token %}
                                 
                                 <div class="choose">
-                                    <input type="checkbox" name="selected_products" value="{{ data.id }}">
-                                    <input type="hidden" name="quantity{{ data.id }}" id="quantity_input_{{ data.id }}" value="{{ data.quantity }}">
+                                    {% if data.product_smartphone %}
+                                        <input type="checkbox" class="product-checkbox" data-id="{{ data.id }}" data-name="{{ data.product_smartphone.name }}" data-image="{{ data.product_smartphone.image.url }}" data-price="{{ data.total_price }}">
+                                    {% elif data.product_food %}
+                                        <input type="checkbox" class="product-checkbox" data-id="{{ data.id }}" data-name="{{ data.product_food.food_name }}" data-image="{{ data.product_food.food_image.url }}" data-price="{{ data.total_price }}">
+                                    {% endif %}
+                                    <input type="hidden" name="quantity{{ data.id }}" id="quantity_input_{{ data.id }}">
                                 </div>
-
-                                <!-- Input hidden to store the updated quantity value -->
-                                <div class="checkout-btn" id="checkout-button">
-                                    <button type="submit" name="checkout" class="btn">Checkout</button>
-                                </div>
+                                
                             </form><hr>
                         {% endfor %}
+                        <div id="checkout-list" style="display: none;">
+                            <h3>Checkout List</h3>
+                            <ul id="checkout-items"></ul>
+                        </div>
+                        
+                        <!-- Shipping Options -->
+                        <div id="shipping-options-container" style="display: none;">
+                            <div class="shippingOptions">
+                                <p>Opsi Pengiriman:</p>
+                                <button class="pilihButton">Pilih</button>
+                            </div>
+                            <!-- Pop Up Form -->
+                            <div class="popUpForm" style="display: none;">
+                                <form id="shippingForm" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-1">
+                                        {% for delivery in shipping_types %}
+                                            <div class="chooseTypes">
+                                                <input type="radio" name="delivery_type" value="{{ delivery.delivery_type }}">
+                                                <label>{{ delivery.delivery_type }}</label>
+                                                <span>Rp.{{ delivery.formatted_price }}</span>
+                                            </div>
+                                            {% if delivery.delivery_type == 'Regular' %}
+                                                <div class="estimated">
+                                                    <p class="estimation-text">Estimasi Sampai:</p>
+                                                    <p class="estimation-time">
+                                                        {% for regular in estimated_time_regular%}
+                                                            {{ regular }}
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                            {% if delivery.delivery_type == 'Fast' %}
+                                                <div class="estimated">
+                                                    <p class="estimation-text">Estimasi Sampai:</p>
+                                                    <p class="estimation-time">
+                                                        {% for fast in estimated_time_fast %}
+                                                            {{ fast }}
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                            {% if delivery.delivery_type == 'Cargo' %}
+                                                <div class="estimated">
+                                                    <p class="estimation-text">Estimasi sampai:</p>
+                                                    <p class="estimation-time">
+                                                        {% for cargo in estimated_time_cargo %}
+                                                            {{ cargo }}
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <button type="button" class="saveButton">Save</button>
+                                </form>
+                            </div>
+                            <div class="showDelivery"></div>
+                        </div>
+                        <div class="summaryCheckout" style="display: none;">
+                            <p class="totalProductText">Total Produk:</p>
+                            <span id="totalProducts">0</span>
+                            <p class="totalCostText">Total Biaya:</p>
+                            <span id="totalCost">Rp.0</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <script src="{% static 'js/cart-function.js' %}"></script>
+
+        <!-- Feather Icon (Installation) -->
+        <script>
+            feather.replace();
+        </script>
+
+        <script>
+            // Delete item with 'trash icon'
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelectorAll(".remove-item").forEach(icon => {
+                    icon.addEventListener("click", function() {
+                        let productId = this.getAttribute("data-id");
+                        let url = `{% url 'delete_cart_item' 0 %}`.replace('0', productId);
+
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                this.closest('.cart-lists').remove();
+                            } else {
+                                alert('Error deleting item/product');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Errornya:', error);
+                        });
+                    });
+                });
+            });
+
+            // Create or Add Product into Checkout List
+            document.addEventListener("DOMContentLoaded", () => {
+                const checkboxOptions = document.querySelectorAll(".product-checkbox");
+                const checkoutLists = document.getElementById("checkout-items");
+                const checkoutListContainer = document.getElementById("checkout-list");
+                const summaryCheckoutContainer = document.querySelector(".summaryCheckout");
+                const totalProductsElement = document.getElementById("totalProducts");
+                const totalCostElement = document.getElementById("totalCost");
+
+                const toggleCheckoutListVisibility = () => {
+                    if (checkoutLists.children.length > 0) {
+                        checkoutListContainer.style.display = "block";
+                        summaryCheckoutContainer.style.display = "flex";
+                    } else {
+                        checkoutListContainer.style.display = "none";
+                        summaryCheckoutContainer.style.display = "none";
+                    }
+                };
+
+                // Update for the checkout total summary
+                const updateSummaryCheckout = () => {
+                    let totalProducts = 0;
+                    let totalCost = 0;
+
+                    checkoutLists.querySelectorAll("li").forEach(item => {
+                        const quantityText = item.querySelector("span").textContent.match(/Quantity: (\d+)/);
+                        const priceText = item.querySelector("span").textContent.match(/-\s*Rp\.([\d.]+)/);
+                        const deliveryCostText = item.querySelector(".formattedPrice")?.textContent.match(/Rp\.([\d.]+)/);
+
+                        if (quantityText && priceText) {
+                            const quantity = parseInt(quantityText[1], 10);
+                            // const price = parseInt(priceText[1], 10);
+                            const price = parseInt(priceText[1].replace(/\./g, ''), 10); // Remove dots and convert to integer
+
+                            totalProducts += quantity;
+                            totalCost += price;
+                        }
+
+                        if (deliveryCostText) {
+                            const deliveryCost = parseInt(deliveryCostText[1].replace(/\./g, ''), 10);
+                            totalCost += deliveryCost;
+                        }
+                    });
+
+                    totalProductsElement.textContent = totalProducts;
+                    // totalCostElement.textContent = `Rp.${totalCost}`;
+                    totalCostElement.textContent = `Rp.${totalCost.toLocaleString('id-ID')}`;
+                };
+
+                checkboxOptions.forEach(checkbox => {
+                    checkbox.addEventListener("change", function() {
+                        let productId = this.getAttribute("data-id")
+                        let productName = this.getAttribute("data-name")
+                        let productImage = this.getAttribute("data-image")
+                        let quantitySpan = document.getElementById("quantity" + productId)
+                        let productQuantity = quantitySpan.textContent;
+                        let priceSpan = document.getElementById("totalPrice" + productId)
+                        let productPrice = priceSpan.textContent;
+
+                        if (this.checked) {
+                            // Add product into checkout List
+                            let listItem = document.createElement("li")
+                            listItem.setAttribute("data-id", productId)
+                            
+                            // Create Product Image element
+                            let imgElement = document.createElement("img");
+                            imgElement.src = productImage;
+                            imgElement.alt = productName;
+                            imgElement.style.width = "50px";
+                            imgElement.style.height = "50px";
+                            imgElement.style.marginBottom = "10px";
+
+                            let textElement = document.createElement("span");
+                            textElement.textContent = `${productName} (Quantity: ${productQuantity}) - ${productPrice}`;
+
+                            // Add imgElement & textElement
+                            listItem.appendChild(imgElement);
+                            listItem.appendChild(textElement);
+
+                            // Clone the shipping options
+                            let shippingOptionsContainer = document.getElementById("shipping-options-container").cloneNode(true);
+                            shippingOptionsContainer.style.display = "flex";
+                            listItem.appendChild(shippingOptionsContainer);
+
+                            // Add all ListItems
+                            checkoutLists.appendChild(listItem);
+
+                            // Add event listener to Choose button
+                            let pilihButton = shippingOptionsContainer.querySelector(".pilihButton");
+                            let popUpForm = shippingOptionsContainer.querySelector(".popUpForm");
+                            let showDelivery = shippingOptionsContainer.querySelector(".showDelivery");
+
+                            pilihButton.addEventListener('click', () => {
+                                // Show popUpForm and hide the 'pilih' button at the same time
+                                popUpForm.style.display = "block";
+                                pilihButton.style.display = "none";
+
+                                // Hide delivery types when popUpFrom is displayed
+                                showDelivery.innerHTML = '';
+                            });
+
+                            // Add event listener to Save button
+                            let saveButton = shippingOptionsContainer.querySelector(".saveButton");
+
+                            saveButton.addEventListener('click', () => {
+                                let selectedValue = popUpForm.querySelector('input[name="delivery_type"]:checked');
+                                let add = showDelivery;
+
+                                // Close popUpForm
+                                popUpForm.style.display = "none";
+                                pilihButton.style.display = "block";
+
+                                // Get the estimated time based on the selected delivery_type
+                                let estimatedTime;
+
+                                // Show selected delivery_options
+                                if (selectedValue.value === 'Regular') {
+                                    let formattedPrice = selectedValue.nextElementSibling.nextElementSibling.textContent;
+                                    estimatedTime = "{% for regular in estimated_time_regular %} {{ regular }} {% endfor %}";
+                                    add.innerHTML = `<div class="selectedValue">${selectedValue.value}</div> <div class="formattedPrice">${formattedPrice}</div> <div class="estimated-Time"> Estimated Time: </div> <div class="estimatedTime">${estimatedTime}</div>`;
+                                    // Set the style
+                                    add.classList.add('showSelectedTypes')
+                                } else if (selectedValue.value === 'Fast') {
+                                    let formattedPrice = selectedValue.nextElementSibling.nextElementSibling.textContent;
+                                    estimatedTime = "{% for fast in estimated_time_fast %} {{ fast }} {% endfor %}";
+                                    add.innerHTML = `<div class="selectedValue">${selectedValue.value}</div> <div class="formattedPrice">${formattedPrice}</div> <div class="estimated-Time"> Estimated Time: </div> <div class="estimatedTime">${estimatedTime}</div>`;
+                                    // Set the style
+                                    add.classList.add('showSelectedTypes')
+                                } else if (selectedValue.value === 'Cargo') {
+                                    let formattedPrice = selectedValue.nextElementSibling.nextElementSibling.textContent;
+                                    estimatedTime = "{% for cargo in estimated_time_cargo %} {{ cargo }} {% endfor %}";
+                                    add.innerHTML = `<div class="selectedValue">${selectedValue.value}</div> <div class="formattedPrice">${formattedPrice}</div> <div class="estimated-Time"> Estimated Time: </div> <div class="estimatedTime">${estimatedTime}</div>`;
+                                    // Set the style
+                                    add.classList.add('showSelectedTypes')
+                                }
+
+                                // Update summaryCheckout after selecting delivery type
+                                updateSummaryCheckout();
+                            });
+                        } else {
+                            // Remove the product from checkout lists
+                            let listItem = checkoutLists.querySelector(`li[data-id="${productId}"]`);
+                            if (listItem) {
+                                listItem.remove();
+                            }
+                        }
+
+                        // update hidden input with the current quantity
+                        document.getElementById('quantity_input_' + productId).value = productQuantity;
+
+                        // Toggle checkout list visibility
+                        toggleCheckoutListVisibility();
+
+                        // Update summaryCheckout after adding or removing product
+                        updateSummaryCheckout();
+                    });
+                });
+
+                // Initial check to see if the list should be visible
+                // toggleCheckoutListVisibility();
+            });
+        </script>
     </body>
 {% endblock %}
