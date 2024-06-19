@@ -156,12 +156,23 @@
                             </div>
                             <div class="showDelivery"></div>
                         </div>
+
+                        <!-- Payment method integrate with midtrans -->
+                        <div class="payment-method" style="display: none;"></div>
+
                         <div class="summaryCheckout" style="display: none;">
-                            <p class="totalProductText">Total Produk:</p>
-                            <span id="totalProducts">0</span>
-                            <p class="totalCostText">Total Biaya:</p>
-                            <span id="totalCost">Rp.0</span>
+                            <h3 class="productNumbersText">Product yang dibeli:</h3>
+                            <h3 id="productNumbers">0</h3>
+                            <h3 class="totalProductText">Jumlah Produk:</h3>
+                            <h3 id="totalProducts">0</h3>
+                            <h3 class="totalCostText">Total Biaya:</h3>
+                            <h3 id="totalCost">Rp.0</h3>
+                            <!-- Warning to select delivery/shipping options before checkout the product -->
+                            <div id="delivery-warning" style="display: none; color: red">
+                                <p>(Please choose the shipping/delivery option first!)</p>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -209,8 +220,10 @@
                 const checkoutLists = document.getElementById("checkout-items");
                 const checkoutListContainer = document.getElementById("checkout-list");
                 const summaryCheckoutContainer = document.querySelector(".summaryCheckout");
+                const productNumbersElement = document.getElementById("productNumbers");
                 const totalProductsElement = document.getElementById("totalProducts");
                 const totalCostElement = document.getElementById("totalCost");
+                const deliveryWarningElement = document.getElementById("delivery-warning");
 
                 const toggleCheckoutListVisibility = () => {
                     if (checkoutLists.children.length > 0) {
@@ -224,32 +237,49 @@
 
                 // Update for the checkout total summary
                 const updateSummaryCheckout = () => {
+                    let uniqueProductId = new Set();
                     let totalProducts = 0;
                     let totalCost = 0;
+                    let deliverySelected = false;
 
                     checkoutLists.querySelectorAll("li").forEach(item => {
+                        const productId = item.getAttribute("data-id");
                         const quantityText = item.querySelector("span").textContent.match(/Quantity: (\d+)/);
                         const priceText = item.querySelector("span").textContent.match(/-\s*Rp\.([\d.]+)/);
                         const deliveryCostText = item.querySelector(".formattedPrice")?.textContent.match(/Rp\.([\d.]+)/);
+                        const selectedDelivery = item.querySelector(".showDelivery").innerHTML.trim();
 
                         if (quantityText && priceText) {
                             const quantity = parseInt(quantityText[1], 10);
-                            // const price = parseInt(priceText[1], 10);
                             const price = parseInt(priceText[1].replace(/\./g, ''), 10); // Remove dots and convert to integer
 
                             totalProducts += quantity;
                             totalCost += price;
+
+                            uniqueProductId.add(productId);
                         }
 
                         if (deliveryCostText) {
                             const deliveryCost = parseInt(deliveryCostText[1].replace(/\./g, ''), 10);
                             totalCost += deliveryCost;
                         }
+
+                        if (selectedDelivery) {
+                            deliverySelected = true;
+                        }
                     });
 
+                    productNumbersElement.textContent = uniqueProductId.size;
                     totalProductsElement.textContent = totalProducts;
                     // totalCostElement.textContent = `Rp.${totalCost}`;
                     totalCostElement.textContent = `Rp.${totalCost.toLocaleString('id-ID')}`;
+
+                    // Show or hide the delivery warning
+                    if (!deliverySelected) {
+                        deliveryWarningElement.style.display = "block";
+                    } else {
+                        deliveryWarningElement.style.display = "none";
+                    }
                 };
 
                 checkboxOptions.forEach(checkbox => {
