@@ -13,6 +13,9 @@ MIDTRANS_CLIENT_KEY = config('MIDTRANS_CLIENT_KEY')
 MIDTRANS_SERVER_KEY = config('MIDTRANS_SERVER_KEY')
 MIDTRANS_IS_PRODUCTION = config('MIDTRANS_IS_PRODUCTION')
 
+# WHATSAPP INTEGRATION
+PHONE_NUMBER = config('PHONE_NUMBER')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

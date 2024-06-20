@@ -97,19 +97,19 @@
                                 
                             </form><hr>
                         {% endfor %}
-                        <div id="checkout-list" style="display: none;">
+                        <div id="checkout-list">
                             <h3>Checkout List</h3>
                             <ul id="checkout-items"></ul>
                         </div>
                         
                         <!-- Shipping Options -->
-                        <div id="shipping-options-container" style="display: none;">
+                        <div id="shipping-options-container">
                             <div class="shippingOptions">
                                 <p>Opsi Pengiriman:</p>
                                 <button class="pilihButton">Pilih</button>
                             </div>
                             <!-- Pop Up Form -->
-                            <div class="popUpForm" style="display: none;">
+                            <div class="popUpForm">
                                 <form id="shippingForm" method="POST">
                                     {% csrf_token %}
                                     <div class="form-1">
@@ -160,7 +160,7 @@
                         <!-- Payment method integrate with midtrans -->
                         <div class="payment-method" style="display: none;"></div>
 
-                        <div class="summaryCheckout" style="display: none;">
+                        <div class="summaryCheckout">
                             <h3 class="productNumbersText">Product yang dibeli:</h3>
                             <h3 id="productNumbers">0</h3>
                             <h3 class="totalProductText">Jumlah Produk:</h3>
@@ -171,6 +171,11 @@
                             <div id="delivery-warning" style="display: none; color: red">
                                 <p>(Please choose the shipping/delivery option first!)</p>
                             </div>
+                        </div>
+
+                        <!-- Checkout Button -->
+                        <div class="checkoutButton">
+                            <button class="checkout-button disabled" type="button" id="checkoutButton">Checkout</button>
                         </div>
 
                     </div>
@@ -224,6 +229,8 @@
                 const totalProductsElement = document.getElementById("totalProducts");
                 const totalCostElement = document.getElementById("totalCost");
                 const deliveryWarningElement = document.getElementById("delivery-warning");
+                const checkoutButton = document.querySelector(".checkout-button");
+
 
                 const toggleCheckoutListVisibility = () => {
                     if (checkoutLists.children.length > 0) {
@@ -277,8 +284,12 @@
                     // Show or hide the delivery warning
                     if (!deliverySelected) {
                         deliveryWarningElement.style.display = "block";
+                        // Turn off disabled feature on checkoutlist as default
+                        checkoutButton.classList.add("disabled");
                     } else {
                         deliveryWarningElement.style.display = "none";
+                        // Turn on disabled feature on checkoutlist as default
+                        checkoutButton.classList.remove("disabled");
                     }
                 };
 
@@ -303,7 +314,8 @@
                             imgElement.alt = productName;
                             imgElement.style.width = "50px";
                             imgElement.style.height = "50px";
-                            imgElement.style.marginBottom = "10px";
+                            imgElement.style.marginBottom = "1rem";
+                            imgElement.style.marginRight = "1rem";
 
                             let textElement = document.createElement("span");
                             textElement.textContent = `${productName} (Quantity: ${productQuantity}) - ${productPrice}`;
@@ -394,6 +406,50 @@
                 // Initial check to see if the list should be visible
                 // toggleCheckoutListVisibility();
             });
+
+            // Send data in 'checkout list' into whatsapp
+            // document.addEventListener("DOMContentLoaded", () => {
+            //     const checkoutButton = document.getElementById("checkoutButton");
+
+            checkoutButton.addEventListener("click", () => {
+                if (checkoutButton.classList.contains("disabled")) {
+                    return;
+                }
+
+                // Get whatsapp number from views.py
+                const phoneNumber = "{{ phone_number }}";
+
+                // Get data from showDelivery
+                const showDeliveryElement = document.querySelector(".showDelivery");
+                const selectedValue = showDeliveryElement.querySelector(".selectedValue")?.textContent || '';
+                const formattedPrice = showDeliveryElement.querySelector(".formattedPrice")?.textContent || '';
+                const estimatedTime = showDeliveryElement.querySelector(".estimatedTime")?.textContent || '';
+
+                // Get data from summaryCheckout
+                const summaryData = {
+                    productOrdered: document.getElementById("productNumbers").textContent,
+                    productQuantity: document.getElementById("totalProducts").textContent,
+                    totalCost: document.getElementById("totalCost").textContent
+                };
+
+                // Format the message
+                let message = `Checkout Details:\n\n`;
+                message += `Delivery Type: ${selectedValue}\n`;
+                message += `Price: ${formattedPrice}\n`;
+                message += `Estimated Time: ${estimatedTime}\n`;
+                message += `\nSummary:\n`;
+                message += `Product Ordered: ${summaryData.productOrdered}\n`;
+                message += `Product Quantity: ${summaryData.productQuantity}\n`;
+                message += `Total Cost: ${summaryData.totalCost}`;
+
+                // Encode the message for URL
+                const encodedMessage = encodeURIComponent(message);
+
+                // Open Whatsapp URL
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                window.open(whatsappURL, '_blank');
+            });
+            // });
         </script>
     </body>
 {% endblock %}

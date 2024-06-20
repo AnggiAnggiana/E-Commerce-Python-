@@ -54,7 +54,8 @@
 
 .cart .container .card-product {
     width: 1150px;
-    height: 950px;
+    /* height: 100rem; */
+    height: auto;
     margin-top: 40px;
     background-color: white;
 }
@@ -201,9 +202,15 @@
 }
 
 
+/* Checkout List temporary */
+.cart .container .card-product .cart-details-product #checkout-list {
+    display: none;
+}
+
+
 /* Styling for shipping options */
 .cart .container .card-product .cart-details-product #shipping-options-container {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     align-items: flex-start;
 }
@@ -236,6 +243,10 @@
 
 
 /* Form to choose shipping options */
+.cart .container .card-product .cart-details-product #shipping-options-container .popUpForm {
+    display: none;
+}
+
 .cart .container .card-product .cart-details-product #shipping-options-container .popUpForm form {
     margin-left: 1rem;
 }
@@ -309,12 +320,12 @@
 
 /* Summary Checkout Product Price */
 .cart .container .card-product .cart-details-product .summaryCheckout {
+    display: none;
     margin-left: 3rem;
     width: 65rem;
     height: 8rem;
     background-color: rgb(23,22,22);
     font-weight: 500;
-    /* font-size: large; */
 }
 
 
@@ -334,4 +345,38 @@
 .cart .container .card-product .cart-details-product .summaryCheckout #delivery-warning {
     padding-top: 5rem;
     margin-left: -39rem;
+}
+
+
+/* Checkout Button */
+.cart .container .card-product .cart-details-product .checkoutButton {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.cart .container .card-product .cart-details-product .checkoutButton .checkout-button {
+    width: 8rem;
+    height: 2rem;
+    /* border-radius: 20%; */
+    background-color: white;
+    color: rgb(112,52,87);
+    margin-bottom: 2rem;
+}
+
+.cart .container .card-product .cart-details-product .checkoutButton .checkout-button:hover {
+    width: 8rem;
+    height: 2rem;
+    /* border-radius: 20%; */
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-bottom: 2rem;
+}
+
+
+/* When the button in disabled mode */
+.cart .container .card-product .cart-details-product .checkoutButton .checkout-button.disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    color: white;
+    margin-bottom: 2rem;
 }

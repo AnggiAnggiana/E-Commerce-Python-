@@ -13,6 +13,9 @@ from datetime import timedelta
 import uuid
 from .midtrans_integration import create_transaction
 
+# getting data from settings.py
+from django.conf import settings
+
 
 def homepage(request):
     locale.setlocale(locale.LC_ALL, 'id_ID')
@@ -289,6 +292,11 @@ def cart_shop(request):
     # print(f'customer: {customer}')
     # print(f'user_saat ini: {owner}')
     
+    # Whatsapp Integration taken from settings.py
+    context = {
+        'phone_number': settings.PHONE_NUMBER,
+    }
+    
     if request.method == 'POST' and 'checkout' in request.POST:
         # Get the choosen product data
         selected_product_id = request.POST.getlist('selected_products')
@@ -310,6 +318,7 @@ def cart_shop(request):
         'estimated_time_regular': estimated_time_regular,
         'estimated_time_fast': estimated_time_fast,
         'estimated_time_cargo': estimated_time_cargo,
+        'context': context,
     })
     
 
