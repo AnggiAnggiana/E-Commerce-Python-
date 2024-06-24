@@ -323,28 +323,79 @@
     display: none;
     margin-left: 3rem;
     width: 65rem;
-    height: 8rem;
+    height: auto;
     background-color: rgb(23,22,22);
     font-weight: 500;
 }
 
+.cart .container .card-product .cart-details-product .summaryCheckout .productDetailsList {
+    display: flex;
+}
 
-.cart .container .card-product .cart-details-product .summaryCheckout .totalProductText, .totalCostText, .productNumbersText {
+.cart .container .card-product .cart-details-product .summaryCheckout .productDetailsList .productNumbersText {
     margin-right: 0.4rem;
     margin-left: 3.5rem;
     padding-top: 1.5rem;
     color: rgb(175, 26, 113);
+    margin-bottom: 0.5rem;
 }
 
-.cart .container .card-product .cart-details-product .summaryCheckout #totalProducts, #totalCost, #productNumbers {
+.cart .container .card-product .cart-details-product .summaryCheckout .productDetailsList #productNumbers, #productNames {
     padding-top: 1.5rem;
     color: white;
 }
 
+.cart .container .card-product .cart-details-product .summaryCheckout .productDetailsList #productNumbers {
+    margin-right: 1rem;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout .productJumlahList {
+    display: flex;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout .productJumlahList .totalProductText {
+    margin-right: 0.4rem;
+    margin-left: 3.5rem;
+    padding-top: 1.5rem;
+    color: rgb(175, 26, 113);
+    margin-bottom: 0.5rem;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout .productJumlahList #totalProducts {
+    padding-top: 1.5rem;
+    color: white;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout .totalCostList {
+    display: flex;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout .totalCostList .totalCostText {
+    margin-right: 0.4rem;
+    margin-left: 3.5rem;
+    padding-top: 1.5rem;
+    color: rgb(175, 26, 113);
+    margin-bottom: 0.5rem;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout .totalCostList #totalCost {
+    padding-top: 1.5rem;
+    color: white;
+}
+
+
 /* Warning to choose the delivery option */
 .cart .container .card-product .cart-details-product .summaryCheckout #delivery-warning {
-    padding-top: 5rem;
-    margin-left: -39rem;
+    display: none;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    /* margin-left: 9rem; */
+    text-align: center;
+    color: red;
+}
+
+.cart .container .card-product .cart-details-product .summaryCheckout #delivery-warning .warning-text {
+    color: red;
 }
 
 

@@ -161,15 +161,23 @@
                         <div class="payment-method" style="display: none;"></div>
 
                         <div class="summaryCheckout">
-                            <h3 class="productNumbersText">Product yang dibeli:</h3>
-                            <h3 id="productNumbers">0</h3>
-                            <h3 class="totalProductText">Jumlah Produk:</h3>
-                            <h3 id="totalProducts">0</h3>
-                            <h3 class="totalCostText">Total Biaya:</h3>
-                            <h3 id="totalCost">Rp.0</h3>
+                            <div class="productDetailsList">
+                                <h3 class="productNumbersText">Product yang dibeli:</h3>
+                                <h3 id="productNumbers">0</h3>
+                                <!-- <h3 class="productNamesText">Product Name:</h3> -->
+                                <h3 id="productNames">0</h3>
+                            </div>
+                            <div class="productJumlahList">
+                                <h3 class="totalProductText">Jumlah Produk:</h3>
+                                <h3 id="totalProducts">0</h3>
+                            </div>
+                            <div class="totalCostList">
+                                <h3 class="totalCostText">Total Biaya:</h3>
+                                <h3 id="totalCost">Rp.0</h3>
+                            </div>
                             <!-- Warning to select delivery/shipping options before checkout the product -->
-                            <div id="delivery-warning" style="display: none; color: red">
-                                <p>(Please choose the shipping/delivery option first!)</p>
+                            <div id="delivery-warning">
+                                <h3 class="warning-text">(Please choose the shipping/delivery option first!)</h3>
                             </div>
                         </div>
 
@@ -226,6 +234,7 @@
                 const checkoutListContainer = document.getElementById("checkout-list");
                 const summaryCheckoutContainer = document.querySelector(".summaryCheckout");
                 const productNumbersElement = document.getElementById("productNumbers");
+                const productNamesElement = document.getElementById("productNames");
                 const totalProductsElement = document.getElementById("totalProducts");
                 const totalCostElement = document.getElementById("totalCost");
                 const deliveryWarningElement = document.getElementById("delivery-warning");
@@ -235,7 +244,7 @@
                 const toggleCheckoutListVisibility = () => {
                     if (checkoutLists.children.length > 0) {
                         checkoutListContainer.style.display = "block";
-                        summaryCheckoutContainer.style.display = "flex";
+                        summaryCheckoutContainer.style.display = "block";
                     } else {
                         checkoutListContainer.style.display = "none";
                         summaryCheckoutContainer.style.display = "none";
@@ -247,14 +256,26 @@
                     let uniqueProductId = new Set();
                     let totalProducts = 0;
                     let totalCost = 0;
-                    let deliverySelected = false;
+                    // let deliverySelected = false;
+                    let deliverySelectedForAllProducts = true;
+
+                    // Get productNames from checkout list
+                    let productNames = [];
 
                     checkoutLists.querySelectorAll("li").forEach(item => {
                         const productId = item.getAttribute("data-id");
+                        const productName = item.getAttribute("data-name");
+                        console.log("Checking item:", item);
+                        console.log("Product Name Check:", productName);
+
                         const quantityText = item.querySelector("span").textContent.match(/Quantity: (\d+)/);
                         const priceText = item.querySelector("span").textContent.match(/-\s*Rp\.([\d.]+)/);
                         const deliveryCostText = item.querySelector(".formattedPrice")?.textContent.match(/Rp\.([\d.]+)/);
                         const selectedDelivery = item.querySelector(".showDelivery").innerHTML.trim();
+
+                        if (productName) {
+                            productNames.push(productName);
+                        }
 
                         if (quantityText && priceText) {
                             const quantity = parseInt(quantityText[1], 10);
@@ -271,18 +292,29 @@
                             totalCost += deliveryCost;
                         }
 
-                        if (selectedDelivery) {
-                            deliverySelected = true;
+                        // if (selectedDelivery) {
+                        //     deliverySelected = true;
+                        // }
+
+                        if (!selectedDelivery) {
+                            deliverySelectedForAllProducts = false;
                         }
                     });
 
-                    productNumbersElement.textContent = uniqueProductId.size;
+                    // productNamesElement.textContent = productNames;
+                    productNamesElement.textContent = productNames.join(', ');
+                    console.log("product names array:", productNames);
+
+                    productNumbersElement.textContent = `(${uniqueProductId.size})`;
+                    // console.log("product numbers 1:", productNumbers);
                     totalProductsElement.textContent = totalProducts;
-                    // totalCostElement.textContent = `Rp.${totalCost}`;
+                    // console.log("product totals 1:", totalProducts);
+                    
                     totalCostElement.textContent = `Rp.${totalCost.toLocaleString('id-ID')}`;
 
                     // Show or hide the delivery warning
-                    if (!deliverySelected) {
+                    // if (!deliverySelected) {
+                    if (!deliverySelectedForAllProducts) {
                         deliveryWarningElement.style.display = "block";
                         // Turn off disabled feature on checkoutlist as default
                         checkoutButton.classList.add("disabled");
@@ -306,7 +338,8 @@
                         if (this.checked) {
                             // Add product into checkout List
                             let listItem = document.createElement("li")
-                            listItem.setAttribute("data-id", productId)
+                            listItem.setAttribute("data-id", productId);
+                            listItem.setAttribute("data-name", productName);
                             
                             // Create Product Image element
                             let imgElement = document.createElement("img");
@@ -331,6 +364,12 @@
 
                             // Add all ListItems
                             checkoutLists.appendChild(listItem);
+
+                            console.log("Added list item:", listItem);
+
+                            // console.log("product names 2:", productName);
+                            // console.log("product quantity 2:", productQuantity);
+                            // console.log("product quantity 2:", productQuantity);
 
                             // Add event listener to Choose button
                             let pilihButton = shippingOptionsContainer.querySelector(".pilihButton");
@@ -409,8 +448,10 @@
 
             // Send data in 'checkout list' into whatsapp
             // document.addEventListener("DOMContentLoaded", () => {
-            //     const checkoutButton = document.getElementById("checkoutButton");
+                //     const checkoutButton = document.getElementById("checkoutButton");
+                
 
+            // Send data in 'checkout list' into whatsapp
             checkoutButton.addEventListener("click", () => {
                 if (checkoutButton.classList.contains("disabled")) {
                     return;
@@ -420,10 +461,43 @@
                 const phoneNumber = "{{ phone_number }}";
 
                 // Get data from showDelivery
-                const showDeliveryElement = document.querySelector(".showDelivery");
-                const selectedValue = showDeliveryElement.querySelector(".selectedValue")?.textContent || '';
-                const formattedPrice = showDeliveryElement.querySelector(".formattedPrice")?.textContent || '';
-                const estimatedTime = showDeliveryElement.querySelector(".estimatedTime")?.textContent || '';
+                // const showDeliveryElement = document.querySelector(".showDelivery");
+                // const selectedValue = showDeliveryElement.querySelector(".selectedValue")?.textContent || '';
+                // const formattedPrice = showDeliveryElement.querySelector(".formattedPrice")?.textContent || '';
+                // const estimatedTime = showDeliveryElement.querySelector(".estimatedTime")?.textContent || '';
+
+                // Get productId from checkout list
+                let productIds = [];
+                // console.log("product id list:", productIds);
+
+                let productNames = [];
+                // console.log("product name lists:", productNames)
+
+                let deliveryDetails = [];
+
+                const checkoutLists = document.getElementById("checkout-items");
+
+                checkoutLists.querySelectorAll("li").forEach(item => {
+                    // productIds.push(item.getAttribute("data-id"));
+                    // productNames.push(item.getAttribute("data-name"));
+                    // console.log("product id yg dipilih:", productIds);
+                    // console.log("product name yg dipilih:", productNames);
+
+                    const productId = item.getAttribute("data-id");
+                    const productName = item.getAttribute("data-name");
+                    const selectedValue = item.querySelector(".selectedValue")?.textContent || '';
+                    const formattedPrice = item.querySelector(".formattedPrice")?.textContent || '';
+                    const estimatedTime = item.querySelector(".estimatedTime")?.textContent || '';
+
+                    productIds.push(productId);
+                    productNames.push(productName);
+
+                    deliveryDetails.push({
+                        selectedValue,
+                        formattedPrice,
+                        estimatedTime
+                    });
+                });
 
                 // Get data from summaryCheckout
                 const summaryData = {
@@ -433,20 +507,32 @@
                 };
 
                 // Format the message
-                let message = `Checkout Details:\n\n`;
-                message += `Delivery Type: ${selectedValue}\n`;
-                message += `Price: ${formattedPrice}\n`;
-                message += `Estimated Time: ${estimatedTime}\n`;
-                message += `\nSummary:\n`;
-                message += `Product Ordered: ${summaryData.productOrdered}\n`;
+                let message = `~ Checkout Details ~\n\n`;
+                // To separate product into sections
+                productIds.forEach((id, index) => {
+                    message += `Product Id: ${id}\n`;
+                    message += `Product Name: ${productNames[index]}\n`;
+                    message += `Delivery Type: ${deliveryDetails[index].selectedValue}\n`;
+                    message += `Delivery Price: ${deliveryDetails[index].formattedPrice}\n`;
+                    message += `Estimated Time: ${deliveryDetails[index].estimatedTime}\n`;
+                    message += `-----------------------------------------------------------------------------------\n`;
+                });
+                // message += `Product Id: ${productIds.join(', ')}\n`;
+                // message += `Product Names: ${productNames.join(', ')}\n`;
+                // message += `\nDelivery:\n`;
+                // message += `Delivery Type: ${selectedValue}\n`;
+                // message += `Price: ${formattedPrice}\n`;
+                // message += `Estimated Time: ${estimatedTime}\n`;
+                message += `\nProduct Ordered: ${summaryData.productOrdered}\n`;
                 message += `Product Quantity: ${summaryData.productQuantity}\n`;
-                message += `Total Cost: ${summaryData.totalCost}`;
+                message += `Total Cost: ${summaryData.totalCost}\n`;
 
                 // Encode the message for URL
-                const encodedMessage = encodeURIComponent(message);
+                // const encodedMessage = encodeURIComponent(message);
 
                 // Open Whatsapp URL
-                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                // const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappURL, '_blank');
             });
             // });
