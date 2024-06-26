@@ -99,6 +99,44 @@
                         {% endfor %}
                         <div id="checkout-list">
                             <h3>Checkout List</h3>
+                            <!-- Buyer shipping address -->
+                            <div class="cart-title-address">
+                                <div class="title-address">
+                                    <h5>Buyer Details</h5>
+                                </div>
+                                <div class="customer-details">
+                                    {% if owner %}
+                                        {% for data in owner %}
+                                            {% if forloop.first %}
+                                                <div class="buyer-details-container">
+                                                    <h5 class="buyer">Recipient:</h5>
+                                                    <p id="buyer-name">{{ data.user }}</p>
+                                                    <textarea id="input_buyer" name="user_buyer"> {{ data.user }}</textarea>
+                                                    <h5 class="contact-recipient">Contact:</h5>
+                                                    <p id="buyer-contact">{{ data.user.phone_number }}</p>
+                                                    <textarea id="input_contact" name="user_contact"> {{ data.user.phone_number }} </textarea>
+                                                </div>
+                                                <div id="address-container">
+                                                    <h5 class="address-buyer">Alamat:</h5>
+                                                    <p id="text_address">{{ data.user.street }}, {{ data.user.district }}, {{ data.user.city }}, {{ data.user.province }}, {{ data.user.country }} ({{ data.user.postal_code }})</p>
+                                                    <textarea id="input_address" name="user_address">{{ data.user.street }}, {{ data.user.district }}, {{ data.user.city }}, {{ data.user.province }}, {{ data.user.country }} ({{ data.user.postal_code }})</textarea>
+                                                    <button id="saveAddress">Save</button>
+                                                </div>
+                                                <button id="editAddress">Edit</button>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="customer-contact">
+                                    {% for product in product_from_cart %}
+                                        <p id="contact-info"> Contact: {{ product.user.phone_number }} </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+
+                            <!-- Checkout list item -->
+                            <h5 class="product-details">Product Details</h5>
                             <ul id="checkout-items"></ul>
                         </div>
                         
@@ -226,6 +264,64 @@
                     });
                 });
             });
+
+
+            // Edit User/Buyer Details Address
+            let editButton = document.getElementById("editAddress");
+            let nameText = document.getElementById("buyer-name");
+            let nameInput = document.getElementById("input_buyer");
+            let contactText = document.getElementById("buyer-contact");
+            let contactInput = document.getElementById("input_contact");
+            let addressText = document.getElementById("text_address");
+            let addressInput = document.getElementById("input_address");
+            let saveButton = document.getElementById("saveAddress");
+
+            editButton.addEventListener("click", () => {
+                editButton.style.display = "none";
+                nameText.style.display = "none";
+                nameInput.style.display = "block";
+                contactText.style.display = "none";
+                contactInput.style.display = "block";
+                addressText.style.display = "none";
+                addressInput.style.display = "block";
+                saveButton.style.display = "block";
+
+                // Set the dynamic marginTop
+                adjustContactInfo()
+            });
+
+            saveButton.addEventListener("click", () => {
+                editButton.style.display = "block";
+                nameText.style.display = "block";
+                nameText.innerText = nameInput.value;
+                nameInput.style.display = "none";
+                contactText.style.display = "block";
+                contactText.innerText = contactInput.value;
+                contactInput.style.display = "none";
+                addressText.style.display = "block";
+                addressText.innerText = addressInput.value;
+                addressInput.style.display = "none";
+                saveButton.style.display = "none";
+                
+                // Set the dynamic marginTop
+                adjustContactInfo()
+            })
+
+            // Script to set dynamic marginTop adjustment for contact information
+            const adjustContactInfo = () => {
+                let contactInfo = document.getElementById("contact-info")
+                let addressText = document.getElementById("text_address")
+                let addressInput = document.getElementById("input_address")
+
+                if (addressText.style.display === "block") {
+                    contactInfo.style.marginTop = "0px";
+                } else if (addressInput.style.display === "block") {
+                    contactInfo.style.marginTop = "-115px";
+                }
+            }
+
+            window.onload = adjustContactInfo;
+
 
             // Create or Add Product into Checkout List
             document.addEventListener("DOMContentLoaded", () => {
@@ -444,12 +540,7 @@
 
                 // Initial check to see if the list should be visible
                 // toggleCheckoutListVisibility();
-            });
-
-            // Send data in 'checkout list' into whatsapp
-            // document.addEventListener("DOMContentLoaded", () => {
-                //     const checkoutButton = document.getElementById("checkoutButton");
-                
+            });    
 
             // Send data in 'checkout list' into whatsapp
             checkoutButton.addEventListener("click", () => {
@@ -460,11 +551,10 @@
                 // Get whatsapp number from views.py
                 const phoneNumber = "{{ phone_number }}";
 
-                // Get data from showDelivery
-                // const showDeliveryElement = document.querySelector(".showDelivery");
-                // const selectedValue = showDeliveryElement.querySelector(".selectedValue")?.textContent || '';
-                // const formattedPrice = showDeliveryElement.querySelector(".formattedPrice")?.textContent || '';
-                // const estimatedTime = showDeliveryElement.querySelector(".estimatedTime")?.textContent || '';
+                // Get customer/buyer details
+                const buyerName = document.getElementById("buyer-name").textContent.trim();
+                const buyerContact = document.getElementById("buyer-contact").textContent.trim();
+                const buyerAddress = document.getElementById("text_address").textContent.trim();
 
                 // Get productId from checkout list
                 let productIds = [];
@@ -478,11 +568,6 @@
                 const checkoutLists = document.getElementById("checkout-items");
 
                 checkoutLists.querySelectorAll("li").forEach(item => {
-                    // productIds.push(item.getAttribute("data-id"));
-                    // productNames.push(item.getAttribute("data-name"));
-                    // console.log("product id yg dipilih:", productIds);
-                    // console.log("product name yg dipilih:", productNames);
-
                     const productId = item.getAttribute("data-id");
                     const productName = item.getAttribute("data-name");
                     const selectedValue = item.querySelector(".selectedValue")?.textContent || '';
@@ -508,6 +593,13 @@
 
                 // Format the message
                 let message = `~ Checkout Details ~\n\n`;
+
+                // Customer details
+                message += `Recipient: ${buyerName}\n`;
+                message += `Contact: ${buyerContact}\n`;
+                message += `Address: ${buyerAddress}\n`;
+                message += `\n`;
+
                 // To separate product into sections
                 productIds.forEach((id, index) => {
                     message += `Product Id: ${id}\n`;
@@ -517,12 +609,7 @@
                     message += `Estimated Time: ${deliveryDetails[index].estimatedTime}\n`;
                     message += `-----------------------------------------------------------------------------------\n`;
                 });
-                // message += `Product Id: ${productIds.join(', ')}\n`;
-                // message += `Product Names: ${productNames.join(', ')}\n`;
-                // message += `\nDelivery:\n`;
-                // message += `Delivery Type: ${selectedValue}\n`;
-                // message += `Price: ${formattedPrice}\n`;
-                // message += `Estimated Time: ${estimatedTime}\n`;
+                
                 message += `\nProduct Ordered: ${summaryData.productOrdered}\n`;
                 message += `Product Quantity: ${summaryData.productQuantity}\n`;
                 message += `Total Cost: ${summaryData.totalCost}\n`;
@@ -535,7 +622,7 @@
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappURL, '_blank');
             });
-            // });
+            
         </script>
     </body>
 {% endblock %}

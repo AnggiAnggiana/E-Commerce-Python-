@@ -208,6 +208,90 @@
 }
 
 
+/* Buyer Address */
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address {
+    margin-left: 1rem;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .title-address {
+    text-align: center;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details {
+    margin-left: 4rem;
+    margin-bottom: 3rem;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details .buyer-details-container #input_buyer {
+    display: none;
+    width: 47rem;
+    height: 2rem;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details .buyer-details-container #input_contact {
+    display: none;
+    width: 47rem;
+    height: 2rem;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details #address-container #input_address {
+    display: none;
+    width: 47rem;
+    height: 7rem;
+    margin-bottom: 2rem;
+}
+
+/* Save Button */
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details #address-container #saveAddress {
+    display: none;
+    width: 68px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: white;
+    color: rgb(112,52,87);
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details #address-container #saveAddress:hover {
+    width: 68px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+/* Edit Button */
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details #editAddress {
+    /* display: block; */
+    width: 68px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: white;
+    color: rgb(112,52,87);
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+.cart .container .card-product .cart-details-product #checkout-list .cart-title-address .customer-details #editAddress:hover {
+    width: 68px;
+    height: 30px;
+    border-radius: 20%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+
+/* Checkout Items */
+.cart .container .card-product .cart-details-product #checkout-list .product-details {
+    text-align: center;
+}
+
+
 /* Styling for shipping options */
 .cart .container .card-product .cart-details-product #shipping-options-container {
     display: none;
