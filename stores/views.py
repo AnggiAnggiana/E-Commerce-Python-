@@ -11,7 +11,16 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
 import uuid
-from .midtrans_integration import create_transaction
+from decouple import config
+import random
+import midtransclient
+import json
+
+# Import CORS Configuration
+from django.views.decorators.csrf import csrf_exempt
+# from corsheaders. import cors_allow_all
+
+# from .midtrans_integration import create_transaction
 
 # getting data from settings.py
 from django.conf import settings
@@ -311,6 +320,11 @@ def cart_shop(request):
     estimated_time_fast = calculate_estimated_time('Fast')
     estimated_time_cargo = calculate_estimated_time('Cargo')
     
+    # Get CLIENT_KEY for MIDTRANS INTEGRATION
+    client_key = {
+        'client_key': settings.MIDTRANS_CLIENT_KEY,
+    }
+    
     return render(request, 'stores/cart_shop.html', {
         'cart_date': cart_date,
         'owner': owner,
@@ -319,14 +333,9 @@ def cart_shop(request):
         'estimated_time_fast': estimated_time_fast,
         'estimated_time_cargo': estimated_time_cargo,
         'context': context,
+        'client_key': client_key,
     })
     
-
-# @login_required
-# def delete_cart_item(request, item_id):
-#     cart_item = Shopping_Cart.objects.get(pk=item_id)
-#     cart_item.delete()
-#     return redirect('cart_shop')
 
 @login_required
 def delete_cart_item(request, item_id):
@@ -362,7 +371,7 @@ def checkout_product(request):
             order_id = str(uuid.uuid4())
             
             # Call Midtrans integration function with unique order ID and price
-            create_transaction(order_id, price)
+            # create_transaction(order_id, price)
             
             return redirect('homepage')
     else:
@@ -401,3 +410,108 @@ def calculate_estimated_time(delivery_type):
         estimated_time = 'Delivery type is not recognized'
         
     return estimated_time
+
+
+
+# Create midtrans transaction
+@csrf_exempt
+# @cors_allow_all
+@login_required
+def create_midtrans_transaction(request):
+    if request.method == 'POST':
+        user = request.user
+        print('user:', user)
+        profile_instance = Profile.objects.get(user=user)
+        print('profile_instance:', profile_instance)
+        customer = Customers.objects.get(owner_id=profile_instance)
+        print('customer:', customer)
+        owner = Shopping_Cart.objects.filter(user=customer)
+        
+        first_name = customer.first_name
+        print('first_name:', first_name)
+        last_name = customer.last_name
+        print('last_name:', last_name)
+        address = f"{customer.street}, {customer.district}, {customer.city}, {customer.province}, {customer.country} ({customer.postal_code})"
+        print('address:', address)
+        phone_number = customer.phone_number
+        print('phone number:', phone_number)
+        
+        # Data sent from Javascript
+        data = json.loads(request.body)
+        
+        # Validate and sum the item details from javascript to match with the gross amount
+        # Get all data from 'items'
+        items = data['items']
+        
+        # Get 'name' data from 'items'
+        names = ', '.join([item['name'] for item in items])
+        print('Item name:', names)
+        
+        # Get 'quantity' data from 'items'
+        # jumlah = ', '.join(str(item['quantity']) for item in items)
+        # quantity = int(jumlah)
+        quantities = [item['quantity'] for item in items]
+        print('Item quantity:', quantities)
+        
+        # Get 'price' data from 'items'
+        total_item = sum(item['price'] * item['quantity'] for item in items)
+        total_item_cost = int(total_item)
+        
+        # Get data for gross_amount
+        amount = data['totalCosts']
+        # gross_amount = data['totalCosts']
+        gross_amount = int(amount)
+        
+        print('itemsnya:', items)
+        print('total_item_cost:', total_item_cost)
+        print('amount:', amount)
+        print('gross_amount:', gross_amount)
+        
+        if gross_amount != total_item_cost:
+            return JsonResponse({'error': 'Total Cost tidak sama dengan kalkulasi total price'}, status=400)
+        
+        # Generate random order_id
+        order_id = random.randint(1000, 9999)
+        
+        # Create Snap API instance
+        snap = midtransclient.Snap(
+            # Set to 'true' if you want to change into live production
+            is_production = config('MIDTRANS_IS_PRODUCTION'),
+            client_key = config('MIDTRANS_CLIENT_KEY'),
+            server_key = config('MIDTRANS_SERVER_KEY'),
+        )
+        
+        # Build API Parameter
+        param = {
+            "transaction_details" : {
+                "order_id": order_id,
+                "gross_amount": data['totalCosts']
+            },
+            "credit_card": {
+                "secure": True
+            },
+            "item_details" : [
+                {
+                    "id": item['id'],
+                    "name": item['name'],
+                    "quantity": item['quantity'],
+                    "price" : item ['price'],
+                    "delivery": item['delivery'],
+                } for item in items
+            ],
+            "customer_details" : {
+                "first_name" : first_name,
+                "last_name" : last_name,
+                "address" : address,
+                "phone_number" : phone_number,
+            }
+        }
+        
+        print('transkrip details:', param)
+        
+        transaction = snap.create_transaction(param)
+        
+        transaction_token = transaction['token']
+        print('transaction_token:', transaction_token)
+        
+        return JsonResponse({'transaction_token': transaction_token})

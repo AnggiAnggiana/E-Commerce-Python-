@@ -4,6 +4,10 @@
     margin-bottom: -20px;
 }
 
+.cart .container {
+    height: auto;
+}
+
 .cart .container .card-title {
     width: 1150px;
     height: 90px;
@@ -54,7 +58,6 @@
 
 .cart .container .card-product {
     width: 1150px;
-    /* height: 100rem; */
     height: auto;
     margin-top: 40px;
     background-color: white;
@@ -62,7 +65,7 @@
 
 .cart .container .card-product .cart-details-product {
     margin-left: 0px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .cart .container .card-product .cart-details-product .cart-lists h6 {
@@ -402,6 +405,41 @@
 }
 
 
+/* PAYMENT MIDTRANS BUTTON */
+.cart .container .card-product .cart-details-product .payment-option form .payment-button {
+    display: none;
+    width: 168px;
+    height: 30px;
+    border-radius: 0%;
+    background-color: white;
+    color: rgb(112,52,87);
+    margin-left: 4rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.cart .container .card-product .cart-details-product .payment-option form .payment-button:hover {
+    display: none;
+    width: 168px;
+    height: 30px;
+    border-radius: 0%;
+    background-color: rgb(112,52,87);
+    color: white;
+    margin-left: 4rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+
+/* Midtrans Integration Display */
+.cart .container .card-product .cart-details-product .payment-method {
+    display: none;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    margin-left: 24rem;
+}
+
+
 /* Summary Checkout Product Price */
 .cart .container .card-product .cart-details-product .summaryCheckout {
     display: none;
@@ -490,21 +528,27 @@
 }
 
 .cart .container .card-product .cart-details-product .checkoutButton .checkout-button {
+    display: none;
     width: 8rem;
     height: 2rem;
-    /* border-radius: 20%; */
+    border-radius: 20%;
     background-color: white;
     color: rgb(112,52,87);
     margin-bottom: 2rem;
+    text-align: center;
+    margin-left: 32rem;
 }
 
 .cart .container .card-product .cart-details-product .checkoutButton .checkout-button:hover {
+    display: none;
     width: 8rem;
     height: 2rem;
-    /* border-radius: 20%; */
+    border-radius: 20%;
     background-color: rgb(112,52,87);
     color: white;
     margin-bottom: 2rem;
+    text-align: center;
+    margin-left: 32rem;
 }
 
 

@@ -3,19 +3,23 @@ const updateTotalPrice = (quantityId) => {
     let priceElement = document.querySelector('.product-price[data-id="' + quantityId + '"]')
     let priceText = priceElement.innerText.trim().replace('Rp.', '')
     let price = parseFloat(priceText.split('.').join(''))
-    console.log('product price:', price);
+    // console.log('product price:', price);
 
     let quantity = parseInt(document.getElementById('quantity' + quantityId).innerText)
-    console.log('quantity:', quantity);
+    // console.log('quantity:', quantity);
 
-    let totalPrice = price * quantity
-    let totalPriceElement = document.getElementById('totalPrice' + quantityId)
-    totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
-    totalPriceElement.style.fontWeight = '500'
+    // let totalPrice = price
+    let totalPrices = price * quantity
+    // let totalPriceElement = document.getElementById('totalPrice' + quantityId)
+    let totalPricesElement = document.getElementById('totalPrice' + quantityId)
+    // totalPriceElement.innerText = 'Rp.' + totalPrice.toLocaleString('id-ID', {useGrouping: true})
+    totalPricesElement.innerText = 'Rp.' + totalPrices.toLocaleString('id-ID', {useGrouping: true})
+    // totalPriceElement.style.fontWeight = '500'
+    totalPricesElement.style.fontWeight = '500'
 
     // Return totalPrice so can be used out of the function
     // return totalPrice;
-    return totalPrice;
+    return totalPrices;
 }
 
 // Script to calculate total price as decrease

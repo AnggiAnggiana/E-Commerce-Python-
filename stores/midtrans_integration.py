@@ -5,9 +5,11 @@
 import random
 import requests
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from midtransclient import Snap
 from decouple import config
-from stores.models import Smartphone, Foods
+from stores.models import Profile, Customers, Smartphone, Foods, Shopping_Cart
+import midtransclient
 
 # MIDTRANS (PAYMENT GATEWAY) CONFIGURATION
 MIDTRANS_CLIENT_KEY = config('MIDTRANS_CLIENT_KEY')
@@ -16,68 +18,52 @@ MIDTRANS_API_BASE_URL = config('MIDTRANS_API_BASE_URL')
 MIDTRANS_IS_PRODUCTION = config('MIDTRANS_IS_PRODUCTION')
 
 
-def create_transaction(request):
-    # Decode data from request.body
-    data = request.json
-    
-    # Data sent from model (Smartphone & Foods)
-    smartphone_data = Smartphone.objects.first() #Change method to get data
-    foods_data = Foods.objects.first() #Change method to get data
-    
-    # Generate random order_id
-    order_id = random.randint(1000, 9999)
-    
-    # Decide gross_amount value based on the selected product (Smartphone or Foods)
-    if request.data['product_type'] == 'smartphone':
-        gross_amount = smartphone_data.price
-    elif request.data['product_type'] == 'foods':
-        gross_amount = foods_data.food_price
-    else:
-        # Default value if there is no product selected
-        gross_amount = 0
+@csrf_exempt
+def create_midtrans_transaction(request):
+    if request.method == 'POST':
+        user = request.user
+        profile_instance = Profile.objects.get(user=user)
+        customer = Customers.objects.get(owner_id=profile_instance)
+        owner = Shopping_Cart.objects.filter(user=customer).first()
+        
+        # first_name = user.first_name
+        # last_name = user.last_name
+        first_name = customer.first_name
+        last_name = customer.last_name
+        # address = f"{user.street}, {user.district}, {user.city}, {user.province}, {user.country} ({user.postal_code})"
+        address = f"{customer.street}, {customer.district}, {customer.city}, {customer.province}, {customer.country} ({customer.postal_code})"
+        # phone_number = user.phone_number
+        phone_number = customer.phone_number
+        gross_amount = request.POST.get('totalCost')
 
-    # Create Snap API instance
-    snap = Snap(
-        # Set to true if you want Production Environment (accept real transaction).
-        is_production= config('MIDTRANS_IS_PRODUCTION'),
-        server_key= config('MIDTRANS_SERVER_KEY'),
-        client_key= config('MIDTRANS_CLIENT_KEY'),
-    )
-    
-    # Build API parameter
-    param = {
-        "transaction_details" : {
-            "order_id": order_id,
-            "gross_amount": gross_amount
-        },
-        "credit_card" : {
-            "secure" : True
-        },
-        "item_details" : [
-            {
-                "id": smartphone_data.id,
-                "name": smartphone_data.name,
-                "quantity": data['quantity'],
-                "price": smartphone_data.price,
+        # Create Snap API instance
+        snap = midtransclient.Snap(
+            # Set to true if you want Production Environment (accept real transaction).
+            # is_production=False,
+            is_production=MIDTRANS_IS_PRODUCTION,
+            # server_key='YOUR_SERVER_KEY'
+            server_key= MIDTRANS_SERVER_KEY
+        )
+        
+        # Build API parameter
+        param = {
+            "transaction_details": {
+                "order_id": f"order-{random.randint(1000, 9999)}",
+                "gross_amount": int(gross_amount.replace('Rp.', '').replace('.', ''))
             },
-            {
-                "id": foods_data.id,
-                "name": foods_data.food_name,
-                "quantity": data['quantity'],
-                "price": foods_data.food_price,
+            "credit_card":{
+                "secure" : True
             },
-        ],
-        "customer_details" : {
-            "first_name": data['name'],
-            "phone": data['phone'],
-            "note": data['note'],
+            "customer_details":{
+                "first_name": first_name,
+                "last_name": last_name,
+                "email": address,
+                "phone": phone_number
+            }
         }
-    }
-    
-    # print(param)
 
-    transaction = snap.create_transaction(param)
+        transaction = snap.create_transaction(param)
 
-    transaction_token = transaction['token']
-    
-    return JsonResponse({'transaction_token': transaction_token})
+        transaction_token = transaction['token']
+        
+        return JsonResponse({'token': transaction_token})

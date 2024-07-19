@@ -59,7 +59,7 @@
                                         <p><a href="{% url 'food_show' data.product_food.pk %}">{{ data.product_food|truncatechars:65 }}</a></p>
                                     </div>
                                 {% endif %}
-                                <div class="product-price" data-id="{{ data.id }}">
+                                <div class="product-price" data-id="{{ data.id }}" id="priceOriginal{{ data.id }}">
                                     Rp.{{ data.formatted_price }}
                                 </div>
                                 <div class="product-quantity">
@@ -76,10 +76,6 @@
                                     <p>Rp.{{ data.formatted_price }}</p>
                                 </div>
                                 <div class="product-action">
-                                    <!-- <form action="{% url 'delete_cart_item' data.id %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="submit" class="btn btn-outline-danger">Delete</input>
-                                    </form> -->
                                     <i data-feather="trash-2" class="remove-item" data-id="{{ data.id }}"></i>
                                 </div>
                             </div>
@@ -195,14 +191,23 @@
                             <div class="showDelivery"></div>
                         </div>
 
+                        <div class="payment-option">
+                            <form id="payment-midtrans-form">
+                                <input type="hidden" name="productNames" id="productNamesInput">
+                                <input type="hidden" name="totalCost" id="totalCostInput">
+                                <input type="hidden" name="totalQuantity" id="totalQuantityInput">
+                                <button class="payment-button" type="button" id="payment-button">Opsi Pembayaran</button>
+                            </form>
+                        </div>
+
                         <!-- Payment method integrate with midtrans -->
-                        <div class="payment-method" style="display: none;"></div>
+                        <div class="payment-method" id="midtrans-payment-method"></div>
 
                         <div class="summaryCheckout">
                             <div class="productDetailsList">
                                 <h3 class="productNumbersText">Product yang dibeli:</h3>
                                 <h3 id="productNumbers">0</h3>
-                                <!-- <h3 class="productNamesText">Product Name:</h3> -->
+                                
                                 <h3 id="productNames">0</h3>
                             </div>
                             <div class="productJumlahList">
@@ -234,6 +239,14 @@
         <!-- Feather Icon (Installation) -->
         <script>
             feather.replace();
+        </script>
+
+        <!-- Include Snap.js dynamically (MIDTRANS INTEGRATION) -->
+        <script>
+            const script = document.createElement('script');
+            script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+            script.setAttribute('data-client-key', "{{ client_key }}");
+            document.head.appendChild(script);
         </script>
 
         <script>
@@ -335,15 +348,25 @@
                 const totalCostElement = document.getElementById("totalCost");
                 const deliveryWarningElement = document.getElementById("delivery-warning");
                 const checkoutButton = document.querySelector(".checkout-button");
+                const form = document.getElementById("payment-midtrans-form");
+                const totalCostInput = document.getElementById("totalCostInput");
+                const totalQuantityInput = document.getElementById("totalQuantityInput");
+                const productNamesInput = document.getElementById("productNamesInput");
+                const paymentButton = document.getElementById("payment-button");
+                const midtransForm = document.getElementById('payment-midtrans-form');
 
 
                 const toggleCheckoutListVisibility = () => {
                     if (checkoutLists.children.length > 0) {
                         checkoutListContainer.style.display = "block";
                         summaryCheckoutContainer.style.display = "block";
+                        paymentButton.style.display = "block";
+                        checkoutButton.style.display = "block";
                     } else {
                         checkoutListContainer.style.display = "none";
                         summaryCheckoutContainer.style.display = "none";
+                        paymentButton.style.display = "none";
+                        checkoutButton.style.display = "none";
                     }
                 };
 
@@ -352,7 +375,7 @@
                     let uniqueProductId = new Set();
                     let totalProducts = 0;
                     let totalCost = 0;
-                    // let deliverySelected = false;
+                    let totalPrices = 0;
                     let deliverySelectedForAllProducts = true;
 
                     // Get productNames from checkout list
@@ -366,6 +389,7 @@
 
                         const quantityText = item.querySelector("span").textContent.match(/Quantity: (\d+)/);
                         const priceText = item.querySelector("span").textContent.match(/-\s*Rp\.([\d.]+)/);
+
                         const deliveryCostText = item.querySelector(".formattedPrice")?.textContent.match(/Rp\.([\d.]+)/);
                         const selectedDelivery = item.querySelector(".showDelivery").innerHTML.trim();
 
@@ -375,10 +399,12 @@
 
                         if (quantityText && priceText) {
                             const quantity = parseInt(quantityText[1], 10);
-                            const price = parseInt(priceText[1].replace(/\./g, ''), 10); // Remove dots and convert to integer
+                            const price = parseInt(priceText[1].replace(/\./g, ''), 10);
 
                             totalProducts += quantity;
-                            totalCost += price;
+                            totalPrices += price;
+
+                            totalCost += price * quantity
 
                             uniqueProductId.add(productId);
                         }
@@ -387,10 +413,6 @@
                             const deliveryCost = parseInt(deliveryCostText[1].replace(/\./g, ''), 10);
                             totalCost += deliveryCost;
                         }
-
-                        // if (selectedDelivery) {
-                        //     deliverySelected = true;
-                        // }
 
                         if (!selectedDelivery) {
                             deliverySelectedForAllProducts = false;
@@ -408,8 +430,15 @@
                     
                     totalCostElement.textContent = `Rp.${totalCost.toLocaleString('id-ID')}`;
 
+                    // Update hidden input fields
+                    productNamesInput.value = JSON.stringify(productNames);
+                    totalQuantityInput.value = JSON.stringify(totalProducts);
+                    totalCostInput.value = JSON.stringify(totalCost);
+                    // console.log('productNames:', productNamesInput.value)
+                    // console.log('quantityProduct:', totalQuantityInput.value)
+                    // console.log('totalCost:', totalCostInput.value)
+
                     // Show or hide the delivery warning
-                    // if (!deliverySelected) {
                     if (!deliverySelectedForAllProducts) {
                         deliveryWarningElement.style.display = "block";
                         // Turn off disabled feature on checkoutlist as default
@@ -420,6 +449,8 @@
                         checkoutButton.classList.remove("disabled");
                     }
                 };
+                // Update summaryCheckout after selecting delivery type
+                updateSummaryCheckout();
 
                 checkboxOptions.forEach(checkbox => {
                     checkbox.addEventListener("change", function() {
@@ -428,7 +459,7 @@
                         let productImage = this.getAttribute("data-image")
                         let quantitySpan = document.getElementById("quantity" + productId)
                         let productQuantity = quantitySpan.textContent;
-                        let priceSpan = document.getElementById("totalPrice" + productId)
+                        let priceSpan = document.getElementById("priceOriginal" + productId)
                         let productPrice = priceSpan.textContent;
 
                         if (this.checked) {
@@ -462,10 +493,6 @@
                             checkoutLists.appendChild(listItem);
 
                             console.log("Added list item:", listItem);
-
-                            // console.log("product names 2:", productName);
-                            // console.log("product quantity 2:", productQuantity);
-                            // console.log("product quantity 2:", productQuantity);
 
                             // Add event listener to Choose button
                             let pilihButton = shippingOptionsContainer.querySelector(".pilihButton");
@@ -538,9 +565,134 @@
                     });
                 });
 
-                // Initial check to see if the list should be visible
-                // toggleCheckoutListVisibility();
-            });    
+                // Payment MIDTRANS FORM
+                paymentButton.addEventListener('click', async () => {
+                    // const formData = new FormData(form);
+                    const formData = new FormData(midtransForm);
+                    const objectData = {};
+                    formData.forEach((value, key) => {
+                        objectData[key] = value;
+                    });
+                    console.log('object data:', objectData);
+
+                    // Collect product data from the DOM
+                    const productNames = [];
+                    const totalProducts = [];
+                    const totalPrices = [];
+                    const shippingOptions = [];
+
+                    const itemsList = document.getElementById("checkout-items");
+                    itemsList.querySelectorAll("li").forEach(item => {
+                        const name = item.getAttribute("data-name");
+                        console.log("Checking item:", item);
+                        console.log("Product Name Check:", name);
+
+                        const quantityElement = item.querySelector("span").textContent.match(/Quantity: (\d+)/);
+                        const priceElement = item.querySelector("span").textContent.match(/-\s*Rp\.([\d.]+)/);
+                        const deliveryCostElement = item.querySelector(".formattedPrice")?.textContent.match(/Rp\.([\d.]+)/);
+
+                        console.log('quantityElement:', quantityElement);
+                        console.log('priceElement:', priceElement);
+                        console.log('Cost Delivery Element:', deliveryCostElement);
+
+                        const quantity = parseInt(quantityElement[1], 10);
+                        const price = parseInt(priceElement[1].replace(/\./g, ''), 10);
+                        const deliveryCost = parseInt(deliveryCostElement[1].replace(/\./g, ''), 10);
+
+                        console.log('quantityFinal:', quantity);
+                        console.log('priceFinal:', price);
+                        console.log('Delivery Cost:', deliveryCost);
+
+                        productNames.push(name);
+                        totalProducts.push(quantity);
+                        totalPrices.push(price);
+                        shippingOptions.push(deliveryCost)
+                    });
+
+                    console.log('productNames final:', productNames);
+                    console.log('totalProducts final:', totalProducts);
+                    console.log('totalPrices final:', totalPrices);
+                    console.log('shippingOptions final:', shippingOptions);
+
+                    // Convert data into Json
+                    try {
+                        const parsedProductNames = JSON.parse(objectData.productNames || '[]');
+                        const parsedTotalProducts = JSON.parse(objectData.totalQuantity || '[]');
+                        const parsedDeliveryCost = shippingOptions;
+                        const parsedTotalPrices = totalPrices;
+                        console.log('parsedProductNames ye:', parsedProductNames)
+                        console.log('parsedTotalProducts ye:', parsedTotalProducts)
+                        console.log('parsedDeliveryCost ye:', parsedDeliveryCost)
+                        console.log('parsedTotalPrices ye:', parsedTotalPrices)
+
+                        // Combine product data into items array
+                        const items = parsedProductNames.map((name, index) => {
+                            const quantity = parseFloat(parsedTotalProducts);
+                            const price = parseFloat(parsedTotalPrices);
+                            const delivery = parseFloat(parsedDeliveryCost);
+                            console.log(`Item ${index}: name=${name}, quantity=${quantity}, delivery=${delivery}, price=${price}`);
+
+                            return {
+                                id: index + 1,
+                                name: name,
+                                quantity : quantity,
+                                delivery : delivery,
+                                price: price,
+                            };
+                        });
+
+                        // Calculate total cost
+                        const totalCosts = items.reduce((sum, item) => {
+                            const itemTotal = item.price * item.quantity;
+                            console.log(`Item total for ${item.name}: ${itemTotal}`);
+                            return sum + itemTotal;
+                        }, 0);
+                        console.log('totalCosts hasil calculate:', totalCosts)
+
+                        // Modify into JSON format
+                        const requestData = {
+                            ...objectData,
+                            items: items,
+                            totalCosts: totalCosts,
+                        };
+
+                        try {
+                            const response = await fetch('http://127.0.0.1:8000/create_midtrans_transaction', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                                },
+                                credentials: 'include',
+                                body: JSON.stringify(requestData),
+                            });
+                            const result = await response.json();
+                            console.log('result:', result);
+                            const token = result.transaction_token;
+                            console.log('tokennya:', token);
+                            // window.snap.pay(token);
+
+                            // if (window.snap && window.snap.pay) {
+                            if (window.snap && window.snap.embed) {
+                                // window.snap.pay(token);
+                                document.getElementById('midtrans-payment-method').style.display = 'block';
+                                window.snap.embed(token, {
+                                    embedId: 'midtrans-payment-method',
+                                });
+                            } else {
+                                console.error('Snap.js is not loaded properly');
+                            }
+                        } catch (error) {
+                            console.log(error.message);
+                        }
+                    } catch (error) {
+                        console.log('JSON parse error:', error.message);
+                    }
+
+                    toggleCheckoutListVisibility();
+                    updateSummaryCheckout();
+                });
+            });
 
             // Send data in 'checkout list' into whatsapp
             checkoutButton.addEventListener("click", () => {
@@ -591,7 +743,7 @@
                     totalCost: document.getElementById("totalCost").textContent
                 };
 
-                // Format the message
+                // Format the message for Whatsapp
                 let message = `~ Checkout Details ~\n\n`;
 
                 // Customer details

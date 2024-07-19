@@ -16,4 +16,5 @@ urlpatterns  = [
     path('cart/', views.cart_shop, name='cart_shop'),
     path('cart/delete/<int:item_id>/', views.delete_cart_item, name='delete_cart_item'),
     path('checkout/', views.checkout_product, name='checkout_product'),
+    path('create_midtrans_transaction', views.create_midtrans_transaction, name='create_midtrans_transaction'),
 ]
